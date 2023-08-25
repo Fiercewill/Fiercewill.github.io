@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WangMing">
+
+
+
+
+
+<title>GPIO输入-外电检测 | WangMing&#39;s blogs</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Wangming&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Wangming&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">GPIO输入-外电检测</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WangMing</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 25, 2023&nbsp;&nbsp;19:22:42</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
+<p>（1）本系列是基于STM32的项目笔记，内容涵盖了STM32各种外设的使用，由浅入深。</p>
+<p>（2）小编使用的单片机是STM32F105RCT6，项目笔记基于小编的实际项目，但是博客中的内容适用于各种单片机开发的同学学习和使用。</p>
+<p>（3）本篇文章对应的国内博客链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62261692/article/details/132499152?spm=1001.2014.3001.5501">GPIO输入-外电检测_爱写博客的橙留香的博客-CSDN博客</a></p>
+<p>（4）此文章中图片加载不出来是因为小编写这篇文章用的是另一台电脑，图片不在同一台电脑上，访问国内博客可以查看图片。</p>
+</blockquote>
+<h3 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h3><blockquote>
+<ol>
+<li>外电检测电路原理的分析。</li>
+<li>外电检测程序代码的开发，掌握GPIO口输入模式的配置。</li>
+<li>实验效果：外电连接LED1亮，外电断开 LED1灭。</li>
+</ol>
+</blockquote>
+<h3 id="外电检测硬件原理图"><a href="#外电检测硬件原理图" class="headerlink" title="外电检测硬件原理图"></a>外电检测硬件原理图</h3><p><img src="https://gitee.com/Wangmingdream/typora-image/raw/master/img/3.png"></p>
+<h4 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h4><blockquote>
+<p>外电的状态是通过PB1端口来检测的。 那分别分析PB1 在没有外电输入和有外电输入的状态。</p>
+<p>（1）外电断开</p>
+<p>PB1 通过下拉电阻R55 接地，PB1输入低电平。</p>
+<p>（2）外电输入端口连接5V供电</p>
+<p>R55&#x2F;(R54+R55) &#x3D; VR55(A点) &#x2F; 5V (VR54+R55)</p>
+<p>PB1的电压值为：VR55 &#x3D;5*200 &#x2F;(100+200) &#x3D; 3.33V，高电平。</p>
+</blockquote>
+<h3 id="程序实现–外电状态检测"><a href="#程序实现–外电状态检测" class="headerlink" title="程序实现–外电状态检测"></a>程序实现–外电状态检测</h3><h4 id="外电检测GPIO的初始化"><a href="#外电检测GPIO的初始化" class="headerlink" title="外电检测GPIO的初始化"></a>外电检测GPIO的初始化</h4><h5 id="端口定义：-外电检测的端口是PB1"><a href="#端口定义：-外电检测的端口是PB1" class="headerlink" title="端口定义： 外电检测的端口是PB1"></a><strong>端口定义： 外电检测的端口是PB1</strong></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// AC Check Pin</span><br><span class="line">#define CHECK_ACSTATE_PORT       GPIOB</span><br><span class="line">#define CHECK_ACSTATE_PIN           GPIO_Pin_1</span><br></pre></td></tr></table></figure>
+
+<p><strong>PB1的初始化GPIO的初始化:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">void hal_GpioConfig_init(void)</span><br><span class="line">&#123;</span><br><span class="line">	GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">	</span><br><span class="line">	RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOB , ENABLE); 	</span><br><span class="line">	</span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = CHECK_ACSTATE_PIN;     </span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;   //浮空输入</span><br><span class="line">	GPIO_Init(CHECK_ACSTATE_PORT, &amp;GPIO_InitStructure);	</span><br><span class="line">	</span><br><span class="line">        AcState = (en_AcLinkSta)hal_GPIO_GetACState();  /// </span><br><span class="line">&#125; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>上拉，下拉，悬空方式的选择：</strong></p>
+<p>选择浮空输入模式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">typedef enum</span><br><span class="line">&#123; GPIO_Mode_AIN = 0x0,//模拟输入</span><br><span class="line">  GPIO_Mode_IN_FLOATING = 0x04,//浮空输入</span><br><span class="line">  GPIO_Mode_IPD = 0x28,//上拉输入</span><br><span class="line">  GPIO_Mode_IPU = 0x48,//下拉输入</span><br><span class="line">  GPIO_Mode_Out_OD = 0x14,//通用开漏输出</span><br><span class="line">  GPIO_Mode_Out_PP = 0x10,//通用推挽输出</span><br><span class="line">  GPIO_Mode_AF_OD = 0x1C,//复用开漏输出</span><br><span class="line">  GPIO_Mode_AF_PP = 0x18//复用推挽输出</span><br><span class="line">&#125;GPIOMode_TypeDef;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/Wangmingdream/typora-image/raw/master/img/4.png"></p>
+<blockquote>
+<p><strong>如果GPIO模式选择： 上拉输入， 则在外电掉电的状态下 PB1 也是高电平。</strong></p>
+<p>GPIO模式选择上拉输入时，Rdo不存在，此时电路中只有其他3个电阻，不论外电连接或断开，PB1均被上拉电阻拉高，为高电平。</p>
+<p><strong>如果GPIO模式选择： 下拉输入， 则在外电连接的状态下 PB1的电平会变小。</strong></p>
+<p>GPIO模式选择下拉输入时，Rup不存在，此时电路中只有其他3个电阻，R55 和RDO 并联之后整体的阻值变小， R54不变。根据串联电路分压， PB1的电压会变小。</p>
+</blockquote>
+<h4 id="常用的GPIO输入库函数"><a href="#常用的GPIO输入库函数" class="headerlink" title="常用的GPIO输入库函数"></a><strong>常用的GPIO输入库函数</strong></h4><h5 id="GPIO-常用输入函数"><a href="#GPIO-常用输入函数" class="headerlink" title="GPIO 常用输入函数"></a><strong>GPIO 常用输入函数</strong></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//读取单个输入端口的数据</span><br><span class="line">uint8_t GPIO_ReadInputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);</span><br><span class="line"></span><br><span class="line">//读取单个输入端口的数据</span><br><span class="line">uint16_t GPIO_ReadInputData(GPIO_TypeDef* GPIOx);</span><br><span class="line"></span><br><span class="line">//读取单个输入端口的数据</span><br><span class="line">uint8_t GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);</span><br><span class="line"></span><br><span class="line">//读取单个输入端口的数据</span><br><span class="line">uint16_t GPIO_ReadOutputData(GPIO_TypeDef* GPIOx);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="定义外电状态枚举类型变量"><a href="#定义外电状态枚举类型变量" class="headerlink" title="定义外电状态枚举类型变量"></a><strong>定义外电状态枚举类型变量</strong></h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">typedef enum</span><br><span class="line">&#123;</span><br><span class="line">	 STA_AC_BREAK = 0,</span><br><span class="line">	  STA_AC_LINK,</span><br><span class="line">&#125;en_AcLinkSta;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="外电检测函数"><a href="#外电检测函数" class="headerlink" title="外电检测函数"></a>外电检测函数</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">// 获取PB1端口状态（高低电平）</span><br><span class="line">static unsigned char hal_GPIO_GetACState(void)</span><br><span class="line">&#123;</span><br><span class="line">	return (GPIO_ReadInputDataBit(CHECK_ACSTATE_PORT,  CHECK_ACSTATE_PIN ));		</span><br><span class="line">&#125;</span><br><span class="line">void delay_1msTest(void)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned int i=0;</span><br><span class="line">	i = 72000;</span><br><span class="line">	while(i--);   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">////外电检测函数任务</span><br><span class="line">////返回值   外电的状态</span><br><span class="line">en_AcLinkSta hal_Gpio_AcStateCheck(void)</span><br><span class="line">&#123;</span><br><span class="line">	en_AcLinkSta state;</span><br><span class="line">	static unsigned char times = 0;	//静态延时计数</span><br><span class="line">	state = (en_AcLinkSta)hal_GPIO_GetACState();//记录第一次检测到的外电状态</span><br><span class="line">	delay_1msTest();</span><br><span class="line">	if(state == AcState)</span><br><span class="line">	&#123;////如果本次获取的状态和上次一样，则清零延时计数</span><br><span class="line">		times	= 0;</span><br><span class="line">	&#125;</span><br><span class="line">	else if(state != AcState)</span><br><span class="line">  &#123;///如果状态有变化</span><br><span class="line">		times	++; //计数增加</span><br><span class="line">		if(times &gt; 20)</span><br><span class="line">		&#123;////如果不一样的状态计数超过20次  则更新 AcState 状态。</span><br><span class="line">			times = 0;</span><br><span class="line">			AcState = state;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return AcState;///</span><br><span class="line">&#125;</span><br><span class="line">///////////////////////////////////</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="hal-GPIO-h代码"><a href="#hal-GPIO-h代码" class="headerlink" title="hal_GPIO.h代码"></a>hal_GPIO.h代码</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#ifndef ____HAL_GPIO_H_</span><br><span class="line">#define ____HAL_GPIO_H_</span><br><span class="line"> </span><br><span class="line">// AC Check Pin</span><br><span class="line">#define CHECK_ACSTATE_PORT       GPIOB</span><br><span class="line">#define CHECK_ACSTATE_PIN        GPIO_Pin_1</span><br><span class="line"></span><br><span class="line">typedef enum</span><br><span class="line">&#123;</span><br><span class="line">		STA_AC_BREAK = 0,</span><br><span class="line">	  STA_AC_LINK,</span><br><span class="line">&#125;en_AcLinkSta;</span><br><span class="line"></span><br><span class="line">void hal_GpioConfig_init(void);</span><br><span class="line">en_AcLinkSta hal_Gpio_AcStateCheck(void);</span><br><span class="line"></span><br><span class="line">#endif</span><br><span class="line">//////</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="hal-GPIO-c代码"><a href="#hal-GPIO-c代码" class="headerlink" title="hal_GPIO.c代码"></a>hal_GPIO.c代码</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stm32F10x.h&quot;</span><br><span class="line">#include &quot;hal_GPIO.H&quot;</span><br><span class="line"></span><br><span class="line">static unsigned char hal_GPIO_GetACState(void);</span><br><span class="line"></span><br><span class="line">static en_AcLinkSta AcState;// 外电的状态静态全局变量</span><br><span class="line"></span><br><span class="line">/////GPIO 初始化函数</span><br><span class="line">void hal_GpioConfig_init(void)</span><br><span class="line">&#123;</span><br><span class="line">	GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">	</span><br><span class="line">	RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOB , ENABLE); 	</span><br><span class="line">	</span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = CHECK_ACSTATE_PIN;     </span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;   //浮空输入</span><br><span class="line">	GPIO_Init(CHECK_ACSTATE_PORT, &amp;GPIO_InitStructure);	</span><br><span class="line">	</span><br><span class="line">  AcState = (en_AcLinkSta)hal_GPIO_GetACState();  ///上电获取外电的状态   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 获取PB1端口状态（高低电平)</span><br><span class="line">static unsigned char hal_GPIO_GetACState(void)</span><br><span class="line">&#123;</span><br><span class="line">	return (GPIO_ReadInputDataBit(CHECK_ACSTATE_PORT, GPIO_Pin_1));		</span><br><span class="line">&#125;</span><br><span class="line">void delay_1msTest(void)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned int i=0;</span><br><span class="line">	i = 7200;</span><br><span class="line">	while(i--);   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">////</span><br><span class="line">en_AcLinkSta hal_Gpio_AcStateCheck(void)</span><br><span class="line">&#123;</span><br><span class="line">	en_AcLinkSta state;</span><br><span class="line">	static unsigned char times = 0;	//静态延时计数</span><br><span class="line">	</span><br><span class="line">	state = (en_AcLinkSta)hal_GPIO_GetACState();</span><br><span class="line">	</span><br><span class="line">	delay_1msTest();</span><br><span class="line">	if(state == AcState)</span><br><span class="line">	&#123;////如果本次获取的状态和上次一样，则清零延时计数</span><br><span class="line">		times	= 0;</span><br><span class="line">	&#125;</span><br><span class="line">	else if(state != AcState)</span><br><span class="line">  &#123;///如果状态有变化</span><br><span class="line">		times	++; //计数增加</span><br><span class="line">		if(times &gt; 20)</span><br><span class="line">		&#123;////如果不—样的状态计数超过20次 则更新 Acstate 状态。</span><br><span class="line">			times = 0;</span><br><span class="line">			AcState = state;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return AcState;///</span><br><span class="line">&#125;</span><br><span class="line">///////////////////////////////////</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="修改main函数"><a href="#修改main函数" class="headerlink" title="修改main函数"></a>修改main函数</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stm32f10x.h&quot;</span><br><span class="line">#include &quot;hal_timer.h&quot;</span><br><span class="line">#include &quot;hal_led.h&quot;</span><br><span class="line">#include &quot;hal_gpio.h&quot;</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	hal_LedInit();</span><br><span class="line">	hal_GpioConfig_init();</span><br><span class="line">//	hal_timerInit();</span><br><span class="line">  while (1)</span><br><span class="line">  &#123;		</span><br><span class="line">		if(hal_Gpio_AcStateCheck() == STA_AC_BREAK)</span><br><span class="line">		&#123;</span><br><span class="line">			GPIO_ResetBits(LED7_PORT,LED7_PIN);</span><br><span class="line">		&#125;</span><br><span class="line">		else</span><br><span class="line">		&#123;	</span><br><span class="line">			GPIO_SetBits(LED7_PORT,LED7_PIN);			</span><br><span class="line">		&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WangMing</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2023/08/25/GPIO%E8%BE%93%E5%85%A5-%E5%A4%96%E7%94%B5%E6%A3%80%E6%B5%8B/">http://example.com/2023/08/25/GPIO%E8%BE%93%E5%85%A5-%E5%A4%96%E7%94%B5%E6%A3%80%E6%B5%8B/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2023 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/STM32/"># STM32</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/08/25/%E5%AE%9A%E6%97%B6%E5%99%A8%E9%A9%B1%E5%8A%A8/">定时器驱动</a>
+            
+            
+            <a class="next" rel="next" href="/2023/08/24/Typora%E4%B8%8A%E4%BC%A0%E5%88%B0%E5%85%B6%E4%BB%96%E7%BD%91%E7%AB%99%E5%90%8E%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%87%BA%E6%9D%A5/">Typora上传到其他网站后图片加载不出来</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WangMing | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
