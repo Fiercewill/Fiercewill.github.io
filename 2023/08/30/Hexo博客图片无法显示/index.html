@@ -13,7 +13,7 @@
 
 
 
-<title>Typora上传到其他网站后图片加载不出来 | WangMing&#39;s blogs</title>
+<title>Hexo博客图片无法显示 | WangMing&#39;s blogs</title>
 
 
 
@@ -127,11 +127,73 @@
                 <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Typora上传到其他网站后图片加载不出来</h1>
+            <h1 class="post-title">Hexo博客图片无法显示</h1>
             
                 <div class="post-meta">
                     
@@ -140,7 +202,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">August 24, 2023&nbsp;&nbsp;23:00:36</a>
+                        Date: <a href="#">August 30, 2023&nbsp;&nbsp;0:31:06</a>
                         </span>
                     
                     
@@ -156,11 +218,24 @@
         </header>
 
         <div class="post-content">
-            <p>参考这篇文章，按步骤来，实测有效！</p>
-<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/501075370/answer/2683954521">https://www.zhihu.com/question/501075370/answer/2683954521</a></p>
-<p>或</p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_57676486/article/details/131035495">https://blog.csdn.net/qq_57676486/article/details/131035495</a></p>
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
+<p>自打用Hexo搭建好自己的博客以来，从写一篇博客的时候就发现了，自己在typora里写好的博客中的图片，在网址里面就看不了了，一直没去解决这个问题，今天搞了一个晚上，终于把问题解决了，先放女神照片在博客中安慰下自己吧，说实话，我女神太漂亮了。</p>
+</blockquote>
+<p><img src="/2023/08/30/Hexo%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA/q.jpg" alt="药姐"></p>
+<h3 id="先给大家避雷一个教程，卵用没得"><a href="#先给大家避雷一个教程，卵用没得" class="headerlink" title="先给大家避雷一个教程，卵用没得"></a>先给大家避雷一个教程，卵用没得</h3><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/501075370/answer/2683954521">https://www.zhihu.com/question/501075370/answer/2683954521</a></p>
+<p>实测没用。。</p>
+<h3 id="正确步骤"><a href="#正确步骤" class="headerlink" title="正确步骤"></a>正确步骤</h3><p>其实很简单。</p>
+<h4 id="步骤1-hexo-asset-imag的安装"><a href="#步骤1-hexo-asset-imag的安装" class="headerlink" title="步骤1  hexo-asset-imag的安装"></a>步骤1  hexo-asset-imag的安装</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install https://github.com/CodeFalling/hexo-asset-image --save</span><br></pre></td></tr></table></figure>
 
+<h4 id="步骤2-config-yml配置"><a href="#步骤2-config-yml配置" class="headerlink" title="步骤2 _config.yml配置"></a>步骤2 _config.yml配置</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//只开启这个就够</span><br><span class="line">post_asset_folder: true</span><br></pre></td></tr></table></figure>
+
+<h4 id="步骤3-新建一个博客"><a href="#步骤3-新建一个博客" class="headerlink" title="步骤3 新建一个博客"></a>步骤3 新建一个博客</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new &#x27;happy&#x27;</span><br></pre></td></tr></table></figure>
+
+<h4 id="步骤4-找到系统自动生成的happy文件夹，把照片复制进去，名称改为q-最好是英文"><a href="#步骤4-找到系统自动生成的happy文件夹，把照片复制进去，名称改为q-最好是英文" class="headerlink" title="步骤4 找到系统自动生成的happy文件夹，把照片复制进去，名称改为q(最好是英文)"></a>步骤4 找到系统自动生成的happy文件夹，把照片复制进去，名称改为q(最好是英文)</h4><p><img src="/2023/08/30/Hexo%E5%8D%9A%E5%AE%A2%E5%9B%BE%E7%89%87%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA/p.jpg" alt="药姐"></p>
+<h4 id="步骤5-最关键的一步"><a href="#步骤5-最关键的一步" class="headerlink" title="步骤5 最关键的一步"></a>步骤5 最关键的一步</h4><p>在typora中引入图片，路径要写相对路径，例如上面我女神的图片，在typora中引入就应该这样写</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![药姐](./Hexo博客图片无法显示/q.jpg)</span><br></pre></td></tr></table></figure>
+
+<h3 id="完结"><a href="#完结" class="headerlink" title="完结"></a>完结</h3>
         </div>
 
         
@@ -206,10 +281,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2023/08/25/GPIO%E8%BE%93%E5%85%A5-%E5%A4%96%E7%94%B5%E6%A3%80%E6%B5%8B/">GPIO输入-外电检测</a>
             
-            
-            <a class="next" rel="next" href="/2023/08/24/GPIO%E5%8F%A3%E8%BE%93%E5%87%BA-%E7%82%B9%E4%BA%AELED%E7%81%AF/">GPIO口输出-点亮LED灯</a>
+            <a class="next" rel="next" href="/2023/08/30/happy/">picture_test</a>
             
         </section>
 
