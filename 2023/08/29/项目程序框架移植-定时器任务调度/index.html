@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WangMing">
+
+
+
+
+
+<title>项目程序框架移植--定时器任务调度架构 | WangMing&#39;s blogs</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Wangming&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Wangming&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">项目程序框架移植--定时器任务调度架构</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WangMing</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 29, 2023&nbsp;&nbsp;19:10:06</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
+<p>（1）本系列是基于STM32的项目笔记，内容涵盖了STM32各种外设的使用，由浅入深。</p>
+<p>（2）小编使用的单片机是STM32F105RCT6，项目笔记基于小编的实际项目，但是博客中的内容适用于各种单片机开发的同学学习和使用。</p>
+<p>（3）本篇文章对应的国内博客链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62261692/article/details/132568020?spm=1001.2014.3001.5502">项目程序框架移植–定时器任务调度程序架构_爱写博客的橙留香的博客-CSDN博客</a></p>
+<p>（4）此文章中图片加载不出来是因为小编写这篇文章用的是另一台电脑，图片不在同一台电脑上，访问国内博客可以查看图片。</p>
+</blockquote>
+<h3 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h3><blockquote>
+<p>本章有两个任务：</p>
+<ol>
+<li>程序框架内核移植（OS文件夹的内容都叫内核，包括定时器任务调度程序框架和cpu文件（使用不同单片机型号只需要编辑cpu文件即可，按照实际单片机的函数库，更改对应函数））</li>
+<li>任务的创建</li>
+</ol>
+</blockquote>
+<h4 id="内核移植的步骤"><a href="#内核移植的步骤" class="headerlink" title="内核移植的步骤"></a>内核移植的步骤</h4><p>1.准备程序框架源码。</p>
+<p>2.OS程序文件复制到并加载到当前工程中</p>
+<p>3.SystTick时间初始化 和内核参数的配置</p>
+<p>4.创建任务。</p>
+<h4 id="准备程序框架源码"><a href="#准备程序框架源码" class="headerlink" title="准备程序框架源码"></a><strong>准备程序框架源码</strong></h4><p><img src="https://gitee.com/Wangmingdream/typora-image/raw/master/img/17.png"></p>
+<h4 id="OS程序文件复制到并加载到当前工程中"><a href="#OS程序文件复制到并加载到当前工程中" class="headerlink" title="OS程序文件复制到并加载到当前工程中"></a><strong>OS程序文件复制到并加载到当前工程中</strong></h4><p>在过程中新建OS文件夹，将上面两个文件复制粘贴进去。</p>
+<p>加载到工程OS工作组下并编译如下图</p>
+<p><img src="https://gitee.com/Wangmingdream/typora-image/raw/master/img/18.png"></p>
+<h4 id="内核初始化和SystemTick等参数的配置"><a href="#内核初始化和SystemTick等参数的配置" class="headerlink" title="内核初始化和SystemTick等参数的配置"></a><strong>内核初始化和SystemTick等参数的配置</strong></h4><h5 id="①新建cpu-c-和cpu-h文件并保存到OS文件下。-加载到工程，并增加相关的头文件"><a href="#①新建cpu-c-和cpu-h文件并保存到OS文件下。-加载到工程，并增加相关的头文件" class="headerlink" title="①新建cpu.c 和cpu.h文件并保存到OS文件下。 加载到工程，并增加相关的头文件"></a>①新建cpu.c 和cpu.h文件并保存到OS文件下。 加载到工程，并增加相关的头文件</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stm32F10x.h&quot;</span><br><span class="line"></span><br><span class="line">#include &quot;OS_System.h&quot; </span><br><span class="line"></span><br><span class="line">#include &quot;CPU.h&quot;</span><br></pre></td></tr></table></figure>
+
+<p>注意，内核初始化的目的就是为了让任务调度的程序框架可以方便移植到各种类型的单片机上使用，内核初始化的操作主要是修改OS文件夹中的文件，又最主要的是修改cpu.c文件。</p>
+<h5 id="②初始化SystemTick-10ms的定时"><a href="#②初始化SystemTick-10ms的定时" class="headerlink" title="②初始化SystemTick 10ms的定时"></a>②初始化SystemTick 10ms的定时</h5><p>我们用的是STM32单片机内核的SystemTick 定时器。这个定时器一般都是用来给系统做Tick的。OS的tick一般选择的都是10ms. 。</p>
+<p>如果不是STM32单片机，没有Tick定时器，用其他定时器也是一样的，只要能完成10ms的定时就OK。</p>
+<p>程序代码如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/********************************************************************************************************</span><br><span class="line">*  @函数名   hal_CoreClockInit						                                                           </span><br><span class="line">*  @描述     CPU系统时钟初始化					                                     </span><br><span class="line">*  @参数     无</span><br><span class="line">*  @返回值   无</span><br><span class="line">*  @注意     这个时钟绝对任务调度的Tick值,为了保证实时性，一般设置为10ms</span><br><span class="line">********************************************************************************************************/</span><br><span class="line">static void hal_CoreClockInit(void)</span><br><span class="line">&#123;	</span><br><span class="line">	SysTick_Config(SystemCoreClock / 100);			//使用72M作为系统时钟，那么计数器减1等于1/72M(ms), (1/72000000hz)*(72000000/100)=0.01S=10ms</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="③完成SystemTick中断程序"><a href="#③完成SystemTick中断程序" class="headerlink" title="③完成SystemTick中断程序"></a>③完成SystemTick中断程序</h5><p>下面完成的就是我们内核程序。内核的程序其实最终就是放到10ms的中断中调度的，10ms运行一次void SysTick_Handler(void)。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/********************************************************************************************************</span><br><span class="line">*  @函数名   SysTick_Handler						                                                           </span><br><span class="line">*  @描述     CPU系统时钟中断				                                     </span><br><span class="line">*  @参数     无</span><br><span class="line">*  @返回值   无</span><br><span class="line">*  @注意     内核时钟10ms定时中断回调函数,一定要把系统时钟处理函数放进去</span><br><span class="line">********************************************************************************************************/</span><br><span class="line"> void SysTick_Handler(void)</span><br><span class="line">&#123;</span><br><span class="line"> </span><br><span class="line">	OS_ClockInterruptHandle(); </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注意：void SysTick_Handler(void)这个系统中断服务函数是工程中的库函数，这里要自己编写，所以要把原工程中的这个函数屏蔽掉，负责相同的函数在两个地方都编写了，会冲突。</p>
+<h5 id="④修改或增加临界相关的函数"><a href="#④修改或增加临界相关的函数" class="headerlink" title="④修改或增加临界相关的函数"></a>④修改或增加临界相关的函数</h5><p>（1）__get_PRIMASK()是STM32里获取总中断状态的函数，0是中断打开，1是中断关闭。</p>
+<p>（2）__disable_irq()是STM32里关闭总中断状态的函数</p>
+<p>（3）__enable_irq()是STM32里打开总中断状态的函数</p>
+<p>以上函数是，在使用不同单片机型号时，需要依照所使用单片机的库函数一一对应进行更改。</p>
+<p>临界相关函数就是关于打开中断和关闭中断有关的处理函数，没那么玄乎，实际应用中只要把该改的函数改成实际单片机的库函数即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">/********************************************************************************************************</span><br><span class="line">*  @函数名   hal_getprimask						                                                           </span><br><span class="line">*  @描述     获取CPU总中断状态							                                     </span><br><span class="line">*  @参数     无</span><br><span class="line">*  @返回值   0-总中断关闭 1-总中断打开</span><br><span class="line">*  @注意     无</span><br><span class="line">********************************************************************************************************/</span><br><span class="line">static unsigned char hal_getprimask(void)</span><br><span class="line">&#123;</span><br><span class="line">	return (!__get_PRIMASK());		//0是中断打开，1是中断关闭，所以要取反，1表示中断打开，0表示中断关闭</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/********************************************************************************************************</span><br><span class="line">*  @函数名   hal_CPU_Critical_Control						                                                           </span><br><span class="line">*  @描述     CPU临界处理控制						                                     </span><br><span class="line">*  @参数     cmd-控制命令  *pSta-总中断状态</span><br><span class="line">*  @返回值   无</span><br><span class="line">*  @注意     无</span><br><span class="line">********************************************************************************************************/</span><br><span class="line">void hal_CPU_Critical_Control(CPU_EA_TYPEDEF cmd,unsigned char *pSta)</span><br><span class="line">&#123;</span><br><span class="line">	if(cmd == CPU_ENTER_CRITICAL)</span><br><span class="line">	&#123;</span><br><span class="line">		*pSta = hal_getprimask();	//保存中断状态</span><br><span class="line">		__disable_irq();		//关CPU总中断</span><br><span class="line">	&#125;else if(cmd == CPU_EXIT_CRITICAL)</span><br><span class="line">	&#123;</span><br><span class="line">		if(*pSta)</span><br><span class="line">		&#123;</span><br><span class="line">			__enable_irq();		//打开中断</span><br><span class="line">		&#125;else </span><br><span class="line">		&#123;</span><br><span class="line">			__disable_irq();	//关闭中断</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="⑤写CPU初始化程序"><a href="#⑤写CPU初始化程序" class="headerlink" title="⑤写CPU初始化程序"></a>⑤写CPU初始化程序</h5><p>初始化包括两部分：SystemTick的初始化 和 临界函数的注册。</p>
+<p>这部分在使用不同单片机时，不用更改。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/********************************************************************************************************</span><br><span class="line">*  @函数名   hal_CPUInit					                                                           </span><br><span class="line">*  @描述     CPU系统时钟相关初始化							                                     </span><br><span class="line">*  @参数     无</span><br><span class="line">*  @返回值   0-总中断关闭 1-总中断打开</span><br><span class="line">*  @注意     无</span><br><span class="line">********************************************************************************************************/</span><br><span class="line">void hal_CPUInit(void)</span><br><span class="line">&#123;</span><br><span class="line">	hal_CoreClockInit();</span><br><span class="line">	OS_CPUInterruptCBSRegister(hal_CPU_Critical_Control);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="⑥完善CPU-h-文件，声明相关函数"><a href="#⑥完善CPU-h-文件，声明相关函数" class="headerlink" title="⑥完善CPU.h 文件，声明相关函数"></a>⑥完善CPU.h 文件，声明相关函数</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#ifndef _CPU_H_</span><br><span class="line">#define _CPU_H_</span><br><span class="line"></span><br><span class="line">void hal_CPUInit(void);</span><br><span class="line"></span><br><span class="line">#endif</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="以上内容已经把内核初始化和SystemTick初始化完成了，可以说已经完成百分之80的操作了。"><a href="#以上内容已经把内核初始化和SystemTick初始化完成了，可以说已经完成百分之80的操作了。" class="headerlink" title="以上内容已经把内核初始化和SystemTick初始化完成了，可以说已经完成百分之80的操作了。"></a>以上内容已经把内核初始化和SystemTick初始化完成了，可以说已经完成百分之80的操作了。</h5><h4 id="OS的初始化和任务的创建"><a href="#OS的初始化和任务的创建" class="headerlink" title="OS的初始化和任务的创建"></a><strong>OS的初始化和任务的创建</strong></h4><h5 id="①在main-C中增加OS相关的头文件"><a href="#①在main-C中增加OS相关的头文件" class="headerlink" title="①在main.C中增加OS相关的头文件"></a>①在main.C中增加OS相关的头文件</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;OS_System.h&quot;</span><br><span class="line">#include &quot;CPU.h&quot;</span><br></pre></td></tr></table></figure>
+
+<h5 id="②在main函数中-初始化OS需要的资源"><a href="#②在main函数中-初始化OS需要的资源" class="headerlink" title="②在main函数中 初始化OS需要的资源"></a>②在main函数中 初始化OS需要的资源</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hal_CPUInit();</span><br><span class="line">OS_TaskInit();</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>hal_CPUInit(); 初始化TICK 和临界函数</p>
+<p>OS_TaskInit(); OS任务初始化。</p>
+</blockquote>
+<h5 id="③创建任务"><a href="#③创建任务" class="headerlink" title="③创建任务"></a>③创建任务</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hal_LedInit();	</span><br><span class="line">OS_CreatTask(OS_TASK1,hal_Led_Task,1,OS_RUN);	//10ms调用一次hal_Led_Task函数</span><br><span class="line">OS_Start();	</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>包括3个部分。</p>
+<p>任务初始化: hal_LedInit();	</p>
+<p>创建任务:OS_CreatTask(OS_TASK1,hal_Led_Task,1,OS_RUN);	</p>
+<p>OS_CreatTask 函数的说明:</p>
+<p>OS_TASK1： 任务ID，再os_system.h中定义，OS系统中最少要创建一个任务。   </p>
+<p>hal_Led_Task：  任务处理函数</p>
+<p><strong>我们做个规定，所有OS创建的任务，任务函数的后缀都必须要带task，表示是任务函数。</strong></p>
+<p>1：任务运行的周期，1表示10毫秒，2表示20毫秒，100表示1s</p>
+<p>OS_RUN： 任务运行。</p>
+</blockquote>
+<h5 id="④修改或添加-hal-Led-Task-函数。-在hal-led-c文件中。"><a href="#④修改或添加-hal-Led-Task-函数。-在hal-led-c文件中。" class="headerlink" title="④修改或添加 hal_Led_Task 函数。 在hal_led.c文件中。"></a>④修改或添加 hal_Led_Task 函数。 在hal_led.c文件中。</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">static void hal_LedHandle(void)//10ms运行一次</span><br><span class="line">&#123;</span><br><span class="line">  static unsigned short delayt =0;</span><br><span class="line">	delayt ++;</span><br><span class="line">  if(delayt &gt; 99)//1s</span><br><span class="line">	&#123;////</span><br><span class="line">		hal_Led1Turn();</span><br><span class="line">		delayt = 0;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line">//////</span><br><span class="line"></span><br><span class="line">void hal_Led_Task(void)//10ms运行一次</span><br><span class="line">&#123;</span><br><span class="line">	hal_LedHandle();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void hal_LedProc(void)//定时器4中调用的函数</span><br><span class="line">&#123;</span><br><span class="line">//	hal_LedHandle();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在hal_led.h中声明函数void hal_Led_Task(void)。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WangMing</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2023/08/29/%E9%A1%B9%E7%9B%AE%E7%A8%8B%E5%BA%8F%E6%A1%86%E6%9E%B6%E7%A7%BB%E6%A4%8D-%E5%AE%9A%E6%97%B6%E5%99%A8%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/">http://example.com/2023/08/29/%E9%A1%B9%E7%9B%AE%E7%A8%8B%E5%BA%8F%E6%A1%86%E6%9E%B6%E7%A7%BB%E6%A4%8D-%E5%AE%9A%E6%97%B6%E5%99%A8%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2023 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/STM32/"># STM32</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/08/29/%E7%A8%8B%E5%BA%8F%E6%9E%B6%E6%9E%84%E5%A4%9A%E4%BB%BB%E5%8A%A1%E5%88%9B%E5%BB%BA/">程序架构多任务创建和代码整理</a>
+            
+            
+            <a class="next" rel="next" href="/2023/08/29/TFTLCD%E6%B6%B2%E6%99%B6%E5%B1%8F%E5%9B%BE%E6%A0%87%E7%9A%84%E6%98%BE%E7%A4%BA/">TFTLCD液晶屏图标的显示</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WangMing | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

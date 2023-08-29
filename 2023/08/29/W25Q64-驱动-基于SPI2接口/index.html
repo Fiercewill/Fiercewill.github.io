@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WangMing">
+
+
+
+
+
+<title>W25Q64 驱动--基于SPI2接口 | WangMing&#39;s blogs</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Wangming&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Wangming&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">W25Q64 驱动--基于SPI2接口</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WangMing</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 29, 2023&nbsp;&nbsp;19:03:02</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><blockquote>
+<p>（1）本系列是基于STM32的项目笔记，内容涵盖了STM32各种外设的使用，由浅入深。</p>
+<p>（2）小编使用的单片机是STM32F105RCT6，项目笔记基于小编的实际项目，但是博客中的内容适用于各种单片机开发的同学学习和使用。</p>
+<p>（3）本篇文章对应的国内博客链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62261692/article/details/132515370?spm=1001.2014.3001.5501">W25Q64 驱动–基于SPI2接口_爱写博客的橙留香的博客-CSDN博客</a></p>
+<p>（4）此文章中图片加载不出来是因为小编写这篇文章用的是另一台电脑，图片不在同一台电脑上，访问国内博客可以查看图片。</p>
+</blockquote>
+<h3 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h3><blockquote>
+<p>本章有四个任务：</p>
+<ol>
+<li>读取W25Q64,制造商ID 和特定芯片的ID，验证SPI驱动</li>
+<li>W25Q64的读操作</li>
+<li>W25Q64的写操作</li>
+<li>25Q64验证测试，完成25q64的数据存储</li>
+<li>提醒：基于SPI协议的25Q64读写操作，大家只要掌握把代码嫖过去，使用成功即可，至于SPI读取数据原理，大家只要了解时序图，知道是按时序图写程序就行。</li>
+</ol>
+</blockquote>
+<h3 id="任务一：读取SPI的ID，验证SPI通讯"><a href="#任务一：读取SPI的ID，验证SPI通讯" class="headerlink" title="任务一：读取SPI的ID，验证SPI通讯"></a>任务一：读取SPI的ID，验证SPI通讯</h3><h4 id="获取芯片ID的操作时序图"><a href="#获取芯片ID的操作时序图" class="headerlink" title="获取芯片ID的操作时序图"></a><strong>获取芯片ID的操作时序图</strong></h4><p><img src="https://gitee.com/Wangmingdream/typora-image/raw/master/img/10.png"></p>
+<h4 id="获取芯片ID函数"><a href="#获取芯片ID函数" class="headerlink" title="获取芯片ID函数"></a>获取芯片ID函数</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//读取芯片ID W25X64的ID:0XEF16</span><br><span class="line">unsigned short mt_flashReadID(void)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned short Temp = 0;	  </span><br><span class="line">	hal_spi2CSDrive(0); 	//片选拉低		    </span><br><span class="line">	hal_spi2ReadWriteByte(0x90);//发送读取ID命令	    </span><br><span class="line">	hal_spi2ReadWriteByte(0x00); 	    </span><br><span class="line">	hal_spi2ReadWriteByte(0x00); 	    </span><br><span class="line">	hal_spi2ReadWriteByte(0x00); 	 			   </span><br><span class="line">	Temp|=hal_spi2ReadWriteByte(0xFF)&lt;&lt;8;  //读取制造商ID，高八位</span><br><span class="line">	Temp|=hal_spi2ReadWriteByte(0xFF);	 //读取设备ID，低八位</span><br><span class="line">	hal_spi2CSDrive(1); 	//片选拉高		    </span><br><span class="line">	return Temp;</span><br><span class="line">&#125;  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="编写flash初始化代码，并调用读芯片ID函数。验证SPI通讯"><a href="#编写flash初始化代码，并调用读芯片ID函数。验证SPI通讯" class="headerlink" title="编写flash初始化代码，并调用读芯片ID函数。验证SPI通讯"></a>编写flash初始化代码，并调用读芯片ID函数。验证SPI通讯</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">void mt_flashInit(void)</span><br><span class="line">&#123;</span><br><span class="line">  static unsigned short produid;</span><br><span class="line">	hal_spi2Init(); </span><br><span class="line">	</span><br><span class="line"> 	produid = mt_flashReadID();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="mt-flash-h-头文件"><a href="#mt-flash-h-头文件" class="headerlink" title="mt_flash.h 头文件"></a>mt_flash.h 头文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#ifndef _MT_FLASH_H</span><br><span class="line">#define _MT_FLASH_H</span><br><span class="line"></span><br><span class="line">#define FLASH_PAGE_SIZE       4096</span><br><span class="line">//指令表</span><br><span class="line">#define W25X_WriteEnable		  0x06 </span><br><span class="line">#define W25X_ReadStatusReg	  0x05 </span><br><span class="line">#define W25X_ReadData	          0x03 </span><br><span class="line">#define W25X_PageProgram		  0x02 </span><br><span class="line">#define W25X_SectorErase		   0x20 </span><br><span class="line">#define W25X_ManufactDeviceID	   0x90 </span><br><span class="line"></span><br><span class="line">void mt_flashInit(void);</span><br><span class="line"></span><br><span class="line">#endif</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="修改main-c文件，并通过仿真读取芯片ID"><a href="#修改main-c文件，并通过仿真读取芯片ID" class="headerlink" title="修改main.c文件，并通过仿真读取芯片ID"></a>修改main.c文件，并通过仿真读取芯片ID</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stm32f10x.h&quot;</span><br><span class="line">#include &quot;hal_timer.h&quot;</span><br><span class="line">#include &quot;hal_led.h&quot;</span><br><span class="line">#include &quot;hal_gpio.h&quot;</span><br><span class="line">#include &quot;mt_flash.h&quot;</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">	hal_LedInit();</span><br><span class="line">	hal_GpioConfig_init();	</span><br><span class="line">	hal_timerInit();</span><br><span class="line">	mt_flashInit();</span><br><span class="line">        while (1)</span><br><span class="line">          &#123;	</span><br><span class="line">          &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="仿真结果图，可见芯片ID为EF16，说明SPI通讯接通"><a href="#仿真结果图，可见芯片ID为EF16，说明SPI通讯接通" class="headerlink" title="仿真结果图，可见芯片ID为EF16，说明SPI通讯接通"></a>仿真结果图，可见芯片ID为EF16，说明SPI通讯接通</h5><p><img src="https://gitee.com/Wangmingdream/typora-image/raw/master/img/11.png"></p>
+<p>到此，验证SPI通讯成功。</p>
+<h3 id="任务二：25Q64读操作"><a href="#任务二：25Q64读操作" class="headerlink" title="任务二：25Q64读操作"></a>任务二：25Q64读操作</h3><blockquote>
+<p>读操作只有一个函数：</p>
+<p>void mt_flashRead(unsigned char *pBuffer,unsigned int ReadAddr,unsigned int NumByteToRead)；</p>
+</blockquote>
+<h4 id="25Q64读操作时序图"><a href="#25Q64读操作时序图" class="headerlink" title="25Q64读操作时序图"></a>25Q64读操作时序图</h4><p><img src="https://gitee.com/Wangmingdream/typora-image/raw/master/img/12.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//pBuffer-读取数据存储地址,ReadAddr-Flash地址,NumByteToRead-读取字节数</span><br><span class="line">void mt_flashRead(unsigned char *pBuffer,unsigned int ReadAddr,unsigned int NumByteToRead)   </span><br><span class="line">&#123; </span><br><span class="line">	unsigned char  *pBuff;</span><br><span class="line">	unsigned short i,num;  </span><br><span class="line">	unsigned int RdAddr;</span><br><span class="line">	RdAddr = ReadAddr;</span><br><span class="line">	num = NumByteToRead;</span><br><span class="line">	pBuff = pBuffer;</span><br><span class="line">	hal_spi2CSDrive(0);                            //使能器件   </span><br><span class="line">	hal_spi2ReadWriteByte(0x03);         //发送读取命令   -</span><br><span class="line">//      00 12 34 56H</span><br><span class="line">	hal_spi2ReadWriteByte((unsigned char )((RdAddr)&gt;&gt;16));  //发送24bit地址    </span><br><span class="line">	hal_spi2ReadWriteByte((unsigned char )((RdAddr)&gt;&gt;8));   </span><br><span class="line">	hal_spi2ReadWriteByte((unsigned char )RdAddr);   </span><br><span class="line">	for(i=0;i&lt;num;i++)</span><br><span class="line">	&#123; </span><br><span class="line">		pBuff[i]=hal_spi2ReadWriteByte(0XFF);   //循环读数  </span><br><span class="line">	&#125;</span><br><span class="line">	hal_spi2CSDrive(1);                             //取消片选     	      </span><br><span class="line">&#125;  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="任务三：25Q64写操作"><a href="#任务三：25Q64写操作" class="headerlink" title="任务三：25Q64写操作"></a>任务三：25Q64写操作</h3><blockquote>
+<p>写操作有三种方式，即三个函数：页写、块写、任意写，在使用过程中根据需要选择调用即可。</p>
+</blockquote>
+<h3 id="1、25Q64数据的页写操作"><a href="#1、25Q64数据的页写操作" class="headerlink" title="1、25Q64数据的页写操作"></a><strong>1、25Q64数据的页写操作</strong></h3><h4 id="页写操作代码"><a href="#页写操作代码" class="headerlink" title="页写操作代码"></a>页写操作代码</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">//SPI在一页(0~65535)内写入少于256个字节的数据</span><br><span class="line">//在指定地址开始写入最大256字节的数据</span><br><span class="line">//pBuffer:数据存储区</span><br><span class="line">//WriteAddr:开始写入的地址(24bit)</span><br><span class="line">//NumByteToWrite:要写入的字节数(最大256),该数不应该超过该页的剩余字节数!!!	 </span><br><span class="line">void mt_flashWritePage(unsigned char * pBuffer,unsigned int WriteAddr,unsigned short NumByteToWrite)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned char  *pBuff;</span><br><span class="line">	unsigned short i,num;  </span><br><span class="line">	unsigned int wAddr;</span><br><span class="line">	pBuff = pBuffer;</span><br><span class="line">	wAddr = WriteAddr;</span><br><span class="line">	num = NumByteToWrite;</span><br><span class="line">	mt_flashWriteEnable();                  //SET WEL </span><br><span class="line"></span><br><span class="line">	hal_spi2CSDrive(0);                              //使能器件   </span><br><span class="line">	hal_spi2ReadWriteByte(W25X_PageProgram);      //发送写页命令   </span><br><span class="line">	hal_spi2ReadWriteByte((unsigned char )((wAddr)&gt;&gt;16)); //发送24bit地址    </span><br><span class="line">	hal_spi2ReadWriteByte((unsigned char )((wAddr)&gt;&gt;8));   </span><br><span class="line">	hal_spi2ReadWriteByte((unsigned char )wAddr);   </span><br><span class="line">	for(i=0;i&lt;num;i++)</span><br><span class="line">	  hal_spi2ReadWriteByte(pBuff[i]);//循环写数  </span><br><span class="line">	hal_spi2CSDrive(1);   </span><br><span class="line">	mt_flashWaitBusy();   //等待写入结束</span><br><span class="line">&#125; </span><br><span class="line">//SPI_FLASH写使能	</span><br><span class="line">//将WEL置位   </span><br><span class="line">void mt_flashWriteEnable(void)   </span><br><span class="line">&#123;</span><br><span class="line">	hal_spi2CSDrive(0);                            //使能器件   </span><br><span class="line">	hal_spi2ReadWriteByte(W25X_WriteEnable);      //发送写使能  0x06</span><br><span class="line">	hal_spi2CSDrive(1);                           //取消片选     	      </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">//读取SPI_FLASH的状态寄存器</span><br><span class="line">//BIT7  6   5   4   3   2   1    0</span><br><span class="line">//SPR   RV  TB BP2 BP1 BP0 WEL   </span><br><span class="line">//SPR:默认0,状态寄存器保护位,配合WP使用</span><br><span class="line">//TB,BP2,BP1,BP0:FLASH区域写保护设置</span><br><span class="line">//WEL:写使能锁定</span><br><span class="line">//BUSY:忙标记位(1,忙;0,空闲)</span><br><span class="line">//默认:0x00</span><br><span class="line">unsigned char  mt_flashReadSR(void)   </span><br><span class="line">&#123;  </span><br><span class="line">	unsigned char  byte=0;   </span><br><span class="line">	hal_spi2CSDrive(0);                            //使能器件   </span><br><span class="line">	hal_spi2ReadWriteByte(W25X_ReadStatusReg);    //发送读取状态寄存器命令    </span><br><span class="line">	byte=hal_spi2ReadWriteByte(0Xff);             //读取一个字节  </span><br><span class="line">	hal_spi2CSDrive(1);                             //取消片选     </span><br><span class="line">	return byte;   </span><br><span class="line">&#125; </span><br><span class="line">//等待空闲</span><br><span class="line">void mt_flashWaitBusy(void)   </span><br><span class="line">&#123;   </span><br><span class="line">	while ((mt_flashReadSR()&amp;0x01)==0x01);   // 等待BUSY位清空</span><br><span class="line">&#125;  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2、25Q64扇区写操作-4096"><a href="#2、25Q64扇区写操作-4096" class="headerlink" title="2、25Q64扇区写操作  4096"></a><strong>2、25Q64扇区写操作  4096</strong></h3><p>我们每个扇区有4K的存储空间，从上面可以看出，页操作只能写256个字节。 如何实现块写？</p>
+<h4 id="应用场景："><a href="#应用场景：" class="headerlink" title="应用场景："></a>应用场景：</h4><blockquote>
+<p>举例，如果起始地址：200（十进制）写长度为500个字节的数据 </p>
+</blockquote>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">//FLASH 块写操作</span><br><span class="line">//必须确保所写的地址范围内的数据全部为0XFF,否则在非0XFF处写入的数据将失败!</span><br><span class="line">//具有自动换页功能 </span><br><span class="line">//在指定地址开始写入指定长度的数据,但是要确保地址不越界!</span><br><span class="line">//pBuffer:数据存储区</span><br><span class="line">//WriteAddr:开始写入的地址(24bit)</span><br><span class="line">//NumByteToWrite:要写入的字节数(最大65535)</span><br><span class="line">//CHECK OK</span><br><span class="line">void mt_flashWrite_Secor(unsigned char * pBuffer,unsigned int WriteAddr,unsigned short NumByteToWrite)   </span><br><span class="line">&#123; 			 		 </span><br><span class="line">	unsigned char  *pBuff;  ////数据地址指针</span><br><span class="line">	unsigned short num;  </span><br><span class="line">	unsigned int wAddr;  ///写的起始地址</span><br><span class="line">	unsigned short pageremain;	</span><br><span class="line">	pBuff = pBuffer;</span><br><span class="line">	num = NumByteToWrite;</span><br><span class="line">	wAddr = WriteAddr;</span><br><span class="line">	pageremain=256-wAddr%256; //单页剩余的字节数		 	    </span><br><span class="line">	if(num&lt;=pageremain)</span><br><span class="line">		pageremain=num;//不大于256个字节</span><br><span class="line">	while(1)</span><br><span class="line">	&#123;	   </span><br><span class="line">		        mt_flashWritePage(pBuff,wAddr,pageremain);</span><br><span class="line">			if(num==pageremain)</span><br><span class="line">				break;//写入结束了</span><br><span class="line">			else //NumByteToWrite&gt;pageremain</span><br><span class="line">			&#123;</span><br><span class="line">				pBuff+=pageremain;</span><br><span class="line">				wAddr+=pageremain;	//200  56   100</span><br><span class="line">				num-=pageremain;			  //减去已经写入了的字节数</span><br><span class="line">				if(num&gt;256)</span><br><span class="line">					pageremain=256; //一次可以写入256个字节</span><br><span class="line">				else </span><br><span class="line">					pageremain=num; 	  //不够256个字节了</span><br><span class="line">			&#125;		</span><br><span class="line">	&#125;	    </span><br><span class="line">&#125; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="3、25Q64任意写操作（常用）"><a href="#3、25Q64任意写操作（常用）" class="headerlink" title="3、25Q64任意写操作（常用）"></a><strong>3、25Q64任意写操作（常用）</strong></h3><h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><blockquote>
+<p>现在要对起始地址是 4000（十进制）写长度为6000个字节的数据。</p>
+</blockquote>
+<h4 id="函数功能说明"><a href="#函数功能说明" class="headerlink" title="函数功能说明"></a>函数功能说明</h4><p>增加自动翻页写操作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">//写SPI FLASH  </span><br><span class="line">//在指定地址开始写入指定长度的数据</span><br><span class="line">//该函数带擦除操作!</span><br><span class="line">//pBuffer:数据存储区</span><br><span class="line">//WriteAddr:开始写入的地址(24bit)</span><br><span class="line">//NumByteToWrite:要写入的字节数(最大256)  </span><br><span class="line">void mt_flashWrite(unsigned char * pBuffer,unsigned int WriteAddr,unsigned short NumByteToWrite)   </span><br><span class="line"> &#123; </span><br><span class="line">		 unsigned char  SPI_FLASH_BUF[4096];</span><br><span class="line">//	   unsigned char testaa[200];</span><br><span class="line">		 unsigned char  *pBuff;</span><br><span class="line">	          unsigned int secpos;        ///需要写的起始的扇区</span><br><span class="line">	           unsigned short secoff;      ///写入到额起始扇区的 偏移地址</span><br><span class="line">	           unsigned short secremain;	 ///第一个写入扇区需要写入的数据的个数     </span><br><span class="line">		  unsigned short i,num;  </span><br><span class="line"></span><br><span class="line">		 unsigned int wAddr;</span><br><span class="line">		 pBuff = pBuffer;</span><br><span class="line">		 wAddr = WriteAddr;</span><br><span class="line">		 num = NumByteToWrite;  ////</span><br><span class="line">		 secpos=wAddr/4096;//扇区地址        </span><br><span class="line">		 secoff=wAddr%4096;//在扇区内的偏移</span><br><span class="line">		 secremain=4096-secoff;//扇区剩余空间大小   </span><br><span class="line">	   if(num&lt;=secremain)  ///num  是需要写入数据的格式   如果需要写入的数据的个数小于本扇区剩余的个数</span><br><span class="line">			 secremain=num;//不大于4096个字节   在同一个区里面写</span><br><span class="line">		 while(1) </span><br><span class="line">		 &#123;	</span><br><span class="line">				 mt_flashRead(SPI_FLASH_BUF,secpos*4096,4096);//读出整个扇区的内容</span><br><span class="line">				 mt_flashEraseSector(secpos);//擦除这个扇区</span><br><span class="line">				 </span><br><span class="line">				 for(i=0;i&lt;secremain;i++)	   //复制</span><br><span class="line">				 &#123;</span><br><span class="line">				        SPI_FLASH_BUF[i+secoff]=pBuff[i];</span><br><span class="line">				 &#125;</span><br><span class="line">				mt_flashWrite_Secor(SPI_FLASH_BUF,secpos*4096,4096);//写入整个扇区 写已经擦除了的,直接写入扇区剩余区间. 				 </span><br><span class="line"></span><br><span class="line">				 if(num==secremain)   ///需要写入的数据长度和 数据长度一致的话，</span><br><span class="line">					 break;//写入结束了</span><br><span class="line">				 </span><br><span class="line">				 else//写入未结束</span><br><span class="line">				 &#123;</span><br><span class="line">					 secpos++;//扇区地址增1</span><br><span class="line">					 secoff=0;//偏移位置为0 	 </span><br><span class="line"></span><br><span class="line">					 pBuff+=secremain;  //指针偏移</span><br><span class="line">					 wAddr+=secremain;//写地址偏移	   </span><br><span class="line">					 num-=secremain;				//字节数递减</span><br><span class="line">					 if(num&gt;4096)</span><br><span class="line">						 secremain=4096;	//下一个扇区还是写不完</span><br><span class="line">					 else </span><br><span class="line">						 secremain=num;			//下一个扇区可以写完了</span><br><span class="line">				 &#125;	 </span><br><span class="line">		 &#125;	 	 </span><br><span class="line"> &#125; </span><br><span class="line"> //擦除一个扇区</span><br><span class="line">//Dst_Addr:扇区地址 0~511 for w25x16</span><br><span class="line">//擦除一个扇区的最少时间:45ms,最大300ms</span><br><span class="line">void mt_flashEraseSector(unsigned int Dst_Addr)   </span><br><span class="line">&#123;   </span><br><span class="line">	unsigned int DstAddr;</span><br><span class="line">	DstAddr = Dst_Addr;</span><br><span class="line">	DstAddr*=4096;</span><br><span class="line">	mt_flashWriteEnable();                  //SET WEL 	 </span><br><span class="line">	mt_flashWaitBusy();   </span><br><span class="line">	hal_spi2CSDrive(0);                              //使能器件   </span><br><span class="line">	hal_spi2ReadWriteByte(W25X_SectorErase);      //发送扇区擦除指令 </span><br><span class="line">	hal_spi2ReadWriteByte((unsigned char )((DstAddr)&gt;&gt;16));  //发送24bit地址    </span><br><span class="line">	hal_spi2ReadWriteByte((unsigned char )((DstAddr)&gt;&gt;8));   </span><br><span class="line">	hal_spi2ReadWriteByte((unsigned char )DstAddr);  </span><br><span class="line">	hal_spi2CSDrive(1);                             //取消片选     	      </span><br><span class="line">	mt_flashWaitBusy();   				   //等待擦除完成</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="任务四：测试25Q64读取"><a href="#任务四：测试25Q64读取" class="headerlink" title="任务四：测试25Q64读取"></a><strong>任务四：测试25Q64读取</strong></h3><h4 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h4><blockquote>
+<p>起始地址是：4000 ，写6000个数据，再读取6000；</p>
+</blockquote>
+<h4 id="测试函数"><a href="#测试函数" class="headerlink" title="测试函数"></a>测试函数</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">unsigned char falshtest[6000];</span><br><span class="line">void mt_flash_test(void)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned int i;</span><br><span class="line">	unsigned int falshdadrx;</span><br><span class="line">	falshdadrx = 4000;</span><br><span class="line">	for(i=0;i&lt; 6000;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		falshtest[i] = i;</span><br><span class="line">  &#125;		</span><br><span class="line">	mt_flashWrite(&amp;falshtest[0],falshdadrx,6000);</span><br><span class="line">         for(i=0;i&lt; 6000;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		falshtest[i] = 0;</span><br><span class="line">       &#125;	</span><br><span class="line">  mt_flashRead(&amp;falshtest[0],falshdadrx,6000);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="修改初始化程序"><a href="#修改初始化程序" class="headerlink" title="修改初始化程序:"></a>修改初始化程序:</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">unsigned char falshtest[6000];</span><br><span class="line">void mt_flash_test(void)</span><br><span class="line">&#123;</span><br><span class="line">	unsigned int i;</span><br><span class="line">	unsigned int falshdadrx;</span><br><span class="line">	falshdadrx = 4000;</span><br><span class="line">	for(i=0;i&lt; 6000;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		falshtest[i] = i;</span><br><span class="line">  &#125;		</span><br><span class="line">	mt_flashWrite(&amp;falshtest[0],falshdadrx,6000);</span><br><span class="line">         for(i=0;i&lt; 6000;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		falshtest[i] = 0;</span><br><span class="line">       &#125;	</span><br><span class="line">  mt_flashRead(&amp;falshtest[0],falshdadrx,6000);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="测试验证"><a href="#测试验证" class="headerlink" title="测试验证"></a>测试验证</h4><blockquote>
+<p>通过仿真的形式，验证Flash 25Q64的读写操作。</p>
+</blockquote>
+<h4 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h4><blockquote>
+<p>先定义一个长度为6000的数组，对数组初始化；用任意写函数，将此数组里的内容写入指定地址，再对数组清零，最后读取指定地址中的内容，若此内容同之前初始化的数组中内容一致，则测试成功。</p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WangMing</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://example.com/2023/08/29/W25Q64-%E9%A9%B1%E5%8A%A8-%E5%9F%BA%E4%BA%8ESPI2%E6%8E%A5%E5%8F%A3/">http://example.com/2023/08/29/W25Q64-%E9%A9%B1%E5%8A%A8-%E5%9F%BA%E4%BA%8ESPI2%E6%8E%A5%E5%8F%A3/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2023 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/STM32/"># STM32</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/08/29/SPI3-DMA%E5%A4%96%E8%AE%BE%E9%A9%B1%E5%8A%A8-TFTLCD%E5%88%9D%E5%A7%8B%E5%8C%96/">SPI3+DMA外设驱动-TFTLCD初始化</a>
+            
+            
+            <a class="next" rel="next" href="/2023/08/25/SPI2%E5%A4%96%E8%AE%BE%E9%A9%B1%E5%8A%A8-W25Q64-SPI%E6%8E%A5%E5%8F%A3%E5%88%9D%E5%A7%8B%E5%8C%96/">SPI2外设驱动-W25Q64 SPI接口初始化</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WangMing | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
