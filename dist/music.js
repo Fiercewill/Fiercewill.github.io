@@ -5,13 +5,6 @@ const ap = new APlayer({
     listMaxHeight: 90,//列表最大高度
     audio: [ //音频信息,包含以下
         {
-            name: '悬溺', //音频名称
-            artist: '葛东琪', //音频艺术家
-            url: 'https://m704.music.126.net/20230830234522/cec3f8ba3133a8f381f4f1de8552c460/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/14096479115/8860/2f07/b3d5/28361787f6f0461a34be056b3ecb4a3f.m4a?authSecret=0000018a470805221df10aaba60821ee', //音频外链
-            cover: '/image/9.jpg', //音频封面
-            theme: '#46718b' //切换到此音频时的主题色，比上面的 theme 优先级高
-        },
-        {
             name: '不想再爱不明白的爱', //如果只有一首歌，删掉这一块，如有更多歌曲按此格式逐渐往下添加
             artist: '戴爱玲',
             url: 'https://m804.music.126.net/20230830234543/173d97e144199e9404ea03832cd324d9/jdyyaac/075c/030b/5258/0650a0aba64adf16fa98e2d479106b91.m4a?authSecret=0000018a470857300bcc0aa4637a1a21',
@@ -26,38 +19,10 @@ const ap = new APlayer({
             theme: '#46718b'
         },
         {
-            name: '让风告诉你', //如果只有一首歌，删掉这一块，如有更多歌曲按此格式逐渐往下添加
-            artist: '林宝馨',
-            url: 'https://m704.music.126.net/20230830234622/b77464da371ce0de096db2d6b399462e/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/28477629810/a0ae/cbb1/237c/97292057d622120a2a4a4c14f606fefc.m4a?authSecret=0000018a4708eeaa1e000aaba0542655',
-            cover: '/image/11feng.jpg',
-            theme: '#46718b'
-        },
-        {
             name: '与我无关', //如果只有一首歌，删掉这一块，如有更多歌曲按此格式逐渐往下添加
             artist: '阿冗',
             url: 'https://m804.music.126.net/20230830234842/3c529c25c8a062c7f1c27e447cd9b4f0/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/14096428100/4c5b/eb42/04b0/7b607352a3f6d6701abbdec4850005fb.m4a?authSecret=0000018a470b10ac061d0aaba0480f57',
             cover: '/image/1.jpg',
-            theme: '#46718b'
-        },
-        {
-            name: '最好的安排', //如果只有一首歌，删掉这一块，如有更多歌曲按此格式逐渐往下添加
-            artist: '曲婉婷',
-            url: 'https://m704.music.126.net/20230830234809/39a502eabef9f577474a7ef19c3c2a4d/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/19900727286/24b6/fdd0/8cda/8f134f3f4779a8c6bad52694bb97bb59.m4a?authSecret=0000018a470a8f50174f0aaba3954133',
-            cover: '/image/2.jpg',
-            theme: '#46718b'
-        },
-        {
-            name: 'Echosmith - Cool Kids（升调）', 
-            artist: 'Echosmith',
-            url: 'https://m804.music.126.net/20230830232350/65b76638e918375012aef0d33216f86e/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/18697332735/063b/f793/767d/6ec9a6b522881d7f3a63cdf6565681c3.m4a?authSecret=0000018a46f44cc709860aa46837113d',
-            cover: '/image/3.jpg',
-            theme: '#46718b'
-        },
-        {
-            name: '武家坡2021', 
-            artist: '龍猛寺寬度',
-            url: 'https://m704.music.126.net/20230830233041/8379909d090ab6f6103802c5255ab238/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/11466828325/de4d/b4bb/4bd8/a4828b65dd12bb0fccdf790e717a090b.m4a?authSecret=0000018a46fa936e183c0aaba5554bbf',
-            cover: '/image/4.jpg',
             theme: '#46718b'
         },
         {
