@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WM">
+
+
+
+
+
+<title>智能车-电磁循迹基础（1） | WM&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">WM&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">WM&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">智能车-电磁循迹基础（1）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WM</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 31, 2023&nbsp;&nbsp;13:42:14</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a>
+                            
+                        </span>
+                    
+                    
+                        <span class="post-count">
+                    Words:
+                        <a href="">2,504</a> 
+                        </span>
+                             
+                    
+                        <span class="post-count">
+                    Time:
+                        <a href="">10min</a> 
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="电磁循迹基础"><a href="#电磁循迹基础" class="headerlink" title="电磁循迹基础"></a>电磁循迹基础</h2><p>视频链接：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1414y1a7D5/?spm_id_from=333.999.0.0&vd_source=221d5bfd8774acfce916ac253ceaee25">假期培训 2023智能车教学_哔哩哔哩_bilibili</a></p>
+<h3 id="LC谐振"><a href="#LC谐振" class="headerlink" title="LC谐振"></a>LC谐振</h3><p>为什么一个电阻和电容能够把电磁信号转换过来？</p>
+<p>就是lc并联谐振。<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45956802/article/details/120535164?ops_request_misc=%7B%22request_id%22:%22169347356516800192259658%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=169347356516800192259658&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-120535164-null-null.142%5Ev93%5Einsert_down28v1&utm_term=lc%E8%B0%90%E6%8C%AF&spm=1018.2226.3001.4187&ydreferer=aHR0cHM6Ly9zby5jc2RuLm5ldC9zby9zZWFyY2g/c3BtPTEwMDAuMjExNS4zMDAxLjQ0OTgmcT1sYyVFOCVCMCU5MCVFNiU4QyVBRiZ0PSZ1PQ==">什么是谐振？什么是LC谐振电路？LC谐振电路有什么用呢？_迷失在频域中的博客-CSDN博客</a></p>
+<p>现在一般都是四六电感的方式。四电感，两个横电感，两个斜电感（外八）。</p>
+<blockquote>
+<p>l、c的值除了理论上算好之外，一定要按赛道上实际的规则电磁频率做测试，测试完后l和c就是固定在板子上了，数值变不了，所以比赛中，若赛事方的频率有问题，一定要指出了，若频率与规则频率不一样，那么硬件再好，也跑不了。</p>
+</blockquote>
+<p>在淘宝上买的高精度电感，可能已经并联上电容了，所以已经是一个并联谐振了，不用在板子上，再加电容了，否则会出问题。</p>
+<h3 id="判断元素"><a href="#判断元素" class="headerlink" title="判断元素"></a>判断元素</h3><p>十字路口不用判断，直接冲过去，因为左右横电感值得大小是一致的。</p>
+<p>圆环是全程电磁感应最强的，圆环与直道的切点出电磁最大。</p>
+<p>走三岔路口的时候，两个斜电感的电磁最小。</p>
+<p>坡道可以用陀螺仪，也可以用电感，到坡道后，不管是横电感还是竖电感的值都很小很小，比三岔路还小，都接近0了。</p>
+<h3 id="横斜电感"><a href="#横斜电感" class="headerlink" title="横斜电感"></a>横斜电感</h3><p>横电感以循迹为主，斜电感跑元素为主。分贝比9：1最好，横电感占百分之90，斜电感占百分之10，这样就能保证你的电感一旦出点问题，因为电感在没有加卡尔曼滤波或者是均值滤波之前，它的波很杂，做成这种比例能够最大程度把误差减到最小，学长试了很多参数，9：1最好。</p>
+<h3 id="归一化"><a href="#归一化" class="headerlink" title="归一化"></a>归一化</h3><p>可做可不做，看自己，学长没做。</p>
+<h2 id="程序代码"><a href="#程序代码" class="headerlink" title="程序代码"></a>程序代码</h2><p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/2.png"></p>
+<p>用户代码有：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/*滤波*/</span><br><span class="line">dianci_lvbol();</span><br><span class="line">henglvbo();</span><br><span class="line">shulvbo();</span><br><span class="line"></span><br><span class="line">/*算差*/</span><br><span class="line">normalize_date();</span><br><span class="line"></span><br><span class="line">/*舵机控制*/</span><br><span class="line">DJ_PID();</span><br><span class="line"></span><br><span class="line">/*元素*/</span><br><span class="line">control();</span><br></pre></td></tr></table></figure>
+
+<h3 id="dianci-lvbol-采样信号并第一次滤波（电感值）"><a href="#dianci-lvbol-采样信号并第一次滤波（电感值）" class="headerlink" title="dianci_lvbol() 采样信号并第一次滤波（电感值）"></a>dianci_lvbol() 采样信号并第一次滤波（电感值）</h3><p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/1.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">void dianci_lvbol(void)</span><br><span class="line">&#123;</span><br><span class="line">	int i;</span><br><span class="line">			uint16_t max = 0,min = 0;     //滤波准备</span><br><span class="line">			uint16_t sum = 0;</span><br><span class="line">			/////////////////////电磁//////////////////////</span><br><span class="line">			</span><br><span class="line">				max = 0;</span><br><span class="line">				min = 400;</span><br><span class="line">				sum = 0;</span><br><span class="line">				for(i = 0;i &lt; 10;i++)  //以10为单位做滤波算法</span><br><span class="line">				&#123;</span><br><span class="line">					ADC_BUF[i] = ADC_Read(ADC0)/10;//通通除以10，缩小十倍</span><br><span class="line">					if(ADC_BUF[i]&gt;max)  //算出ADC0通道的最大值</span><br><span class="line">					&#123;</span><br><span class="line">						max = ADC_BUF[i];</span><br><span class="line">					&#125;</span><br><span class="line">					if(ADC_BUF[i]&lt;min)  //算出ADC0通道的最小值</span><br><span class="line">					&#123;</span><br><span class="line">						min = ADC_BUF[i];</span><br><span class="line">					&#125;	</span><br><span class="line">                    sum += ADC_BUF[i];  //一个单位求和</span><br><span class="line">				&#125;</span><br><span class="line">				//求和值减去最大值和最小值，再去平均值</span><br><span class="line">				LnowADC[0] = (sum - max -min)/8;  //左边横的实际电感值 </span><br><span class="line">				</span><br><span class="line">				max = 0;</span><br><span class="line">				min = 400;</span><br><span class="line">				sum = 0;</span><br><span class="line">				for(i = 0;i &lt; 10;i++)  //以10为单位做滤波算法</span><br><span class="line">				&#123;</span><br><span class="line">					ADC_BUF[i] = ADC_Read(ADC1)/10;//通通除以10，缩小十倍</span><br><span class="line">					if(ADC_BUF[i]&gt;max)  //算出ADC0通道的最大值</span><br><span class="line">					&#123;</span><br><span class="line">						max = ADC_BUF[i];</span><br><span class="line">					&#125;</span><br><span class="line">					if(ADC_BUF[i]&lt;min)  //算出ADC1通道的最小值</span><br><span class="line">					&#123;</span><br><span class="line">						min = ADC_BUF[i];</span><br><span class="line">					&#125;	</span><br><span class="line">                    sum += ADC_BUF[i];  //一个单位求和</span><br><span class="line">				&#125;</span><br><span class="line">				//求和值减去最大值和最小值，再去平均值</span><br><span class="line">				LnowADC[1] = (sum - max -min)/8;  //左边竖的实际电感值 </span><br><span class="line">				</span><br><span class="line">				//右边竖和右边横的实际电感值，照上cv下去</span><br><span class="line">				</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="henglvbo-横电感滤波"><a href="#henglvbo-横电感滤波" class="headerlink" title="henglvbo() 横电感滤波"></a>henglvbo() 横电感滤波</h3><p>先加限幅滤波,电感值高于或低于某个数值的时候，车就不动了。</p>
+<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/3.png"></p>
+<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/4.png"></p>
+<p>横电感不能低于40，斜电感不能低于20。这样在进圆环的时候，对电感值做处理，不要Horizontal_Inductan直接减多少，要用乘法，乘上0.5，或者零点几，切记限幅的赋值不能是0，而且不能用减法，会出问题的。特别是电磁循迹，很容易冲出赛道。</p>
+<h3 id="竖电感滤波同理"><a href="#竖电感滤波同理" class="headerlink" title="竖电感滤波同理"></a>竖电感滤波同理</h3><h3 id="算偏差normalize-date"><a href="#算偏差normalize-date" class="headerlink" title="算偏差normalize_date()"></a>算偏差normalize_date()</h3><p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/5.png"></p>
+<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/6.png"></p>
+<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/7.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">void normalize_date(void)</span><br><span class="line">&#123;</span><br><span class="line">	float sancha_jishu = 1;//三岔计数</span><br><span class="line">//*******进右环内切**********//</span><br><span class="line">    if(leftstate == 1)//进入圆环</span><br><span class="line">    &#123;</span><br><span class="line">        yuanhuan_jishu -= 0.010;//圆环计数，normalize_data()在5ms的中断函数中，yuanhuan_jishu原始数据是1，每5ms减0.01，yuanhuan_jishu作用到舵机——慢慢打角,起到渐变打角的效果，375ms后减到0.25，不再继续减，375ms对于单片机来说很长</span><br><span class="line">        yuanhuan_jishu1++;</span><br><span class="line">        if(yuanhuan_jishu &lt;= 0.25) yuanhuan_jishu = 0.25;//yuanhuan_jishu减到0.25就不变了</span><br><span class="line">        if(yuanhuan_jishu &gt;= 0.25) Left_Adc = LnowADC[1]*yuanhuan_jishu;//最后Left_Adc一直都是LnowADC[1]的0.25倍，又由于LnowADC[1]是被限幅出来的值，所以小到一定程度是一个死值，故，这样操作后，在预圆环位置，舵机会打一个固定的角，转入圆环，若LnowADC[1]一直很小，则Left_Adc一直是死值，舵机角度不变</span><br><span class="line">        Right_Adc = LnowADC[0];</span><br><span class="line">        //循迹时斜电感不动，斜电感一般不动，斜电感只是原来判断元素用的</span><br><span class="line">        Left_Xie_Adc = LnowADC[3];//左斜电感最终值</span><br><span class="line">        Right_Xie_Adc = Lnow[2];//右斜电感最终值</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">//******三岔右拐**********//</span><br><span class="line">    else if(sancha_flag == 1)</span><br><span class="line">    &#123;</span><br><span class="line">        sancha_jishu1++;</span><br><span class="line">        sancah_jishu -= 0.025;</span><br><span class="line">        Right_Adc = LnowADC[0];</span><br><span class="line"></span><br><span class="line">        if(sancha_jishu &lt; 0.5) sancha_jishu = 0.5;//注意代码顺序</span><br><span class="line">        if(sancha_jishu &gt;= 0.5) Left_Adc = LnowADC[1]*sancha_jishu;</span><br><span class="line">        Right_Adc = LnowADC[0];</span><br><span class="line">        Left_Xie_Adc = LnowADC[3];//左斜电感最终值</span><br><span class="line">        Right_Xie_Adc = Lnow[2];//右斜电感最终值	</span><br><span class="line">    &#125;</span><br><span class="line">    else if(shizi_flag == 1)//十字直接直走，不对电感值做处理</span><br><span class="line">    &#123;</span><br><span class="line">    	Left_Adc = LnowADC[1];//左电感最终值</span><br><span class="line">    	Right_Adc = LnowADC[0];//右电感最终值</span><br><span class="line">        Left_Xie_Adc = LnowADC[3];//左斜电感最终值</span><br><span class="line">        Right_Xie_Adc = Lnow[2];//右斜电感最终值</span><br><span class="line">    &#125;</span><br><span class="line">    else//直接循迹，不对电感值做处理</span><br><span class="line">    &#123;</span><br><span class="line">     	Left_Adc = LnowADC[1];//左电感最终值</span><br><span class="line">    	Right_Adc = LnowADC[0];//右电感最终值</span><br><span class="line">        Left_Xie_Adc = LnowADC[3];//左斜电感最终值</span><br><span class="line">        Right_Xie_Adc = Lnow[2];//右斜电感最终值   	</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    position = Cha_BI_He_Cha(Left_Adc,Right_Adc,Left_Xie_Adc,Right_Xie_Adc,0.9,0.1,7);</span><br><span class="line">    new_position = filter_position();//均值滤波</span><br><span class="line">    Error_L = XiangDui_Error(Left_Adc,Right_Adc,100);</span><br><span class="line">    Error_R = XiangDui_Error(Right_Adc,Left_Adc,100);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="差比和原理"><a href="#差比和原理" class="headerlink" title="差比和原理"></a>差比和原理</h3><p>x,y</p>
+<p>(x-y)&#x2F;(x+y)</p>
+<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/8.png"></p>
+<p>a&#x3D;0.9;b&#x3D;0.1;横占9，斜占1；</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">int Cha_BI_He_Cha(int Date_1,int Date_2,int Date_3,int Date_4,float a,float b,int X)</span><br><span class="line">&#123;</span><br><span class="line">	int Resault;</span><br><span class="line">	Cha_H = (int)((Date_1 - Date_2));  //横电感差</span><br><span class="line">	Cha_X = (int)((Date_3 - Date_4));  //斜电感差</span><br><span class="line">	</span><br><span class="line">	He   =  Date_1 + Date_2;  //横电感和</span><br><span class="line">	Sum  =  Date_1 + Date_2 + Date_3 +  Date_4;  //所有电感之和</span><br><span class="line">    He_X =  Date_3 +  Date_4;  //斜电感和</span><br><span class="line">    </span><br><span class="line">    FengZ = a*Cha_H + b*Cha_X;</span><br><span class="line">    FengM = a*He + b*myabs(Cha_X);</span><br><span class="line">    Resault = ((FengZ&lt;&lt;X)/(FengM+1));//差比和差 左移一位*2 左移n位 2^n</span><br><span class="line">    </span><br><span class="line">    return Resault;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="为什么要差比和"><a href="#为什么要差比和" class="headerlink" title="为什么要差比和"></a>为什么要差比和</h4><ol>
+<li>减少干扰因素，差比和也算一次小滤波</li>
+<li>差比和直接利用单片机几个通道采集到的值，算出来一个结果，直接就可以告诉单片机是左转还是右转；这个算法有个什么作用：单片机是想直接知道他是向左转还是向右转，而不是知道几个通道的电感值，这个算法就是中间过程，对几个通道的电感值做了处理。</li>
+</ol>
+<h3 id="DJ-PID-舵机控制-PID"><a href="#DJ-PID-舵机控制-PID" class="headerlink" title="DJ_PID() 舵机控制 PID"></a>DJ_PID() 舵机控制 PID</h3><p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/9.png"></p>
+<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/10.png"></p>
+<p>position是差比和函数里输出的一个偏差值。</p>
+<h4 id="学长闲话：卡尔曼滤波一定要用上，这玩意儿太好用了。"><a href="#学长闲话：卡尔曼滤波一定要用上，这玩意儿太好用了。" class="headerlink" title="学长闲话：卡尔曼滤波一定要用上，这玩意儿太好用了。"></a>学长闲话：卡尔曼滤波一定要用上，这玩意儿太好用了。</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/*************************DJ_PID**************************/</span><br><span class="line">void DJ_PID(void)</span><br><span class="line">&#123;</span><br><span class="line">	int last_error_l;      //上次偏差</span><br><span class="line">	int last_error_nihe;   //上次误差拟合</span><br><span class="line">	int a,steer_last;</span><br><span class="line">	</span><br><span class="line">	error = (int)(0-position);</span><br><span class="line">	</span><br><span class="line">//////////////////////////////////////舵机方向控制////////////////////////////</span><br><span class="line">	kp_pu = T*position*position+1.5;  //二次函数式</span><br><span class="line">	error_nihe = Kp_pu*error + Kd_pu*(error - 2*lasterror + last_error_1);</span><br><span class="line">	</span><br><span class="line">	last_error_l = lasterror;         //记录上上次误差</span><br><span class="line">	lasterror = error;                //记录上次误差</span><br><span class="line">	</span><br><span class="line">///////////////////舵机平衡（学长后面没用，因为车速度比较慢，所以这里相关参数都改为0了）///////////////////////</span><br><span class="line">	steer = DJ_midpoint - error_nihe - Servo_PWM*0.8;</span><br><span class="line">	//舵机pwm值 = 舵机中值 - 拟合误差值（PID拟合出来的偏差值）</span><br><span class="line">	</span><br><span class="line">	steer_last = steer;</span><br><span class="line">	ServoCtrl(steer);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="kp-pu用二次函数式的妙处（特别重要，电磁循迹和摄像头循迹都要用）"><a href="#kp-pu用二次函数式的妙处（特别重要，电磁循迹和摄像头循迹都要用）" class="headerlink" title="kp_pu用二次函数式的妙处（特别重要，电磁循迹和摄像头循迹都要用）"></a>kp_pu用二次函数式的妙处（特别重要，电磁循迹和摄像头循迹都要用）</h4><p>p &#x3D; T*x^2+b，是一个开口向上的二次函数。</p>
+<p>直道上，position小，即x小，那么最后的kp小，kp变化不大；</p>
+<p>弯道上，position大，即x大，kp一下就升上去了，就能过弯道了。</p>
+<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/11.png"></p>
+<h5 id="二次函数是确定kp最好的方法，这个你一定要知道，这个就叫算法，比赛考来考去就考算法。"><a href="#二次函数是确定kp最好的方法，这个你一定要知道，这个就叫算法，比赛考来考去就考算法。" class="headerlink" title="二次函数是确定kp最好的方法，这个你一定要知道，这个就叫算法，比赛考来考去就考算法。"></a>二次函数是确定kp最好的方法，这个你一定要知道，这个就叫算法，比赛考来考去就考算法。</h5><p>摄像头循迹要比电磁循迹灵敏一些，因为摄像头出一点点偏差就拐过去了。</p>
+<h2 id="运放OPA4377"><a href="#运放OPA4377" class="headerlink" title="运放OPA4377"></a>运放OPA4377</h2><h4 id="学长闲话：电路数电模电一定要学精，做电路的时候太重要了。"><a href="#学长闲话：电路数电模电一定要学精，做电路的时候太重要了。" class="headerlink" title="学长闲话：电路数电模电一定要学精，做电路的时候太重要了。"></a>学长闲话：电路数电模电一定要学精，做电路的时候太重要了。</h4><p>常见的同向比例放大电路</p>
+<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/12.png"></p>
+<p>提取出来，实际上就是</p>
+<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/13.png"></p>
+<p>OPA4377里面有四个上述电路。</p>
+<h4 id="学长闲话：现实中的东西就是课本上的东西。上面的是实际，下面图是理论，学东西一定要理论和实际相结合，推荐在学模电的时候，多用multisim搭搭电路，先用这个搭建电路测试，再去实际中搭建电路，会极大降低成本。"><a href="#学长闲话：现实中的东西就是课本上的东西。上面的是实际，下面图是理论，学东西一定要理论和实际相结合，推荐在学模电的时候，多用multisim搭搭电路，先用这个搭建电路测试，再去实际中搭建电路，会极大降低成本。" class="headerlink" title="学长闲话：现实中的东西就是课本上的东西。上面的是实际，下面图是理论，学东西一定要理论和实际相结合，推荐在学模电的时候，多用multisim搭搭电路，先用这个搭建电路测试，再去实际中搭建电路，会极大降低成本。"></a>学长闲话：现实中的东西就是课本上的东西。上面的是实际，下面图是理论，学东西一定要理论和实际相结合，推荐在学模电的时候，多用multisim搭搭电路，先用这个搭建电路测试，再去实际中搭建电路，会极大降低成本。</h4><h4 id="人家985传承代码，混一下，至少有个招牌在那，我们已经是双非了，如果我们还混的话，那我们就废了。"><a href="#人家985传承代码，混一下，至少有个招牌在那，我们已经是双非了，如果我们还混的话，那我们就废了。" class="headerlink" title="人家985传承代码，混一下，至少有个招牌在那，我们已经是双非了，如果我们还混的话，那我们就废了。"></a>人家985传承代码，混一下，至少有个招牌在那，我们已经是双非了，如果我们还混的话，那我们就废了。</h4><h4 id="模电数电一定要好好学，太重要了，学到用时方恨少。"><a href="#模电数电一定要好好学，太重要了，学到用时方恨少。" class="headerlink" title="模电数电一定要好好学，太重要了，学到用时方恨少。"></a>模电数电一定要好好学，太重要了，学到用时方恨少。</h4><h3 id="control"><a href="#control" class="headerlink" title="control()"></a>control()</h3><p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/17.png"></p>
+<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/14.png"></p>
+<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/15.png"></p>
+<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/16.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">void control(void)</span><br><span class="line">&#123;</span><br><span class="line">/******************三叉判断*************/</span><br><span class="line">	if(He_X &lt; 80 &amp;&amp; Error_L &lt;30 &amp;&amp; He &gt; 220 &amp;&amp; leftstate == 0 &amp;&amp; sancha_flag == 0 &amp;&amp; sanchastate == 0)//三叉判断</span><br><span class="line">	&#123;</span><br><span class="line">		sabcha_flag = 1;</span><br><span class="line">		beep_open();</span><br><span class="line">		aim_speed = motopwm_sancha;</span><br><span class="line">	&#125;</span><br><span class="line">	if(He &lt;130 &amp;&amp; leftstate == 0 &amp;&amp; sancha_jishu1 &gt; 800 &amp;&amp; sancha_flag == 1)//出三岔后清标志位水鳖下一次</span><br><span class="line">	&#123;</span><br><span class="line">		sancha_flag = 0;</span><br><span class="line">		beep_close();</span><br><span class="line">		aim_speed = xx;</span><br><span class="line">		sanchastate = 1;   //防止重新进入</span><br><span class="line">		padao_shibie++;</span><br><span class="line">	&#125;</span><br><span class="line">///***************************坡道处理*************/</span><br><span class="line">	if(Roll &gt;4 &amp;&amp; podaostate == 0 &amp;&amp; podao_shibie &gt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		beep_open();</span><br><span class="line">		podao_flag = 1;</span><br><span class="line">		podaostate = 1;</span><br><span class="line">	&#125;</span><br><span class="line">	podao_dispose();</span><br><span class="line">	//////圆环处理/////////////////////////////////////</span><br><span class="line">	//**********预测圆环******************************//</span><br><span class="line">	if（He &gt; 500 &amp;&amp; leftstate == 0 &amp;&amp; cancha_flag == 0 &amp;&amp; lefthuandao_flag == 0）</span><br><span class="line">	&#123;</span><br><span class="line">		beep_open();</span><br><span class="line">		leftstate = 1;//圆环标志位</span><br><span class="line">		aim_speed = motorpwm_yuanhuan;//固定低速行驶</span><br><span class="line">	&#125;</span><br><span class="line">/***********************************十字路口**************************/</span><br><span class="line">	if((Right_Xie_Adc - Left_Xie_Adc) &gt; 100 &amp;&amp; He &gt;200 &amp;&amp; He &lt;300 &amp;&amp; shizi_flag == 0)</span><br><span class="line">	&#123;</span><br><span class="line">		shizi_flag == 1;</span><br><span class="line">		beep_open();</span><br><span class="line">	&#125;</span><br><span class="line">	if((Left_Xie_Adc - Right_Xie_Adc) &gt; 100 &amp;&amp; He &gt;200 &amp;&amp; He &lt;300 &amp;&amp; shizi_flag ==`1)</span><br><span class="line">	&#123;</span><br><span class="line">		shizi_flag = 0;</span><br><span class="line">		beep_close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WM</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://fiercewill.github.io/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/">https://fiercewill.github.io/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2023 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E8%BD%A6/">🏷️ 电磁循迹车</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/">智能车-摄像头循迹基础（1）</a>
+            
+            
+            <a class="next" rel="next" href="/2023/08/30/Hexo%E5%8D%9A%E5%AE%A2%E7%BE%8E%E5%8C%96%E6%95%99%E7%A8%8B/">Hexo博客美化教程</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WM | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    总访客量:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;
+
+
+<span class="site-pv">
+    总访问量:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+		
+        </span>
+    </div>
+</footer>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<!--浏览器搞笑标题-->
+<!-- 雪花特效 -->
+
