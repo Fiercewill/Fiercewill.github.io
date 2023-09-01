@@ -13,7 +13,7 @@
 
 
 
-<title>智能车-摄像头循迹基础（1） | WM&#39;s blog</title>
+<title>智能车-摄像头循迹代码指导（2） | WM&#39;s blog</title>
 
 
 
@@ -196,7 +196,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">智能车-摄像头循迹基础（1）</h1>
+            <h1 class="post-title">智能车-摄像头循迹代码指导（2）</h1>
             
                 <div class="post-meta">
                     
@@ -205,7 +205,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">August 31, 2023&nbsp;&nbsp;17:38:43</a>
+                        Date: <a href="#">September 1, 2023&nbsp;&nbsp;14:33:17</a>
                         </span>
                     
                     
@@ -219,13 +219,13 @@
                     
                         <span class="post-count">
                     Words:
-                        <a href="">751</a> 
+                        <a href="">142</a> 
                         </span>
                              
                     
                         <span class="post-count">
                     Time:
-                        <a href="">3min</a> 
+                        <a href="">1min</a> 
                         </span>
                     
                 </div>
@@ -233,48 +233,15 @@
         </header>
 
         <div class="post-content">
-            <p>摄像头做起来比电磁复杂，看起来还行，但是写代码会相对复杂一些</p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>本章学习目标：</p>
-<ol>
-<li>搞懂摄像头识别赛道的过程和原理</li>
-<li>大致了解循迹代码，有一个思维印象；下节课会详细分析摄像头循迹代码。</li>
-</ol>
-</blockquote>
-<h3 id="摄像头像素"><a href="#摄像头像素" class="headerlink" title="摄像头像素"></a>摄像头像素</h3><blockquote>
-<p>一般是144乘120&#x2F;80乘60，其实就是像素点的个数</p>
-</blockquote>
-<p>龙邱神眼&#x2F;逐飞阵风，都是不带主控的</p>
-<p>而openmv&#x2F;K210都是自带处理芯片，内部可以自己算好。</p>
-<p>比赛的时候只能用不带主控的摄像头，主控只能用车的那颗主控芯片。这些摄像头都是灰度摄像头，，一般照出来都是灰白的，是为了减小功耗，如果是彩色的功耗太大了，尤其是后面还要对图像做分析，彩色图片分析很难，灰白的图片好分析。</p>
-<h2 id="二值化"><a href="#二值化" class="headerlink" title="二值化"></a>二值化</h2><p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/1.png"></p>
-<p>二值化后可以降低功耗，大多数人都是先学二值化，再学赛道分析，因为在灰度中做赛道分析是比较难的。</p>
-<p>二值化就是设定合适阈值，将图像处理为只有黑白两种颜色，即处理后的数字信息只有0和1，白1黑0，白色的值大（80<del>120），灰色的值小（0</del>20）；</p>
-<h2 id="赛道分析"><a href="#赛道分析" class="headerlink" title="赛道分析"></a>赛道分析</h2><p>摄像头最重要的两字，就是扫描。</p>
-<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><ol>
-<li>搞基准线</li>
-<li>从基准线向两侧递推，找黑色点</li>
-<li>对图像的每一横行都进行2号步骤，得到每一横行的两个边界点</li>
-<li>对每一横行的两个边界点取中点——得到循迹线</li>
-<li>差值式：预判线与循迹线、基准线的交点做差，得到偏差error。在直道上，偏差为0【只要是涉及循迹，总绕不开偏差这个东西，因为有了偏差，两轮之间的速度才会有差，才能实现转弯】</li>
-</ol>
-<p>​		角度式：</p>
-<p>循迹线是当前值，基准线是目标值。误差可以是差值数值，也可以是角度。</p>
-<ol start="6">
-<li>把error放到PD控制里面，然后控制舵机打角；有了error，就可以上pid了，因为是舵机控制，所以用pd控制就行，不需要i，i会导致延时太长，pd控制响应快</li>
-</ol>
-<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/2.png"></p>
-<h3 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h3><h4 id="左右水平扫描，第二、三步"><a href="#左右水平扫描，第二、三步" class="headerlink" title="左右水平扫描，第二、三步"></a>左右水平扫描，第二、三步</h4><p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/13.png"></p>
-<p>midpoint是循迹线</p>
-<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/14.png"></p>
-<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/15.png"></p>
-<h3 id="摄像头初始化"><a href="#摄像头初始化" class="headerlink" title="摄像头初始化"></a>摄像头初始化</h3><p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/17.png"></p>
-<h3 id="二值化-1"><a href="#二值化-1" class="headerlink" title="二值化"></a>二值化</h3><p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/18.png"></p>
-<h3 id="大津法求阈值大小，适应不同光线场地（开源的，图片上有网址）"><a href="#大津法求阈值大小，适应不同光线场地（开源的，图片上有网址）" class="headerlink" title="大津法求阈值大小，适应不同光线场地（开源的，图片上有网址）"></a>大津法求阈值大小，适应不同光线场地（开源的，图片上有网址）</h3><p>大津法是现在摄像头用的最多的一个算法。</p>
-<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/19.png"></p>
-<h3 id="灰度里用卷积，可以把渐变的边界线周围数据进行卷积，计算量很小，就可以得到边界线"><a href="#灰度里用卷积，可以把渐变的边界线周围数据进行卷积，计算量很小，就可以得到边界线" class="headerlink" title="灰度里用卷积，可以把渐变的边界线周围数据进行卷积，计算量很小，就可以得到边界线"></a>灰度里用卷积，可以把渐变的边界线周围数据进行卷积，计算量很小，就可以得到边界线</h3><h4 id="sobel就是卷积，复变函数"><a href="#sobel就是卷积，复变函数" class="headerlink" title="sobel就是卷积，复变函数"></a>sobel就是卷积，复变函数</h4><p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/20.png"></p>
-<p>比二值化计算量小，因为二值化要把图像全部扫描一遍，而卷积就只需要计算渐变线周围的数据，最后得到的新图像就是</p>
-<p><img src="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/21.png"></p>
+            <p>%f.%02f 表示小数点后面保留2位数</p>
+<p>%d是有几位就显示几位</p>
+<p>%f是有几位显示几位，但是最多显示5位</p>
+<p>用int就行，没必要用uint、sint，一般我们用到的值超不过int的限制。</p>
+<p>做摄像头的必须要学会补线。</p>
+<p><img src="/2023/09/01/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E4%BB%A3%E7%A0%81%E6%8C%87%E5%AF%BC%EF%BC%882%EF%BC%89/1.png"></p>
+<h4 id="学长闲话：搞智能车电赛的知识，老师教是教不完的，要自学；现在网络上的资源丰富，大学了，不要想着什么东西都老师来教，一定要自己去学"><a href="#学长闲话：搞智能车电赛的知识，老师教是教不完的，要自学；现在网络上的资源丰富，大学了，不要想着什么东西都老师来教，一定要自己去学" class="headerlink" title="学长闲话：搞智能车电赛的知识，老师教是教不完的，要自学；现在网络上的资源丰富，大学了，不要想着什么东西都老师来教，一定要自己去学"></a>学长闲话：搞智能车电赛的知识，老师教是教不完的，要自学；现在网络上的资源丰富，大学了，不要想着什么东西都老师来教，一定要自己去学</h4><p>。</p>
+<p>元素就是找特征。</p>
+<p><img src="/2023/09/01/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E4%BB%A3%E7%A0%81%E6%8C%87%E5%AF%BC%EF%BC%882%EF%BC%89/2.png"></p>
 
         </div>
 
@@ -289,7 +256,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://fiercewill.github.io/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/">https://fiercewill.github.io/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/</a></span>
+                        <span><a href="https://fiercewill.github.io/2023/09/01/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E4%BB%A3%E7%A0%81%E6%8C%87%E5%AF%BC%EF%BC%882%EF%BC%89/">https://fiercewill.github.io/2023/09/01/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E4%BB%A3%E7%A0%81%E6%8C%87%E5%AF%BC%EF%BC%882%EF%BC%89/</a></span>
                     </p>
                 
                 
@@ -326,10 +293,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2023/09/01/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E4%BB%A3%E7%A0%81%E6%8C%87%E5%AF%BC%EF%BC%882%EF%BC%89/">智能车-摄像头循迹代码指导（2）</a>
             
-            
-            <a class="next" rel="next" href="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/">智能车-电磁循迹基础（1）</a>
+            <a class="next" rel="next" href="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/">智能车-摄像头循迹基础（1）</a>
             
         </section>
 
