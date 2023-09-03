@@ -13,7 +13,7 @@
 
 
 
-<title>智能车-摄像头循迹代码指导（2） | WM&#39;s blog</title>
+<title>数据结构与算法（day2） | WM&#39;s blog</title>
 
 
 
@@ -196,7 +196,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">智能车-摄像头循迹代码指导（2）</h1>
+            <h1 class="post-title">数据结构与算法（day2）</h1>
             
                 <div class="post-meta">
                     
@@ -205,27 +205,27 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 1, 2023&nbsp;&nbsp;14:33:17</a>
+                        Date: <a href="#">September 3, 2023&nbsp;&nbsp;8:09:53</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a>
+                                <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89/">数据结构与算法（C语言）</a>
                             
                         </span>
                     
                     
                         <span class="post-count">
                     Words:
-                        <a href="">142</a> 
+                        <a href="">909</a> 
                         </span>
                              
                     
                         <span class="post-count">
                     Time:
-                        <a href="">1min</a> 
+                        <a href="">4min</a> 
                         </span>
                     
                 </div>
@@ -233,15 +233,31 @@
         </header>
 
         <div class="post-content">
-            <p>%f.%02f 表示小数点后面保留2位数</p>
-<p>%d是有几位就显示几位</p>
-<p>%f是有几位显示几位，但是最多显示5位</p>
-<p>用int就行，没必要用uint、sint，一般我们用到的值超不过int的限制。</p>
-<p>做摄像头的必须要学会补线。</p>
-<p><img src="/2023/09/01/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E4%BB%A3%E7%A0%81%E6%8C%87%E5%AF%BC%EF%BC%882%EF%BC%89/1.png"></p>
-<h4 id="学长闲话：搞智能车电赛的知识，老师教是教不完的，要自学；现在网络上的资源丰富，大学了，不要想着什么东西都老师来教，一定要自己去学"><a href="#学长闲话：搞智能车电赛的知识，老师教是教不完的，要自学；现在网络上的资源丰富，大学了，不要想着什么东西都老师来教，一定要自己去学" class="headerlink" title="学长闲话：搞智能车电赛的知识，老师教是教不完的，要自学；现在网络上的资源丰富，大学了，不要想着什么东西都老师来教，一定要自己去学"></a>学长闲话：搞智能车电赛的知识，老师教是教不完的，要自学；现在网络上的资源丰富，大学了，不要想着什么东西都老师来教，一定要自己去学</h4><p>。</p>
-<p>元素就是找特征。</p>
-<p><img src="/2023/09/01/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E4%BB%A3%E7%A0%81%E6%8C%87%E5%AF%BC%EF%BC%882%EF%BC%89/2.png"></p>
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>（1）在本章的学习此前，需要复习前一章的内容，动手敲一遍解题。</p>
+<p>（2）经过上一章的操练以后，大家应该体会到了，简化版桶排序所要申请的数组的容量大小由要排序的数中的最大值决定，所以如果我们要排序的数中最大值是210000000，那我们还得申请一个大小为210000001的数组，毫无疑问，非常浪费空间！</p>
+<p>（3）而且，简化版桶排序的i表示数值，book[i]表示数值的数量，由于数组要求book[i]中的i的类型必须为整数，所以，如果要排序的存在小数，那简化版桶排序就失效了！</p>
+<p>本章的学习目标：</p>
+<p>（1）学习冒泡排序原理</p>
+<p>（2）会用冒泡排序联系实际生活，解决编程问题</p>
+</blockquote>
+<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><blockquote>
+<p>冒泡排序的基本思想是：每次比较两个相邻的元素，如果他们的顺序错误就把它们交换过来。</p>
+<p>代码思路：如果有n个数进行从大到小排序，只需将n-1个数归位，也就是说要进行n-1趟操作。而”每一趟“都需要从第1位开始进行两个数的比较，将较小的一个数放在在后面，比较完毕后向后挪一位继续比较下面两个相邻数的大小，重复此步骤，直到最后一个尚未归位的数，已经归位的数则无需再进行比较（已经归位的数你还比较个啥，浪费表情）。</p>
+</blockquote>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><h3 id="题目一"><a href="#题目一" class="headerlink" title="题目一"></a>题目一</h3><blockquote>
+<p>输入n个整数，对它们用冒泡排序按从小到大或者是从大到小的顺序排列，并打印出来。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int a[100], i, j, t, n;</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">	for (i = 1; i &lt;= n; i++)</span><br><span class="line">		scanf(&quot;%d&quot;,&amp;a[i]);</span><br><span class="line"></span><br><span class="line">	//冒泡排序的核心部分</span><br><span class="line">	for (i = 1; i &lt;= n - 1; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for (j = 1; j &lt;= n - i; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			//a[j] &gt; a[j + 1]——从小到大排序；a[j] &lt; a[j + 1]——从大到小排序</span><br><span class="line">			if (a[j] &gt; a[j + 1])  //若a[j] &gt; a[j + 1]，则a[j] 与 a[j + 1]调换位置，即大的放数组后面，故实现从小到大排序</span><br><span class="line">			&#123;</span><br><span class="line">				t = a[j]; a[j] = a[j + 1]; a[j + 1] = t;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//数组内的数据已排好序，这一步按顺序打印出数组内的数值</span><br><span class="line">	for (i = 1; i &lt;= n; i++)   //若i = 1; 则i &lt;= n;要加等号</span><br><span class="line">		printf(&quot;%d &quot;,a[i]);</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="题目二"><a href="#题目二" class="headerlink" title="题目二"></a>题目二</h3><blockquote>
+<p>读入n个人的人名和分数，按分数从大到小排序，打印出分数对应的人名。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">struct student</span><br><span class="line">&#123;</span><br><span class="line">	char name[21];</span><br><span class="line">	char score;</span><br><span class="line">&#125;;   //这里创建了一个结构体，用来存储姓名和分数  </span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	struct student a[100], t;</span><br><span class="line">	int i, j, n;</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;n);   //多少个人</span><br><span class="line"></span><br><span class="line">	for (i = 1; i &lt;= n; i++)</span><br><span class="line">		scanf(&quot;%s %d&quot;,a[i].name,&amp;a[i].score);</span><br><span class="line"></span><br><span class="line">	//按分数从高到低进行排序</span><br><span class="line">	for (i = 1; i &lt;= n - 1; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for (j = 1; j &lt;= n - i; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			if (a[j].score &lt; a[j + 1].score) //按从达到小顺序排序</span><br><span class="line">			&#123;</span><br><span class="line">				t = a[j]; a[j] = a[j + 1]; a[j + 1] = t;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for (i = 1;i &lt;= n; i++)  //i = 1;i &lt;= n;</span><br><span class="line">		printf(&quot;%s\n&quot;,a[i].name);</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><blockquote>
+<p>冒泡排序的核心部分是双重嵌套循环，不难看出冒泡排序的时间复杂度是O(N^2)。这是一个非常高的时间复杂度，后面也没有人能成功把冒泡排序改进。</p>
+</blockquote>
 
         </div>
 
@@ -256,7 +272,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://fiercewill.github.io/2023/09/01/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E4%BB%A3%E7%A0%81%E6%8C%87%E5%AF%BC%EF%BC%882%EF%BC%89/">https://fiercewill.github.io/2023/09/01/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E4%BB%A3%E7%A0%81%E6%8C%87%E5%AF%BC%EF%BC%882%EF%BC%89/</a></span>
+                        <span><a href="https://fiercewill.github.io/2023/09/03/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88day2%EF%BC%89/">https://fiercewill.github.io/2023/09/03/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88day2%EF%BC%89/</a></span>
                     </p>
                 
                 
@@ -280,7 +296,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E8%BD%A6/">🏷️ 摄像头循迹车</a>
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%8CC%E8%AF%AD%E8%A8%80/">🏷️ 数据结构与算法，C语言</a>
                     
                         
                 </span>
@@ -293,10 +309,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2023/09/02/%E6%99%BA%E8%83%BD%E8%BD%A6%E2%80%94%E5%BE%AA%E8%BF%B9%E6%80%BB%E7%BB%93/">智能车—循迹总结</a>
             
-            
-            <a class="next" rel="next" href="/2023/08/31/%E6%99%BA%E8%83%BD%E8%BD%A6-%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E5%9F%BA%E7%A1%80%EF%BC%881%EF%BC%89/">智能车-摄像头循迹基础（1）</a>
+            <a class="next" rel="next" href="/2023/09/03/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88day1%EF%BC%89/">数据结构与算法（day1）</a>
             
         </section>
 
