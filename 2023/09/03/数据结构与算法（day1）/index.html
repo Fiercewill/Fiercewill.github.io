@@ -219,7 +219,7 @@
                     
                         <span class="post-count">
                     Words:
-                        <a href="">1,006</a> 
+                        <a href="">998</a> 
                         </span>
                              
                     
@@ -233,42 +233,45 @@
         </header>
 
         <div class="post-content">
-            <h1 id="数据结构与算法学习（day1）"><a href="#数据结构与算法学习（day1）" class="headerlink" title="数据结构与算法学习（day1）"></a>数据结构与算法学习（day1）</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+            <h2 id="前言">前言</h2>
+<blockquote>
 <p>（1）我是一个大三的学生（准确来说应该是准大三，因为明天才报名哈哈哈）。</p>
 <p>（2）最近就想每天闲着没事也刷些C语言习题来锻炼下编程水平，也一直在思考企业对应届大学生能力的要求，所以经常会想到关于面试的事情。由于我也没实习过，所以我对面试没有一个具象化的概念。</p>
 <p>（3）好在我会动用网络去搜集信息，我打开了CSDN查了下“C语言编程每日一练”，就发现了“C语言面试题每日一练‘’的文章，其中我发现了，嵌入式面试对数据结构与算法的要求也不低，所以我要特地花时间去提升下我的数据结构与算法的能力了，不能啥也不知道哇！</p>
 <p>（4）我是通过看书学习的，因为要学一门课程，视频的时长太长了，而且听人讲也费神，我更喜欢看博客或者好的书籍，正好我手上有一本算法书《啊哈！算法》。</p>
 <p>（5）这本书我看过一些，给我的印象挺好的，生动有趣，令人爱不释手。所以从现在起，我会通过此书，开启我的算法之旅。</p>
 </blockquote>
-<h2 id="本书内容"><a href="#本书内容" class="headerlink" title="本书内容"></a>本书内容</h2><blockquote>
+<h2 id="本书内容">本书内容</h2>
+<blockquote>
 <p>本书中涉及的数据结构有栈、队列、链表、树、并查集、堆和图等；涉及的算法有排序、枚举、深度和广度优先搜索、图的遍历，当然还有图论中不可缺少的四种最短路径算法、两种最小生成树算法、割点与割边算法、二分图的最大匹配算法等。</p>
 </blockquote>
-<h2 id="本章目标"><a href="#本章目标" class="headerlink" title="本章目标"></a>本章目标</h2><blockquote>
+<h2 id="本章目标">本章目标</h2>
+<blockquote>
 <ol>
 <li>掌握简化版桶排序的使用场景和代码架构</li>
 <li>会用简化版桶排序解决一些问题</li>
 </ol>
 </blockquote>
-<h2 id="简化版桶排序"><a href="#简化版桶排序" class="headerlink" title="简化版桶排序"></a>简化版桶排序</h2><h3 id="题目一"><a href="#题目一" class="headerlink" title="题目一"></a>题目一</h3><blockquote>
-<p>题目：让计算机随机读入5个数，，数的大小范围是0~10；然后将这5个数从大到小输出。</p>
+<h2 id="简化版桶排序">简化版桶排序</h2>
+<h3 id="题目一">题目一</h3>
+<blockquote>
+<p>题目：让计算机随机读入5个数，数的大小范围是0~10；然后将这5个数从大到小输出。</p>
 <p>思路：借助一个一维数组。</p>
 </blockquote>
 <ol>
 <li>从小到大输出</li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int a[11], i, j, t;</span><br><span class="line">	for (i = 0; i &lt;= 10; i++)</span><br><span class="line">		a[i] = 0;     //初始化一维数组为0</span><br><span class="line"></span><br><span class="line">	for (i = 1; i &lt;= 5; i++)   //循环读入5个数</span><br><span class="line">	&#123;</span><br><span class="line">		scanf(&quot;%d&quot;,&amp;t);        //把每一个数读入到变量t中</span><br><span class="line">		a[t]++;                //进行计数</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for (i = 0; i &lt;= 10; i++)</span><br><span class="line">		for (j = 1; j &lt;= a[i]; j++)</span><br><span class="line">			printf(&quot;%d &quot;,i);</span><br><span class="line"></span><br><span class="line">	getchar(); getchar();</span><br><span class="line">	//这里的getchar();用来暂停程序，以便查看程序输出内容</span><br><span class="line">	//也可以用system(&quot;pause&quot;);等来代替</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <ol start="2">
 <li>从大到小排序</li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int a[11], i, j, t;</span><br><span class="line">	for (i = 0; i &lt;= 10; i++)</span><br><span class="line">		a[i] = 0;     //初始化一维数组为0</span><br><span class="line"></span><br><span class="line">	for (i = 1; i &lt;= 5; i++)   //循环读入5个数</span><br><span class="line">	&#123;</span><br><span class="line">		scanf(&quot;%d&quot;,&amp;t);        //把每一个数读入到变量t中</span><br><span class="line">		a[t]++;                //进行计数</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//i就是输入的数值，a[i]就是i的个数</span><br><span class="line">	for (i = 10; i &gt;= 0; i--)  //改这里就可以决定是从大到小排序还是从小到大排序</span><br><span class="line">		for (j = 1; j &lt;= a[i]; j++)</span><br><span class="line">			printf(&quot;%d &quot;,i);</span><br><span class="line"></span><br><span class="line">	getchar(); getchar();</span><br><span class="line">	//这里的getchar();用来暂停程序，以便查看程序输出内容</span><br><span class="line">	//也可以用system(&quot;pause&quot;);等来代替</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="题目二"><a href="#题目二" class="headerlink" title="题目二"></a>题目二</h3><blockquote>
+<h3 id="题目二">题目二</h3>
+<blockquote>
 <p>题目：输入n个0~1000之间的整数，将它们从大到小排序。</p>
-<p>思路：对数据范围在0<del>1000的整数排序，我们需要1001个桶，来表示0</del>1000之间每一个数出现的次数。</p>
+<p>思路：对数据范围在0~1000的整数排序，我们需要1001个桶，来表示0~1000之间每一个数出现的次数。</p>
 </blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int book[1001], i, j, t, n;</span><br><span class="line">	for (i = 0; i &lt;= 1000; i++)</span><br><span class="line">		book[i] = 0;</span><br><span class="line"></span><br><span class="line">	scanf(&quot;%d&quot;,&amp;n);   //输入一个数n，表示接下来有n个数</span><br><span class="line">	for (i = 1; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		scanf(&quot;%d&quot;,&amp;t);</span><br><span class="line">		book[t]++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for (i = 1000; i &gt;= 0; i--)</span><br><span class="line">		for (j = 1; j &lt;= book[i]; j++)</span><br><span class="line">			printf(&quot;%d &quot;,i);</span><br><span class="line">	getchar(); getchar();</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 
         </div>
 
