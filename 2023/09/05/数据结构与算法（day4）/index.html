@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WM">
+
+
+
+
+
+<title>数据结构与算法（day4） | WM&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">WM&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">WM&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">数据结构与算法（day4）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WM</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 5, 2023&nbsp;&nbsp;8:28:32</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89/">数据结构与算法（C语言）</a>
+                            
+                        </span>
+                    
+                    
+                        <span class="post-count">
+                    Words:
+                        <a href="">1,554</a> 
+                        </span>
+                             
+                    
+                        <span class="post-count">
+                    Time:
+                        <a href="">7min</a> 
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1>前言</h1>
+<blockquote>
+<ol>
+<li>
+<p>在本章的学习此前，需要复习前三章的内容，每个算法都动手敲一遍解题。宁愿学慢一点，也要对每个算法掌握基本的理解！</p>
+</li>
+<li>
+<p>前面我们学习了简化版桶排序、冒泡排序和快速排序三种算法，今天我们来实践一下前面的三种算法。</p>
+</li>
+<li>
+<p>本章的学习目标：</p>
+</li>
+</ol>
+<p>（1）回顾三个算法的基本原理，能够熟悉运用三个算法解决问题</p>
+<p>（2）用三种不同算法解决同一个问题</p>
+</blockquote>
+<h1>题目</h1>
+<blockquote>
+<p>（1）输入有2行，第1行为一个正整数，表示有n个同学参与调查（n&lt;=100）。第2行有n个用空格隔开的正整数，为每本图书的ISBN号（假设图书的ISBN号在1~1000）。</p>
+<p>（2）输出也是2行。第1行为一个正整数k，表示需要买多少本书。第2行为k个用空格隔开的正整数，为从小到大已排好序的需要购买的图书的ISBN号（去重）。</p>
+</blockquote>
+<p>例如输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">10</span><br><span class="line">20 40 32 67 40 20 89 300 400 15</span><br></pre></td></tr></table></figure>
+<p>则输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">8</span><br><span class="line">15 20 32 40 67 89 300 400</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>（3）最后，程序运行的时间限制为1s。</p>
+</blockquote>
+<h2 id="分析题目">分析题目</h2>
+<blockquote>
+<p>我们要实现的要求有：</p>
+<ol>
+<li>对数据按从小到大顺序排列</li>
+<li>去重</li>
+</ol>
+</blockquote>
+<h2 id="方法一">方法一</h2>
+<p>我想到的第一个方法就是用简化版桶排序。</p>
+<p>程序如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int book[1001], n;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int i, j, k=0, t;</span><br><span class="line">	for (i = 0; i &lt;= 1000; i++)</span><br><span class="line">		book[i] = 0;</span><br><span class="line">		</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">	for (i = 1; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		scanf(&quot;%d&quot;, &amp;t);</span><br><span class="line">		book[t]++;</span><br><span class="line"></span><br><span class="line">		if (book[t] == 1)</span><br><span class="line">		&#123;</span><br><span class="line">			book[t] = 2;</span><br><span class="line">			k++;</span><br><span class="line">		&#125;</span><br><span class="line">		else if (book[t] &gt; 2)</span><br><span class="line">		&#123;</span><br><span class="line">			book[t] = 2;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;%d\n&quot;,k);</span><br><span class="line">	for (i = 1; i &lt;= 1000; i++)</span><br><span class="line">		if(book[i]==2)</span><br><span class="line">			printf(&quot;%d &quot;, i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果如图</p>
+<p><img src="/2023/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88day4%EF%BC%89/1.png" alt></p>
+<blockquote>
+<p>我们来评价一下这个程序，毫无疑问，这个程序比较无脑，不是一个巧妙的处理方式，但是也可以实现题目要求。</p>
+<ol>
+<li>程序运用的方法是比较简单的桶排序</li>
+<li>思路是先排序（排序实际上数组已经排好了），后去重。</li>
+<li>这个方法的时间复杂度就是桶排序的时间复杂度O(N+M)。</li>
+</ol>
+</blockquote>
+<h2 id="方法二">方法二</h2>
+<p>第二种方法也是先排序后去重，排序我们可以使用冒泡排序或者快速排序,这里我们用冒泡排序举例。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int a[1001], i,j, n,t,k = 0;</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line"></span><br><span class="line">	for (i = 0; i &lt; n; i++)</span><br><span class="line">		scanf(&quot;%d&quot;,&amp;a[i]);</span><br><span class="line"></span><br><span class="line">	//开始冒泡排序</span><br><span class="line">	for (i = 0; i &lt; n - 1; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		for (j = 0; j &lt; n - i - 1; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			if (a[j] &gt; a[j + 1])  //按从小到大的顺序排列</span><br><span class="line">			&#123;</span><br><span class="line">				t = a[j]; a[j] = a[j + 1]; a[j + 1] = t;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for (i = 0; i &lt; n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (a[i] == a[i - 1])  //计算重复元素的个数</span><br><span class="line">			k++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	printf(&quot;%d\n&quot;,n - k);</span><br><span class="line"></span><br><span class="line">	for (i = 0; i &lt; n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if(a[i] != a[i-1])</span><br><span class="line">			printf(&quot;%d &quot;, a[i]);</span><br><span class="line">	&#125;	</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="/2023/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88day4%EF%BC%89/3.png" alt></p>
+<blockquote>
+<p>我们来评价一下这个程序，</p>
+<ol>
+<li>程序运用的方法是比较简单的冒泡排序</li>
+<li>思路是先排序，后去重。</li>
+<li>这个方法的时间复杂度就是桶排序的时间复杂度O(N^2)，冒泡排序的时间复杂度在整个程序中是大块，所以其他两个的时间复杂度不计，时间复杂度比较高。</li>
+<li>如果要排序的数字数量增大，大到10万，桶排序要申请更大的数组，不现实，而冒泡排序的时间复杂度高所以耗时不少，这时候就只能用快速排序，如下；</li>
+</ol>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">/*****************</span><br><span class="line">*a[101]用于存放要排序的数组</span><br><span class="line">* n是要排序的个数</span><br><span class="line">*****************/</span><br><span class="line">int a[1001], n;   //全局变量，这两个变量需要在子函数中使用</span><br><span class="line">/*****************</span><br><span class="line">* 函数名：quicksort</span><br><span class="line">* 形参：int left, int right</span><br><span class="line">* 返回值：无</span><br><span class="line">* 作用：快速排序算法</span><br><span class="line">* ****/</span><br><span class="line">void quicksort(int left, int right)  // left一直都是1</span><br><span class="line">&#123;</span><br><span class="line">	int i, j, t, temp;</span><br><span class="line">	if (left &gt; right)</span><br><span class="line">		return;</span><br><span class="line"></span><br><span class="line">	temp = a[left];  //temp中存的就是基准数</span><br><span class="line">	i = left;</span><br><span class="line">	j = right;</span><br><span class="line">	while (i != j)  //相遇后跳出循环</span><br><span class="line">	&#123;</span><br><span class="line">		//顺序很重要，要先从右往左找</span><br><span class="line">		while (a[j] &gt;= temp &amp;&amp; i &lt; j)</span><br><span class="line">			j--;</span><br><span class="line"></span><br><span class="line">		//再从左往右找</span><br><span class="line">		while (a[i] &lt;= temp &amp;&amp; i &lt; j)</span><br><span class="line">			i++;</span><br><span class="line"></span><br><span class="line">		//交换两个数再数组中的位置</span><br><span class="line">		if (i &lt; j)   //当哨兵i和哨兵j没有相遇时</span><br><span class="line">		&#123;</span><br><span class="line">			t = a[i];</span><br><span class="line">			a[i] = a[j];</span><br><span class="line">			a[j] = t;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//最终将基准数归位</span><br><span class="line">	//若相遇，一定是在一个小于基准数的数相遇，将相遇时的数作为基准数进行下一轮的“探测”</span><br><span class="line">	a[left] = a[i];</span><br><span class="line">	a[i] = temp;</span><br><span class="line"></span><br><span class="line">	quicksort(left,i-1);  //继续处理左边的，这里是一个递归的过程</span><br><span class="line">	quicksort(i + 1, right);  //继续处理右边的，这里是一个递归的过程</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int i,j,k = 0;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line"></span><br><span class="line">	for (i = 1; i &lt;= n; i++)</span><br><span class="line">		scanf(&quot;%d&quot;, &amp;a[i]);</span><br><span class="line"></span><br><span class="line">	//开始快速排序</span><br><span class="line">	quicksort(1, n);  //快速排序调用</span><br><span class="line"></span><br><span class="line">	for (i = 1; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (a[i] == a[i - 1])  //计算重复元素的个数</span><br><span class="line">			k++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	printf(&quot;%d\n&quot;, n - k);</span><br><span class="line"></span><br><span class="line">	for (i = 1; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		if (a[i] != a[i - 1])</span><br><span class="line">			printf(&quot;%d &quot;, a[i]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88day4%EF%BC%89/4.png" alt></p>
+<blockquote>
+<p>（1）我们在写程序的时候，只要不是面试等需要现场手打程序，那我们可以利用之前写好的代码，移植到我们现在的问题上，来解决问题。</p>
+<p>（2）所以，平时多储备知识和源码，还是很重要的，平时的积累，要求我们要掌握好知识，否则到移植的时候，半天都移植不成功。</p>
+</blockquote>
+<h1>小结</h1>
+<blockquote>
+<p>我们来回顾一下三个算法的时间复杂度。</p>
+<p>（1）桶排序是最快的，时间复杂度为O(N+M);</p>
+<p>（2）冒泡排序是O(N^2)</p>
+<p>（3）快速排序是O(NlogN)</p>
+</blockquote>
+<p>下一节，我们将进入栈、队列、链表的学习。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WM</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://fiercewill.github.io/2023/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88day4%EF%BC%89/">https://fiercewill.github.io/2023/09/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88day4%EF%BC%89/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2023 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">🏷️ 数据结构与算法</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/09/04/%E8%80%83%E7%A0%94%E4%B8%8A%E6%B5%B7%E4%BA%A4%E9%80%9A%E5%A4%A7%E5%AD%A6/">考研上海交通大学</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WM | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    总访客量:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;
+
+
+<span class="site-pv">
+    总访问量:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+		
+        </span>
+    </div>
+</footer>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<!--浏览器搞笑标题-->
+<!-- 雪花特效 -->
+
