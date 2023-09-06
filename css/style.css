@@ -748,7 +748,7 @@ header label {
   padding-bottom: 0.3em;
 }
 .post-content h1::before {
-  content: "#";
+content
   margin-right: 5px;
   color: #2d96bd;
 }
@@ -756,7 +756,7 @@ header label {
   color: #eee;
 }
 .post-content h2::before {
-  content: "#";
+content
   margin-right: 5px;
   color: #2d96bd;
 }
@@ -764,7 +764,7 @@ header label {
   color: #eee;
 }
 .post-content h3::before {
-  content: "|";
+content
   margin-right: 5px;
   color: #2d96bd;
 }
@@ -772,7 +772,7 @@ header label {
   color: #eee;
 }
 .post-content h4::before {
-  content: "*";
+content
   margin-right: 5px;
   color: #2d96bd;
 }
@@ -1360,4 +1360,30 @@ header label {
 .post-content pre .keyword,
 .post-content pre .javascript .function {
   color: #8959a8;
+}
+.gt-container {
+  max-width: 780px;
+  margin: auto;
+}
+.gutter {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+}
+.post-content figure.highlight figcaption {
+  text-align: left;
+}
+.footer {
+  height: 3rem;
+  line-height: 1.2rem;
+}
+footer {
+  text-align: right;
+}
+h1 {
+  font-size: 1.6em;
+}
+h2 {
+  font-size: 1.2em;
 }
