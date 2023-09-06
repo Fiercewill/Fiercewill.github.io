@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WM">
+
+
+
+
+
+<title>语言芯片WTN6的驱动-定时器矩阵的典型用法 | WM&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">WM&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">WM&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">语言芯片WTN6的驱动-定时器矩阵的典型用法</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WM</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 6, 2023&nbsp;&nbsp;11:59:08</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a>
+                            
+                        </span>
+                    
+                    
+                        <span class="post-count">
+                    Words:
+                        <a href="">2,705</a> 
+                        </span>
+                             
+                    
+                        <span class="post-count">
+                    Time:
+                        <a href="">12min</a> 
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1>前言</h1>
+<blockquote>
+<p>（1）本系列是基于STM32的项目笔记，内容涵盖了STM32各种外设的使用，由浅入深。</p>
+<p>（2）小编使用的单片机是STM32F105RCT6，项目笔记基于小编的实际项目，但是博客中的内容适用于各种单片机开发的同学学习和使用。</p>
+</blockquote>
+<h1>学习目标</h1>
+<blockquote>
+<p>本章有三个任务：</p>
+<ol>
+<li>关于语言芯片外设电路的设计</li>
+<li>语言芯片驱动的逻辑分析</li>
+<li>驱动芯片程序的开发</li>
+<li>语音芯片功能的测试</li>
+</ol>
+</blockquote>
+<h1>学习内容</h1>
+<blockquote>
+<p>语音芯片的主要作用是让主机有语音提示功能。 这个是本产品最主要的功能之一。我们选择的是广州唯创电子的一颗定制芯片。</p>
+</blockquote>
+<h2 id="1-硬件原理图纸的分析"><strong>1.硬件原理图纸的分析:</strong></h2>
+<p><img src="/2023/09/06/%E8%AF%AD%E8%A8%80%E8%8A%AF%E7%89%87%E7%9A%84%E9%A9%B1%E5%8A%A8-%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9F%A9%E9%98%B5%E7%9A%84%E5%85%B8%E5%9E%8B%E7%94%A8%E6%B3%95/12-1.png" alt></p>
+<p><img src="/2023/09/06/%E8%AF%AD%E8%A8%80%E8%8A%AF%E7%89%87%E7%9A%84%E9%A9%B1%E5%8A%A8-%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9F%A9%E9%98%B5%E7%9A%84%E5%85%B8%E5%9E%8B%E7%94%A8%E6%B3%95/12-2.png" alt></p>
+<p><img src="/2023/09/06/%E8%AF%AD%E8%A8%80%E8%8A%AF%E7%89%87%E7%9A%84%E9%A9%B1%E5%8A%A8-%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9F%A9%E9%98%B5%E7%9A%84%E5%85%B8%E5%9E%8B%E7%94%A8%E6%B3%95/12-3.png" alt></p>
+<blockquote>
+<p>从上面的原理图很难看的出，WTN06的通讯的方式的。</p>
+<p>但是可以看出，接单片机引脚的三个口，是单片机输出来驱动语音芯片，输出是PWM，PWM再进入功放电路，功放就是声音放大的作用，不加功放的话声音会小一点。</p>
+<p>WTN06支持多种通讯方式，刚开始原理图是按照单线通讯的方式设计的，但和厂家沟通后，单线通讯不支持我们的功能，所有我们有修改成了2线串口方式。</p>
+</blockquote>
+<p>PC1 –  WTN6_DATA –  CLK 时钟线</p>
+<p>PC2 –  WTN6_NC   –  DAT</p>
+<p>PC3 –  WTN6_BUSY –  NC （PC3没用到，预留在这，我们只用到了PC1和PC2，CLK和DAT，他俩是什么，看下面的逻辑分析）</p>
+<p>功放芯片：</p>
+<p>PA0 — 8002_EN        功放控制脚    8002_EN写入高电平，将三极管导通，SH为低电平，功放工作</p>
+<p><img src="/2023/09/06/%E8%AF%AD%E8%A8%80%E8%8A%AF%E7%89%87%E7%9A%84%E9%A9%B1%E5%8A%A8-%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9F%A9%E9%98%B5%E7%9A%84%E5%85%B8%E5%9E%8B%E7%94%A8%E6%B3%95/12-4.png" alt></p>
+<p><img src="/2023/09/06/%E8%AF%AD%E8%A8%80%E8%8A%AF%E7%89%87%E7%9A%84%E9%A9%B1%E5%8A%A8-%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9F%A9%E9%98%B5%E7%9A%84%E5%85%B8%E5%9E%8B%E7%94%A8%E6%B3%95/12-5.png" alt></p>
+<h2 id="2-语言芯片驱动的逻辑分析"><strong>2.语言芯片驱动的逻辑分析</strong></h2>
+<p><img src="/2023/09/06/%E8%AF%AD%E8%A8%80%E8%8A%AF%E7%89%87%E7%9A%84%E9%A9%B1%E5%8A%A8-%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9F%A9%E9%98%B5%E7%9A%84%E5%85%B8%E5%9E%8B%E7%94%A8%E6%B3%95/12-6.png" alt></p>
+<blockquote>
+<p>96H：1001 0110 先发送低位，再高位，0110 1001</p>
+<p>96H发送完后，就播放96H地址对应的语音，在表里面可以找。</p>
+<p>例如要发在家布防： 0000 0001，则DATA发送1000 0000，如下</p>
+<p>50,         3,3,     3,3,    3,3,    3,3,    3,3,    3,3,    3,3,    3,3,    3,3,   3（多一个，是最后数据发送完了，要对CLK和DATA拉高，这里多一位相当于把这位提前初始化了，是0是1并不重要）</p>
+<p>CLK-L     0 1     0 1      0 1      0 1    0 1    0 1      0 1    0 1     0 1</p>
+<p>DATA-L    1        0        0        0        0      0         0         0         0</p>
+</blockquote>
+<p>①时钟脚CLK.</p>
+<p>​                ● 空闲：高电平</p>
+<p>​                ● 唤醒：5ms的低电平</p>
+<p>​                ● 输出数据：40-3.2ms周期的时钟 推荐高低电平300uS</p>
+<p>​                ● 结束：高电平</p>
+<p>5ms 300us 300us…(16个高低电平，16个300us)最后持续高电平</p>
+<p>②数据脚DATA</p>
+<p>​                ○ 空闲：高电平</p>
+<p>​                ○ 唤醒： 和CLK同步5ms的低电平</p>
+<p>​                ○ 数据传输：低位在前     数据1：高电平  数据0：低电平</p>
+<blockquote>
+<p>CLK和DATA空闲的时候都是高电平。</p>
+</blockquote>
+<p>数据的就和我们的语音对应</p>
+<p>程序语音的排序:sentence句子</p>
+<p><img src="/2023/09/06/%E8%AF%AD%E8%A8%80%E8%8A%AF%E7%89%87%E7%9A%84%E9%A9%B1%E5%8A%A8-%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9F%A9%E9%98%B5%E7%9A%84%E5%85%B8%E5%9E%8B%E7%94%A8%E6%B3%95/12-7.png" alt></p>
+<h2 id="3-驱动芯片程序的开发"><strong>3.驱动芯片程序的开发</strong></h2>
+<blockquote>
+<p>上面的代码我们用定时器矩阵来完成。如果没有定时器矩阵功能的话，这个功能如果做起来还是有很大的困难的。裸机去跑的话还是有很多办法去实现的，但是如果是放在系统（Freertos）里面，那做起来还是有难度的。</p>
+<p>首先我们用定时器矩阵依次定时5ms + 16个300us，控制CLK 管脚</p>
+<p>其次我们根据CLK的变化，来控制DATA的高低电平</p>
+</blockquote>
+<h2 id="步骤">步骤</h2>
+<p>①程序版本修改为V1.14  我们在V1.14版本上完成WTN6驱动的开发</p>
+<p>②新建hal_wtn6.c和hal_wtn6.h文件。并加载到V1.14工程里</p>
+<p>③相关IO的初始化</p>
+<h3 id="端口定义">端口定义:</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;hal_wTn6.h&quot;</span><br><span class="line">#include &quot;stm32F10x.h&quot;</span><br><span class="line">#include &quot;hal_timer.h&quot;</span><br><span class="line"></span><br><span class="line">//只用了PC1和PC2</span><br><span class="line">#define WTN6_CLK_PORT    GPIOC</span><br><span class="line">#define WTN6_CLK_PIN     GPIO_Pin_1</span><br><span class="line"></span><br><span class="line">#define WTN6_DAT_PORT    GPIOC</span><br><span class="line">#define WTN6_DAT_PIN     GPIO_Pin_2</span><br><span class="line"></span><br><span class="line">#define SC8002_SH_PORT	 GPIOA</span><br><span class="line">#define SC8002_SH_PIN    GPIO_Pin_0</span><br><span class="line"></span><br><span class="line">//时钟低电平，时钟高电平</span><br><span class="line">#define WTN6_CLK_LOW   GPIO_ResetBits(WTN6_CLK_PORT,WTN6_CLK_PIN)</span><br><span class="line">#define WTN6_CLK_HIG   GPIO_SetBits(WTN6_CLK_PORT,WTN6_CLK_PIN)</span><br><span class="line"></span><br><span class="line">//数据高低电平</span><br><span class="line">#define WTN6_DAT_LOW   GPIO_ResetBits(WTN6_DAT_PORT,WTN6_DAT_PIN)</span><br><span class="line">#define WTN6_DAT_HIG   GPIO_SetBits(WTN6_DAT_PORT,WTN6_DAT_PIN)</span><br><span class="line"></span><br><span class="line">//控制功放引脚</span><br><span class="line">#define SC8002_SH_LOW   GPIO_ResetBits(SC8002_SH_PORT,SC8002_SH_PIN)</span><br><span class="line">#define SC8002_SH_HIG   GPIO_SetBits(SC8002_SH_PORT,SC8002_SH_PIN)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="GPIO的初始化">GPIO的初始化:</h3>
+<p>初始化相关的GPIO口。配置CLK DAT 为高电平（空闲为高电平）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">static void hal_Wtn6Config(void)</span><br><span class="line">&#123;</span><br><span class="line">	GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC , ENABLE); 	//注意时钟端口一定都要打开</span><br><span class="line">	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA , ENABLE); 	</span><br><span class="line"></span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = WTN6_CLK_PIN | WTN6_DAT_PIN;</span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; </span><br><span class="line">	GPIO_Init(GPIOC, &amp;GPIO_InitStructure);</span><br><span class="line"></span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = SC8002_SH_PIN;</span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_10MHz;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP ; </span><br><span class="line">	GPIO_Init(SC8002_SH_PORT, &amp;GPIO_InitStructure);	</span><br><span class="line">	</span><br><span class="line">	GPIO_SetBits(GPIOC,GPIO_Pin_1);	</span><br><span class="line">	GPIO_SetBits(GPIOC,GPIO_Pin_2);</span><br><span class="line">	GPIO_SetBits(SC8002_SH_PORT,SC8002_SH_PIN);	</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>④播放语音的初始化</p>
+<p>在hal_timer.h文件中增加T_WTN6定时器矩阵，用来驱动WTN6语音播报。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">typedef enum</span><br><span class="line">&#123;</span><br><span class="line">	T_LED,					//LED定时器</span><br><span class="line">    T_WTN6,</span><br><span class="line">	T_SUM,</span><br><span class="line">&#125;TIMER_ID_TYPEDEF;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>利用定时器矩阵依次定时5ms 300us 300us…300us(17个),并初始化相关参数。</p>
+<p>定义三个变量:</p>
+<blockquote>
+<p>unsigned short wtn6[] = {50,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3};	 //5ms 300us 300us…300us(17个),</p>
+<p>unsigned char Wtn6Playflag;// CLK的序号</p>
+<p>unsigned char Wtn6VolueNum;// 当前播放的语音</p>
+<p>unsigned char Wtn6NextNum; // 下一个播放的语音</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">unsigned short wtn6[] = &#123;50,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3&#125;;	//50*100us=5ms;3*100us=300us</span><br><span class="line">unsigned char Wtn6Playflag;// CLK的序号的计数个数</span><br><span class="line">unsigned char Wtn6VolueNum;// 当前播放的语音</span><br><span class="line">unsigned char Wtn6NextNum; // 下一个播放的语音</span><br><span class="line">volatile unsigned short Wtn6Timer;  //当前WTN计时次数</span><br><span class="line">static void hal_Wtn6_PlayHandle(void);</span><br><span class="line">void hal_wtn6(void)</span><br><span class="line">&#123;</span><br><span class="line">	hal_Wtn6Config();</span><br><span class="line">	WTN6_DAT_HIG;</span><br><span class="line">	WTN6_CLK_HIG;</span><br><span class="line">	Wtn6Playflag = 0;</span><br><span class="line">	Wtn6VolueNum = 0;</span><br><span class="line">	Wtn6NextNum = 0xff;</span><br><span class="line">    hal_CreatTimer(T_WTN6,hal_Wtn6_PlayHandle,2,T_STA_STOP);//100us</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>开始语音播报程序:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void hal_Wtn6_PlayVolue(unsigned char VolNum) //VolNum是我们程序头文件枚举中的值，例如，播放在家布防就是1</span><br><span class="line">&#123;</span><br><span class="line">	if(Wtn6Playflag == 0)  //时序等于0，表示当前是空闲状态</span><br><span class="line">	&#123; //空闲 ，这次直接发</span><br><span class="line">		hal_CreatTimer(T_WTN6,hal_Wtn6_PlayHandle,2,T_STA_START); //启动定时器矩阵，时间周期为100us</span><br><span class="line">		WTN6_CLK_LOW;</span><br><span class="line">		WTN6_DAT_LOW;  //这两个引脚拉低，去唤醒芯片</span><br><span class="line">		Wtn6VolueNum = VolNum; //把当前要播放的语音复制给Wtn6VolueNum</span><br><span class="line">		Wtn6Playflag = 0; //清零</span><br><span class="line">		Wtn6Timer = wtn6[0];	//用来计数，50 3 3 3 ……，每进一次定时器矩阵处理函数，Wtn6Timer会减减</span><br><span class="line">		Wtn6NextNum = 0xff;  //清零，这里的清零是初始化为定值0xff</span><br><span class="line">	&#125;</span><br><span class="line">	else   //时序不等于0 ，则表示正在发送时序</span><br><span class="line">	&#123; //忙碌，则保存为Next值，下一次发</span><br><span class="line">		Wtn6NextNum = VolNum;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>语音播报处理函数程序:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">/********</span><br><span class="line">*CLK：</span><br><span class="line">*开始时，CLK是50ms高电平，后面数组的第1，3，5，7，9……15都是低电平，WTN6_CLK_LOW，2，4，6，*8……16都是高电平，WTN6_CLK_HIG</span><br><span class="line">*DATA：VolueNum &amp; 0x01，每次只判断VolueNum（0000 0001）（VolueNum = Wtn6VolueNum）的最低位（因为DATA每次都是从最低位开始发），每次判断完后，将VolueNum左移一位，VolueNum &gt;&gt;= 1；每次判断最低位是1还是0，1则发高电平，0则发低电平</span><br><span class="line">***************/</span><br><span class="line">static void hal_Wtn6_PlayHandle(void)</span><br><span class="line">&#123;</span><br><span class="line">	static unsigned char VolueNum;</span><br><span class="line">	Wtn6Timer --;</span><br><span class="line">	if(Wtn6Timer == 0)</span><br><span class="line">	&#123;</span><br><span class="line">			Wtn6Playflag ++;   //对数组的元素，一个一个位来；比如，数组第一个数是50，则50--，到0的时候，Wtn6Playflag ++，后面Wtn6Timer= wtn6[Wtn6Playflag]，即要3--直到0，才到下一次</span><br><span class="line">		    Wtn6Timer= wtn6[Wtn6Playflag];</span><br><span class="line">			switch(Wtn6Playflag)</span><br><span class="line">			&#123;</span><br><span class="line">				case 1:</span><br><span class="line">					VolueNum = Wtn6VolueNum;</span><br><span class="line">					WTN6_CLK_LOW;</span><br><span class="line">					if(VolueNum &amp; 0x01)</span><br><span class="line">					&#123;</span><br><span class="line">							WTN6_DAT_HIG;</span><br><span class="line">					&#125;</span><br><span class="line">					else</span><br><span class="line">					&#123;</span><br><span class="line">							WTN6_DAT_LOW;</span><br><span class="line">					&#125;		</span><br><span class="line">				break;</span><br><span class="line">				case 2:</span><br><span class="line">				case 4:</span><br><span class="line">				case 6:</span><br><span class="line">				case 8:</span><br><span class="line">				case 10:</span><br><span class="line">				case 12:</span><br><span class="line">				case 14:</span><br><span class="line">			  case 16:</span><br><span class="line">				&#123;</span><br><span class="line">						WTN6_CLK_HIG;	</span><br><span class="line">					  VolueNum &gt;&gt;= 1;</span><br><span class="line">				&#125;		</span><br><span class="line">				break;</span><br><span class="line">				case 3:</span><br><span class="line">				case 5:</span><br><span class="line">				case 7:</span><br><span class="line">				case 9:</span><br><span class="line">				case 11:</span><br><span class="line">				case 13:</span><br><span class="line">				case 15:	</span><br><span class="line">				&#123;</span><br><span class="line">					WTN6_CLK_LOW;	</span><br><span class="line">					if(VolueNum &amp; 0x01)</span><br><span class="line">					&#123;</span><br><span class="line">							WTN6_DAT_HIG;</span><br><span class="line">					&#125;</span><br><span class="line">					else</span><br><span class="line">					&#123;</span><br><span class="line">							WTN6_DAT_LOW;</span><br><span class="line">					&#125;				</span><br><span class="line">				&#125;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">			if(Wtn6Playflag == 17) //发完了，对要清零的数据清零</span><br><span class="line">			&#123;</span><br><span class="line">				WTN6_DAT_HIG;</span><br><span class="line">				WTN6_CLK_HIG;</span><br><span class="line">				Wtn6Playflag = 0;</span><br><span class="line">				if(Wtn6NextNum != 0xff)  //若下一次用播放，即Wtn6NextNum！=0，则继续播放</span><br><span class="line">				&#123;</span><br><span class="line">					hal_Wtn6_PlayVolue(Wtn6NextNum);</span><br><span class="line">					Wtn6NextNum = 0xff;</span><br><span class="line">				&#125;</span><br><span class="line">				return;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	hal_ResetTimer(T_WTN6,T_STA_START);	</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分析（及时理解）：</p>
+<p>（1）语音播报程序void hal_Wtn6_PlayVolue(unsigned char VolNum) 其实就包含了语音播报处理函数static void hal_Wtn6_PlayHandle(void)，</p>
+<p>（2）因为语音播报处理函数是语音播报程序的回调函数</p>
+<p>（3）语音播报程序void hal_Wtn6_PlayVolue(unsigned char VolNum) 相当于播报前的一个预处理，语音播报处理函数static void hal_Wtn6_PlayHandle(void)是正式处理播报功能</p>
+<p>（4）这就体现出来，程序和做事一样，做得很周到，有预处理和对预处理的结果做正式处理。</p>
+</blockquote>
+<p>⑤完善hal_wtn6.h代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">#ifndef ____HAL_WTN6_H_</span><br><span class="line">#define ____HAL_WTN6_H_</span><br><span class="line">//通过枚举的形式，把要播放的语音都写在这里，要播放哪个直接取值就行</span><br><span class="line">enum</span><br><span class="line">&#123;</span><br><span class="line">	WTN6_HOMEARM = 1,   ///在家布防</span><br><span class="line">	WTN6_AWAYARM,       ///离家布防</span><br><span class="line">	WTN6_DISARM,        ///撤防</span><br><span class="line">	WTN6_STUDY_START,   ///开始成功，请出发探测器</span><br><span class="line">	WTN6_STUDY_SUC,     ///配对成功 </span><br><span class="line">	WTN6_HAVED_DETEC,   ///探测器已存在 </span><br><span class="line">	WTN6_STUDY_FAIL,    ///配对失败</span><br><span class="line">	WTN6_GET_WIFI_PASSWORD,    ///开始配网，请在APP上输入WIFI密码，点击链接按钮</span><br><span class="line">	WTN6_GET_WIFI_OK,    ///配网成功</span><br><span class="line">	WTN6_GET_WIFI_FAIL,  ///配网失败</span><br><span class="line">	WTN6_WIFI_TIMEOUT,  ///配网超时	</span><br><span class="line"></span><br><span class="line">	WTN6_AC_DOWN,    ///主机掉电</span><br><span class="line">	WTN6_AC_RECOVER,  ///外电恢复</span><br><span class="line">	WTN6_TO_FACTORY,  ///恢复出厂设置OK</span><br><span class="line"></span><br><span class="line">	WTN6_UPGRADE_NEWFIREWARE,//new fireware</span><br><span class="line">	WTN6_UPGRADE_DOWN_START,//</span><br><span class="line">	WTN6_UPGRADE_DOWN_FAIL,</span><br><span class="line">	WTN6_UPGRADE_DOWN_SUC,  ///升级成功，</span><br><span class="line"></span><br><span class="line">	WTN6_VOLUE_SUC,         ///音效 成功音效</span><br><span class="line">	WTN6_VOLUE_DI,        ///音效 DI DI</span><br><span class="line">	WTN6_VOLUE_DINGDONG,    ///音效 叮咚</span><br><span class="line">	WTN6_VOLUE_VOLT_LOW,    ///音效 电池低压	</span><br><span class="line"></span><br><span class="line">	WTN6_VOLUE_110,         ///音效 110报警声音</span><br><span class="line">	WTN6_VOLUE_110_12,         ///音效 110报警声音</span><br><span class="line">	WTN6_VOLUE_110_15,         ///音效 110报警声音</span><br><span class="line">	WTN6_VOLUE_110_18,         ///音效 110报警声音</span><br><span class="line">&#125;;</span><br><span class="line">	</span><br><span class="line">void hal_wtn6(void);  //初始化的函数</span><br><span class="line">void hal_Wtn6_PlayVolue(unsigned char VolNum);  //播放语音的函数</span><br><span class="line"></span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>⑥在hal_task.c中初始化wtn6.代码如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;hal_task.h&quot;</span><br><span class="line">#include &quot;hal_timer.h&quot;</span><br><span class="line">#include &quot;hal_led.h&quot;</span><br><span class="line">#include &quot;hal_gpio.h&quot;</span><br><span class="line">#include &quot;hal_wtn6.h&quot;</span><br><span class="line"></span><br><span class="line">void hal_task_init(void)</span><br><span class="line">&#123;</span><br><span class="line">	hal_timerInit();	</span><br><span class="line">	hal_GpioConfig_init();		</span><br><span class="line">	hal_LedInit();</span><br><span class="line">	hal_wtn6(); //初始化语音播报芯片</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>⑦在hal_task.c 函数void hal_task(void)中增加wtn6.测试代码:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">void hal_task(void)</span><br><span class="line">&#123;</span><br><span class="line">	static unsigned short wtn6testDelay = 0;</span><br><span class="line">	static unsigned char wtn6PlayNum = 1;</span><br><span class="line">	wtn6testDelay ++;</span><br><span class="line">	if(wtn6testDelay &gt; 500) //10ms*500 = 5s，每5s执行一次播报，把枚举的几个语句全部读完又从头读</span><br><span class="line">	&#123;</span><br><span class="line">		wtn6testDelay = 0;</span><br><span class="line">		hal_Wtn6_PlayVolue(wtn6PlayNum);</span><br><span class="line">		wtn6PlayNum ++;</span><br><span class="line">		if(wtn6PlayNum &gt;= WTN6_VOLUE_110_18)</span><br><span class="line">		&#123;</span><br><span class="line">			wtn6PlayNum = 1;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="4-语音芯片功能的测试"><strong>4.语音芯片功能的测试</strong></h2>
+<h1>tips</h1>
+<blockquote>
+<p>（1）理解代码，先去找到最终实现功能的函数，</p>
+<p>（2）根据目的，去研究相关的各个函数，每个函数的研究可以从函数里面的变量入手，去理解一个一个有什么作用。</p>
+<p>（3）理解每个变量的作用，而后理解整个函数的思路，最后可以理解整个系统的逻辑思路。</p>
+<p>（4）上面的驱动代码还是比较灵活的运用了定时器矩阵，不过我感觉这代码里面更值得欣赏的还是发送CLK和DATA数据的思路，巧妙的配合，灵活的程序编写，很优秀，值得深入研究学习。</p>
+<p>（5）有的时候程序写完了却没有实现目的，可能的代码问题是，功能所用到的端口的时钟，没有全部打开。</p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WM</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://fiercewill.github.io/2023/09/06/%E8%AF%AD%E8%A8%80%E8%8A%AF%E7%89%87%E7%9A%84%E9%A9%B1%E5%8A%A8-%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9F%A9%E9%98%B5%E7%9A%84%E5%85%B8%E5%9E%8B%E7%94%A8%E6%B3%95/">https://fiercewill.github.io/2023/09/06/%E8%AF%AD%E8%A8%80%E8%8A%AF%E7%89%87%E7%9A%84%E9%A9%B1%E5%8A%A8-%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9F%A9%E9%98%B5%E7%9A%84%E5%85%B8%E5%9E%8B%E7%94%A8%E6%B3%95/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2023 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/STM32/">🏷️ STM32</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/09/06/%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9F%A9%E9%98%B5%E7%9A%84%E7%A7%BB%E6%A4%8D/">定时器矩阵的移植</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WM | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    总访客量:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;
+
+
+<span class="site-pv">
+    总访问量:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+		
+        </span>
+    </div>
+</footer>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<!--浏览器搞笑标题-->
+<!-- 雪花特效 -->
+
