@@ -219,13 +219,13 @@
                     
                         <span class="post-count">
                     Words:
-                        <a href="">1,782</a> 
+                        <a href="">3,681</a> 
                         </span>
                              
                     
                         <span class="post-count">
                     Time:
-                        <a href="">6min</a> 
+                        <a href="">13min</a> 
                         </span>
                     
                 </div>
@@ -259,7 +259,7 @@
 <p>Lonjjmp: 执行一个非局部跳转 /* setjmp.h*/</p>
 </blockquote>
 <h4 id="反思">反思</h4>
-<p>（1）请先允许见识狭窄的我先说一句，我用了两年C语言都没见过&lt;setjmp.h&gt;这个头文件，以至于我开始都以为这题考的不是C语言哈哈，直到我把题目代码在VS里编译后，才相信，还是学的东西太少了，一下子暴露了自己的知识上限（doge）,其次题目代码少包含了一个头文件#include &lt;stdio.h&gt;。</p>
+<p>（1）请先允许见识狭窄的我先说一句，我用了两年C语言都没见过&lt;setjmp.h&gt;这个头文件，以至于我开始都以为这题考的不是C语言哈哈，直到我把题目代码在VS里编译后，才相信，还是学的东西太少了，一下子暴露了自己的知识上限（doge）,其次题目代码少包含了一个头文件#include &lt;stdio.h&gt;。这个程序看似很复杂，实际超级简单。</p>
 <p><img src="/2023/09/07/%E5%AD%A6%E4%B9%A0%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%88day1%EF%BC%89/1.png" alt></p>
 <p>我提出问题，头文件&lt;setjmp.h&gt;有什么作用？函数setjmp()、longjmp()是什么作用？该程序的逻辑功能是什么？</p>
 <p>（2）头文件&lt;setjmp.h&gt;有什么作用？</p>
@@ -301,6 +301,73 @@
 <p>然而，在跳转之前，我们将变量b的值修改为5。</p>
 <p>最后，通过调用longjmp(buf, 1)函数，程序将跳转回之前设置的跳转点，并且setjmp()函数的返回值被设置为1。这会导致条件判断语句为真，从而执行跳转后的代码块。</p>
 <p>综上所述，这段代码的输出结果将是&quot;5&quot;。</p>
+</blockquote>
+<h2 id="Tips">Tips</h2>
+<p>（1）需要注意的是，volatile关键字只会影响对变量的访问和修改行为，而不会影响变量本身的类型或存储方式。volatile并不提供线程安全性或互斥访问的保证，因此在多线程环境中使用volatile变量时需要额外的同步机制。</p>
+<p>（2）以下是一个示例，展示了volatile变量的使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line">    volatile int counter = 0;</span><br><span class="line"></span><br><span class="line">    while (counter &lt; 10) &#123;</span><br><span class="line">        printf(&quot;Counter: %d\n&quot;, counter);</span><br><span class="line">        counter++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在这个程序中，我们声明了一个 volatile 整数变量 counter。volatile 关键字的作用是告诉编译器，该变量的值可能会被意外地改变，因此<strong>在编译器优化过程中</strong>不要对该变量进行优化。</p>
+<p>在这个示例中，counter 变量在每次循环迭代时增加 1，然后将其值打印出来。由于 counter 是 volatile 类型的，编译器会确保每次循环都会读取变量的最新值，而不是依赖于缓存或寄存器中的旧值。这样可以确保输出的结果是连续递增的数字，而不是出现不连续或重复的数字。</p>
+<p>如果我们将 counter 声明为非 volatile 类型，编译器可能会进行优化，例如将 counter 的值保存在寄存器中，以避免每次迭代都从内存中读取。这样可能导致打印出的结果不符合预期，例如可能会输出重复的数字或者不按顺序递增。</p>
+<p>因此，使用 volatile 关键字可以确保程序正确地处理那些可能被意外改变的变量，如硬件寄存器、多线程环境下的共享变量等。</p>
+</blockquote>
+<h3 id="Volatile在嵌入式中的应用：">Volatile在嵌入式中的应用：</h3>
+<p>可以去看看别人做项目的程序中什么时候用volatile，加以理解；光看白话文，而不看代码，很难理解透彻。</p>
+<blockquote>
+<p>当我们使用 volatile 关键字修饰变量时，我们告诉编译器该变量的值可能在程序的其他地方被意外地修改，因此编译器不应该对该变量进行某些优化，以确保程序的行为符合我们的预期。</p>
+<p>volatile 关键字的作用主要有以下几个方面：</p>
+<p>（1）防止编译器优化：编译器在进行代码优化时，为了提高程序的性能和效率，可能会对变量进行优化，例如将变量存储在寄存器中，而不是每次都从内存中读取。然而，这种优化可能导致问题，特别是当变量的值可能会在程序的其他地方被修改时。通过使用 volatile 关键字，我们告诉编译器不要对这些变量进行优化，每次都从内存中读取最新的值。</p>
+<p>（2）处理硬件寄存器：在嵌入式系统或与硬件交互的程序中，我们经常需要使用 volatile 关键字来处理硬件寄存器。硬件寄存器是与外部设备直接通信的接口，其值可以在任何时候被修改。通过使用 volatile 关键字修饰硬件寄存器，我们确保编译器不会对寄存器的读取和写入进行优化，并且始终与硬件保持同步。</p>
+<p>（3）处理多线程共享变量：在多线程编程中，多个线程可能同时访问和修改共享变量。这种情况下，使用 volatile 关键字可以确保每个线程都能正确地读取和写入共享变量的最新值，而不会依赖于线程本地的缓存。volatile 关键字提供了一种简单的同步机制，用于确保可见性和一致性。</p>
+<p>（4）需要注意的是，volatile 关键字并不能解决所有的并发问题，它只能保证可见性和一致性，但不能提供原子操作或线程安全。对于更复杂的多线程场景，需要使用其他同步机制，如互斥锁（mutex）或原子操作来保证线程安全性。</p>
+<p>综上所述，使用 volatile 关键字可以确保变量在特定的场景下的可见性和一致性，避免编译器的优化干扰。它在处理硬件寄存器、多线程共享变量或其他需要确保变量值正确性的情况下非常有用。</p>
+</blockquote>
+<h1>第二题（考查类型转换）</h1>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">main()</span><br><span class="line">&#123;</span><br><span class="line">   struct node </span><br><span class="line">   &#123;</span><br><span class="line">     int a;</span><br><span class="line">     int b;</span><br><span class="line">     int c;     </span><br><span class="line">   &#125;;</span><br><span class="line">   struct node  s= &#123; 3, 5,6 &#125;;</span><br><span class="line">   struct node *pt = &amp;s;</span><br><span class="line">   printf(&quot;%d&quot; ,  *(int*)pt);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>请问这段程序的输出是：</p>
+<blockquote>
+<p>(a) 3<br>
+(b) 5<br>
+© 6<br>
+(d) 7</p>
+</blockquote>
+<h2 id="第二题答案-a-3">第二题答案(a) 3</h2>
+<h3 id="详细解析-2">详细解析</h3>
+<blockquote>
+<p>（1）这段代码定义了一个结构体node，其中包含三个整型成员变量a、b和c。然后创建了一个名为s的node类型的结构体变量，并初始化其成员变量为3、5和6。</p>
+<p>（2）接下来，声明了一个指向node类型结构体的指针pt，并将其指向结构体变量s的地址。</p>
+<p>（3）最后，通过使用类型转换</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(int*)</span><br></pre></td></tr></table></figure>
+<p>将指针pt转换为<strong>指向整型的指针</strong>，然后使用间接访问运算符</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*</span><br></pre></td></tr></table></figure>
+<p>对其进行解引用，即</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*(int*)pt</span><br></pre></td></tr></table></figure>
+<p>这样可以将指针pt解释为指向整型变量的指针，并<strong>取得该整型变量的值</strong>。</p>
+<p>（4）最终，通过调用printf()函数，将解引用后的整型值打印出来。</p>
+<p>（5）根据代码中的初始化，输出结果将是3，<strong>因为pt指向s结构体的起始地址</strong>，而在s结构体中，第一个成员变量a的值为3。</p>
+</blockquote>
+<h1>第三题（考查递归调用）</h1>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">int  foo ( int x , int  n)　</span><br><span class="line">&#123;</span><br><span class="line">  int val;</span><br><span class="line">  val =1;</span><br><span class="line">  </span><br><span class="line">  if (n&gt;0) </span><br><span class="line">  &#123;</span><br><span class="line">    if (n%2 == 1)  val = val *x;</span><br><span class="line">    </span><br><span class="line">    val = val * foo(x*x , n/2);</span><br><span class="line">  &#125;</span><br><span class="line">  return val;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>这段代码对x和n完成什么样的功能(操作)?</p>
+<blockquote>
+<p>(a) x^n (x的n次幂)<br>
+(b) x*n(x与n的乘积)<br>
+© n^x(n的x次幂)<br>
+(d) 以上均不是</p>
+</blockquote>
+<h3 id="第三题答案-a">第三题答案(a)</h3>
+<h3 id="详细解析-3">详细解析</h3>
+<blockquote>
+<p>这段代码定义了一个名为foo的递归函数，用于计算一个整数x的n次幂。</p>
+<p>函数内部有一个局部变量val，并将其初始化为1。</p>
+<p>接下来，通过嵌套的条件语句进行递归计算。首先，判断n是否大于0。如果是，进入第一个内部条件语句。</p>
+<p>在第一个内部条件语句中，判断n是否为奇数（即n % 2 == 1）。如果是奇数，将val乘以x，即val = val * x。</p>
+<p>然后，调用foo()函数本身，传入x的平方和n除以2的结果。这样就实现了递归调用，将问题规模减半。</p>
+<p>递归调用在函数内部进行，通过每次将n减半的方式，最终达到递归的结束条件（即n等于0，其实n/2小于1就结束了，因为是形参是int类型）。当n等于0时，递归函数返回1。</p>
+<p>最后，在函数的最外层，返回变量val的值。</p>
+<p>通过这种递归的方式，函数foo()可以计算x的n次幂，并将结果作为返回值返回。</p>
+<p>需要注意的是，对于较大的n值，由于递归的深度增加，可能导致栈溢出或性能下降。在实际使用中，需要注意递归调用的层数和性能影响。</p>
 </blockquote>
 
         </div>
