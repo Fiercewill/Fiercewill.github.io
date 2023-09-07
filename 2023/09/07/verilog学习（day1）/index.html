@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WM">
+
+
+
+
+
+<title>verilog学习（day1） | WM&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">WM&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">WM&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">verilog学习（day1）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WM</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 7, 2023&nbsp;&nbsp;7:11:04</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/verilog%E7%A1%AC%E4%BB%B6%E6%8F%8F%E8%BF%B0%E8%AF%AD%E8%A8%80/">verilog硬件描述语言</a>
+                            
+                        </span>
+                    
+                    
+                        <span class="post-count">
+                    Words:
+                        <a href="">1,189</a> 
+                        </span>
+                             
+                    
+                        <span class="post-count">
+                    Time:
+                        <a href="">4min</a> 
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1>前言</h1>
+<blockquote>
+<p>（1）大三上学期，我们开了一门叫“FPGA应用技术及实践”的专业课，一看到FPGA这个名字，我就觉得很高级，因为此前我只是听过FPGA这个名词，但是对其一无所知。</p>
+<p>（2）本以为这门课，我们会学FPGA，但是在上第一节课的时候，我发现这门课的教材是“Verilog硬件描述语言”，好家伙，这门课原来是学一门语言，但是呢，我对verilog这个语言也是一无所知，也不明白什么是硬件描述语言。</p>
+<p>（3）学校老师上课的方式，我一言难尽，所以两节课下来，我也没听懂多少，主要还是之前根本没接触过这个东西，还是得找机会向学长请教一下这门课，怎么学，学什么，学了有什么用……</p>
+<p>（4）由于这门课是考试课，所以最后还要考试，而且考试内容还有编程题，听实验室学长说，verilog以后就业薪资很高，这一下我的兴趣就提上来了，所谓跟谁过不去，都别跟钱过不去。因此，从这个学期的学习开始，我将新开一个系列博客，就是讲verilog，我在这一学期的学习之中会把内容分享出来，希望各位大佬多多指导，一起交流，一起进步，谢谢大家！</p>
+</blockquote>
+<blockquote>
+<p>本章目标：</p>
+<p>（1）verilog入门，了解什么是fpga，什么是verilog，他们有什么关系？</p>
+<p>本章参考教程</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Vu411s7dR/?spm_id_from=333.1296.top_right_bar_window_history.content.click">https://www.bilibili.com/video/BV1Vu411s7dR/?spm_id_from=333.1296.top_right_bar_window_history.content.click</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1hX4y137Ph/?spm_id_from=333.788.recommend_more_video.0&amp;vd_source=221d5bfd8774acfce916ac253ceaee25">Verilog零基础入门_哔哩哔哩_bilibili</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/verilog-tutorial.html">https://www.runoob.com/w3cnote/verilog-tutorial.html</a></li>
+</ol>
+</blockquote>
+<h1>FPGA是什么？</h1>
+<p>（1）FPGA英文全称Field- Programmable GateArray，即<strong>现场可编程门阵列</strong>。它是在PAL、GAL、CPLD等可编程器件的基础上进一步发展的产物。它是作为专用集成电路(ASIC)领域中的一种半定制电路而出现的，既解决了定制电路的不足，叉克服了原有可编程器件门电路数有限的缺点。</p>
+<p>（2）FPGA本质是一块芯片，与我们平时所接触的一些芯片比较，它突出的优势是什么呢?</p>
+<p>（3）FPGA可以通过编程来改变芯片的内部结构，去满足不同硬件的产品需求。我们这里所说的可编程，跟平常所理解的软件编程有很大的不同，它们有着本质上区别。平时我们所说的软件编程，比如说CPU或者单片机的编程，它们往往是通过改变上面寄存器的配置来实现功能的，本质上编程并不会改变这个芯片内部的逻辑结构。</p>
+<p>（4）但是我们这里所说的FPGA编程呢，实际上可以通过编程的方式去<strong>改变它内部的逻辑结构</strong>，这就是FPGA非常强大的优势，这就是为什么FPGA称之为现场可编程的原因。</p>
+<p>（5）其次，大家可以看到FPGA是现场可编程门阵列，那这个<strong>门阵列</strong>实际上也是决定了FPGA的强大之处，学过数电的同学实际上都知道，门阵列是数字电路当中最基本的一个组成单位，它是基于布尔代数这个二进制0和1进行操作，去完成不同的逻辑运算。我们可以在FPPGA内部，通过硬件描述语言改变各个门阵列的排列方式及组合，那我们实际上就可以去实现各种各样的逻辑功能。</p>
+<p>（6）FPGA内部是由大量的门阵列构成，这就满足我们对于不同功能及产品开发的要求。</p>
+<h2 id="综合以上FPGA的特点">综合以上FPGA的特点</h2>
+<p>（1）可编程性实现了开发者可任意编程、组合逻辑电路实现功能，因此，很多人也把FPGA称之为“万能芯”</p>
+<p>（2）也可以把FPGA看成是一个乐高，根据需要我们既可以把它组合成一个简单的玩具，也可以把它组合成非常复杂的模型，你也可以用这种通俗的比喻来理解FPGA。</p>
+<p>（3）在大家学习FPGA之前一定要知道它的特点及优势是什么，包括FPGA编程与软件编程的区别</p>
+<h1>Verilog简介</h1>
+<blockquote>
+<p>（1）Verilog是一种硬件描述语言，可以用写电路的方法设计复杂数字系统;</p>
+<p>（2）FPGA和数字集成电路设计几乎无一例外地使用Verilog，值得深入学习，熟练掌握，为学业深造和职业生涯打下良好基础。</p>
+</blockquote>
+<h2 id="Verilog-环境搭建">Verilog 环境搭建</h2>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/verilog-install.html">1.3 Verilog 环境搭建 | 菜鸟教程 (runoob.com)</a></p>
+</blockquote>
+<p><img src="/2023/09/07/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day1%EF%BC%89/1.png" alt></p>
+<p><img src="/2023/09/07/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day1%EF%BC%89/2.png" alt></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WM</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://fiercewill.github.io/2023/09/07/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day1%EF%BC%89/">https://fiercewill.github.io/2023/09/07/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day1%EF%BC%89/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>电子信息工程 (A) 2023 <a href="https://fiercewill.github.io/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a> . <a href="https://fiercewill.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89/">数据结构与算法（c语言）</a> . <a href="https://fiercewill.github.io/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a> 王明的博客</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/verilog/">🏷️ verilog</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/09/07/%E5%AD%A6%E4%B9%A0%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%88day1%EF%BC%89/">学习嵌入式软件工程师面试题（day1）</a>
+            
+            
+            <a class="next" rel="next" href="/2023/09/06/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88day5%EF%BC%89/">数据结构与算法（day5）</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WM | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    总访客量:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;
+
+
+<span class="site-pv">
+    总访问量:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+		
+        </span>
+    </div>
+</footer>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<!--浏览器搞笑标题-->
+<!-- 雪花特效 -->
+

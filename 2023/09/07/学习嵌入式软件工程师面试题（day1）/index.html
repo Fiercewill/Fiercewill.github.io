@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WM">
+
+
+
+
+
+<title>学习嵌入式软件工程师面试题（day1） | WM&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">WM&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">WM&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">学习嵌入式软件工程师面试题（day1）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WM</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 7, 2023&nbsp;&nbsp;8:02:26</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95/">嵌入式软件工程师面试</a>
+                            
+                        </span>
+                    
+                    
+                        <span class="post-count">
+                    Words:
+                        <a href="">1,782</a> 
+                        </span>
+                             
+                    
+                        <span class="post-count">
+                    Time:
+                        <a href="">6min</a> 
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1>前言</h1>
+<blockquote>
+<p>（1）如果你在读大学，不管你本科毕业是读研还是就业，你都可以早点准备嵌入式面试题，本系列教程的面试题均基于C语言。</p>
+<p>（2）像嵌入式学得好，且学历不错的本科生和研究生，都有机会进入华为、小米、大疆、智元等公司，薪资待遇也是不错的。</p>
+<p>（3）早点接触面试题，心里有底，大家一起学起来吧。</p>
+<p>（4）希望各位大佬多多指点经验，大家一起交流，共同进步！本人邮箱：3201935299@qq.com</p>
+</blockquote>
+<h1>第一题（考查对volatile关键字的认识）</h1>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;setjmp.h&gt;</span><br><span class="line">static jmp_buf  buf;</span><br><span class="line"></span><br><span class="line">main()    </span><br><span class="line">&#123;</span><br><span class="line">  volatile  int b;</span><br><span class="line">  b =3;</span><br><span class="line"></span><br><span class="line">  if(setjmp(buf)!=0)  </span><br><span class="line">  &#123;</span><br><span class="line">    printf(&quot;%d &quot;, b);  </span><br><span class="line">    exit(0);</span><br><span class="line">  &#125;</span><br><span class="line">  b=5;</span><br><span class="line">  longjmp(buf , 1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>请问，这段程序的输出是</p>
+<blockquote>
+<p>(a) 3<br>
+(b) 5<br>
+© 0<br>
+(d) 以上均不是</p>
+</blockquote>
+<h2 id="第一题答案-b-5">第一题答案(b) 5</h2>
+<h3 id="详细解析">详细解析</h3>
+<blockquote>
+<p>（1）volatile是C语言中的一个关键字，用于声明一个变量为&quot;易变&quot;（volatile）。当一个变量被声明为volatile时，编译器将对该变量的访问和操作做出特殊处理，以确保对该变量的读写操作不会被优化、重排序或省略，从而提供对变量的准确和可预测的访问。<br>
+（2）这是因为这个变量可能在一个寄存器，直接与外部设备相连，你写入之后，该寄存器也有可能被外部设备的写操作所改变;或者，该变量被一个中断程序，或被另一个进程改变了。<br>
+（3）volatile 不会被编译器优化影响，在longjump 后,它的值 是后面假定的变量值,b最后的值是5,所以5被打印出来.</p>
+<p>（4）setjmp : 设置非局部跳转 /* setjmp.h*/</p>
+<p>Lonjjmp: 执行一个非局部跳转 /* setjmp.h*/</p>
+</blockquote>
+<h4 id="反思">反思</h4>
+<p>（1）请先允许见识狭窄的我先说一句，我用了两年C语言都没见过&lt;setjmp.h&gt;这个头文件，以至于我开始都以为这题考的不是C语言哈哈，直到我把题目代码在VS里编译后，才相信，还是学的东西太少了，一下子暴露了自己的知识上限（doge）,其次题目代码少包含了一个头文件#include &lt;stdio.h&gt;。</p>
+<p><img src="/2023/09/07/%E5%AD%A6%E4%B9%A0%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%88day1%EF%BC%89/1.png" alt></p>
+<p>我提出问题，头文件&lt;setjmp.h&gt;有什么作用？函数setjmp()、longjmp()是什么作用？该程序的逻辑功能是什么？</p>
+<p>（2）头文件&lt;setjmp.h&gt;有什么作用？</p>
+<blockquote>
+<p>头文件&lt;setjmp.h&gt;是C标准库中的一个头文件，它提供了用于非局部跳转的函数setjmp()和longjmp()的声明和定义。</p>
+<p>setjmp()和longjmp()函数允许在程序的不同位置进行跳转，而不是按照正常的顺序执行代码。这种非局部跳转的能力对于处理异常、错误处理、状态回滚等情况非常有用。</p>
+<p>具体来说，&lt;setjmp.h&gt;头文件中提供的函数有以下作用：</p>
+<p>setjmp()函数：用于设置一个跳转点，并将当前程序状态保存到jmp_buf类型的变量中。它在设置跳转点时返回0，但当通过longjmp()函数跳转回来时，setjmp()函数会返回非零值，用于判断是否发生了跳转。</p>
+<p>longjmp()函数：用于进行非局部跳转，返回到之前通过setjmp()函数设置的跳转点。它的第一个参数是之前保存的jmp_buf变量，第二个参数是用于标识跳转原因的值。</p>
+<p>通过结合使用setjmp()和longjmp()函数，可以实现一种跳转回之前的程序状态的机制，从而实现异常处理、错误处理、状态回滚等操作。</p>
+<p>需要注意的是，由于非局部跳转可能会导致代码流程的混乱和难以维护，应该谨慎使用setjmp()和longjmp()函数，并确保在使用时遵循相关的规范和最佳实践。</p>
+</blockquote>
+<p>（3）函数setjmp()、longjmp()是什么作用？</p>
+<blockquote>
+<p>函数<code>setjmp()</code>和<code>longjmp()</code>是C标准库中提供的用于非局部跳转的函数。</p>
+<ol>
+<li>
+<p><code>setjmp()</code>函数：<code>setjmp()</code>函数用于设置一个跳转点，并将当前程序状态保存到一个<code>jmp_buf</code>类型的变量中。它的原型如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int setjmp(jmp_buf env);</span><br></pre></td></tr></table></figure>
+<p>``setjmp()<code>函数在设置跳转点时返回0，并将程序状态保存在</code>env<code>变量中。这样，通过调用</code>longjmp()<code>函数可以跳回到</code>setjmp()`函数所在的位置，并恢复保存的程序状态。</p>
+</li>
+<li>
+<p><code>longjmp()</code>函数：<code>longjmp()</code>函数用于进行非局部跳转，返回到之前通过<code>setjmp()</code>函数设置的跳转点。它的原型如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">void longjmp(jmp_buf env, int value);</span><br></pre></td></tr></table></figure>
+<p>``longjmp()<code>函数接受一个</code>jmp_buf<code>类型的变量</code>env<code>作为参数，以及一个用于标识跳转原因的整数值</code>value<code>。调用</code>longjmp()<code>函数会使程序跳转回</code>setjmp()<code>所在的位置，并且</code>setjmp()<code>函数的返回值被设置为</code>value`。</p>
+</li>
+</ol>
+<p>这种非局部跳转的机制可以用于异常处理、错误处理以及特定的控制流程需求。例如，当发生某个异常情况时，可以使用<code>setjmp()</code>函数设置一个跳转点，然后在需要的地方调用<code>longjmp()</code>函数跳转回来，从而实现异常处理。这种机制在一些C语言框架和库中被广泛使用，例如错误处理和资源回收的实现。</p>
+<p>需要注意的是，非局部跳转是一种强大但也容易导致代码复杂性和难以维护性的特性，因此在使用时应慎重考虑，并确保遵循相关的规范和最佳实践。</p>
+</blockquote>
+<p>（4）程序逻辑分析</p>
+<blockquote>
+<p>这段代码展示了使用C标准库中的setjmp()和longjmp()函数来实现非局部跳转的示例。</p>
+<p>首先，jmp_buf是一个用于存储跳转位置信息的数据类型。在代码中，我们声明了一个名为buf的jmp_buf类型变量。</p>
+<p>接下来，main()函数中声明了一个volatile修饰符的整型变量b，并将其初始化为3。</p>
+<p>然后，通过使用setjmp(buf)函数，在此处设置了一个跳转点。setjmp()函数会将当前程序状态保存到buf中，并返回0作为返回值。这是第一次调用setjmp()函数，因此返回值为0。</p>
+<p>之后，代码中的条件判断语句if(setjmp(buf)!=0)检测到setjmp()函数的返回值不为0，表示发生了跳转。在这种情况下，程序会执行跳转后的代码块。</p>
+<p>在跳转后的代码块中，通过调用printf()函数输出变量b的值，并调用exit(0)函数来终止程序运行。</p>
+<p>然而，在跳转之前，我们将变量b的值修改为5。</p>
+<p>最后，通过调用longjmp(buf, 1)函数，程序将跳转回之前设置的跳转点，并且setjmp()函数的返回值被设置为1。这会导致条件判断语句为真，从而执行跳转后的代码块。</p>
+<p>综上所述，这段代码的输出结果将是&quot;5&quot;。</p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WM</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://fiercewill.github.io/2023/09/07/%E5%AD%A6%E4%B9%A0%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%88day1%EF%BC%89/">https://fiercewill.github.io/2023/09/07/%E5%AD%A6%E4%B9%A0%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%88day1%EF%BC%89/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>电子信息工程 (A) 2023 <a href="https://fiercewill.github.io/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a> . <a href="https://fiercewill.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89/">数据结构与算法（c语言）</a> . <a href="https://fiercewill.github.io/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a> 王明的博客</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">🏷️ 面试题</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/09/07/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day1%EF%BC%89/">verilog学习（day1）</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WM | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    总访客量:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;
+
+
+<span class="site-pv">
+    总访问量:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+		
+        </span>
+    </div>
+</footer>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<!--浏览器搞笑标题-->
+<!-- 雪花特效 -->
+
