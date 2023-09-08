@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WM">
+
+
+
+
+
+<title>介绍串行和并行 | WM&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">WM&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">WM&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">介绍串行和并行</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WM</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 8, 2023&nbsp;&nbsp;17:26:19</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E7%9F%A5%E8%AF%86%E5%BA%93/">知识库</a>
+                            
+                        </span>
+                    
+                    
+                        <span class="post-count">
+                    Words:
+                        <a href="">1,154</a> 
+                        </span>
+                             
+                    
+                        <span class="post-count">
+                    Time:
+                        <a href="">4min</a> 
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1>前言</h1>
+<blockquote>
+<p>参考文章：</p>
+<p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?spm=1001.2014.3001.7498&amp;q=%E4%B8%B2%E8%A1%8C%E5%92%8C%E5%B9%B6%E8%A1%8C&amp;t=&amp;u=&amp;utm_term=%E4%B8%B2%E8%A1%8C%E5%92%8C%E5%B9%B6%E8%A1%8C&amp;utm_medium=distribute.pc_toolbar_associateword.none-task-associate_word-opensearch_query-1-%E4%B8%B2%E8%A1%8C%3C%2Fem%3E%E5%92%8C%E5%B9%B6%E8%A1%8C-null-null.179%5Ev5%5Epv&amp;depth_1-utm_source=distribute.pc_toolbar_associateword.none-task-associate_word-opensearch_query-1-%E4%B8%B2%E8%A1%8C%3C%2Fem%3E%E5%92%8C%E5%B9%B6%E8%A1%8C-null-null.179%5Ev5%5Epv&amp;request_id=169404871316800227430886&amp;opensearch_request_id=169404871316800227430886">串行和并行- CSDN搜索</a></p>
+<p><a target="_blank" rel="noopener" href="https://chaochaochao.blog.csdn.net/article/details/124242629?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2~default~BlogCommendFromBaidu~Rate-1-124242629-blog-130517862.235%5Ev38%5Epc_relevant_anti_t3_base&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2~default~BlogCommendFromBaidu~Rate-1-124242629-blog-130517862.235%5Ev38%5Epc_relevant_anti_t3_base&amp;utm_relevant_index=1">并行传输和串行传输的区别_金陵大掌柜的博客-CSDN博客</a></p>
+</blockquote>
+<h1>串行和并行介绍</h1>
+<blockquote>
+<p>（1）串行和并行是计算机领域中两个重要的概念。串行是指在计算机中，任务按照顺序一个一个执行，每个任务执行完后才能执行下一个任务。而并行是指多个任务同时进行，即多个任务在同一时刻进行，彼此之间相互独立。</p>
+<p>（2）举个例子，假设有一个需要打印100份文件的任务，如果使用串行方式，就是打印一份文件，等打印完成后再打印下一份文件，这样需要耗费很长时间。而如果使用并行方式，可以同时启动多个打印机，每个打印机打印不同的文件，这样可以大大缩短打印时间。</p>
+<p>（3）串行和并行都有各自的优缺点，具体使用取决于任务的特点和<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6&amp;spm=1001.2101.3001.7020">计算机硬件</a>的性能。</p>
+</blockquote>
+<h2 id="串行和并行都有各自适用的场景，下面列举一些常见的场景">串行和并行都有各自适用的场景，下面列举一些常见的场景</h2>
+<h3 id="串行场景">串行场景</h3>
+<blockquote>
+<ol>
+<li>单核CPU执行任务，因为单核CPU只能处理一个任务，只能采用串行方式；</li>
+<li>需要保证任务的顺序性，即必须先完成前一个任务才能进行下一个任务的场景，如编译代码时需要按照文件依赖关系依次编译；</li>
+<li>任务之间存在依赖关系，后一个任务需要使用前一个任务的输出结果作为输入，如数据处理任务。</li>
+</ol>
+</blockquote>
+<h3 id="并行场景">并行场景</h3>
+<blockquote>
+<ol>
+<li>多核CPU执行任务，因为多核CPU可以同时处理多个任务，可以采用并行方式；</li>
+<li>需要加速任务的执行速度，如<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86&amp;spm=1001.2101.3001.7020">图像处理</a>、视频编码、数据挖掘等计算密集型任务；</li>
+<li>任务之间不存在依赖关系，可以独立执行，如多个用户同时访问网站的请求处理。</li>
+</ol>
+</blockquote>
+<p>我们在学习嵌入式的时候最常见的之一就是串口通信，那么串口通信是串行还是并行通信呢？</p>
+<p>是串行。</p>
+<p>下面介绍一下，串行传输和并行传输的相关知识。</p>
+<h1>串行传输和并行传输的区别</h1>
+<h2 id="概念">概念</h2>
+<p>并行传输：并行传输指的是数据以成组的方式，在多条并行信道上同时进行传输，是在传输中有多个数据位同时在设备之间进行的传输。</p>
+<p>串行传输：使用一条数据线，将数据一位一位地依次传输，每一位数据占据一个固定的时间长度。只需要少数几条线就可以在系统间交换信息，特别适用于计算机与计算机、外设之间的远距离通信。</p>
+<h2 id="区别">区别</h2>
+<p>1、传输方式不同：一个是并行一个是串行</p>
+<p>2、效率不同：并行传输效率高，一次可传输多个数据；串行传输一次可传输一个数据。</p>
+<p>3、速度不同：这个要具体说一说，大多数情况下串行速度会快一些。</p>
+<p>4、并行传输适用于短距离，串行适用于长距离。</p>
+<h2 id="注意">注意</h2>
+<p>上面提到了效率和速度两个概念，在这里要做一个比较。光从并行和串行的概念来看，并行似乎传输速度要比串行快，但是实际上确实反过来的。为什么呢？</p>
+<p>原因是并行传输虽然一次可以发出多个数据，但是由于实际使用中，多条线路同时发送数据会造成线路震荡，为了避免这种干扰，就必须将两次发送之间的间隔时间加大。而串行传输不会有这个影响。举个不太准确的例子，并行传输一个发送10个数字，假设一秒钟可以发出5次（间隔时间已经加进去了），那么一秒钟一共发送了50 个数字；如果使用串行传输的话，虽然效率低，一次仅能传输一个数字，是例子中并行传输效率的1/10，但是串行传输一秒钟可以传输100次，所以同样的时间内，串行传输比并行传输多传输了50个数字。这就是为什么明明并行效率高却不如串行用途更广泛的原因，因为串行快。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WM</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://fiercewill.github.io/2023/09/08/%E4%BB%8B%E7%BB%8D%E4%B8%B2%E8%A1%8C%E5%92%8C%E5%B9%B6%E8%A1%8C/">https://fiercewill.github.io/2023/09/08/%E4%BB%8B%E7%BB%8D%E4%B8%B2%E8%A1%8C%E5%92%8C%E5%B9%B6%E8%A1%8C/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>电子信息工程 (A) 2023 <a href="https://fiercewill.github.io/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a> . <a href="https://fiercewill.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89/">数据结构与算法（c语言）</a> . <a href="https://fiercewill.github.io/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a> 王明的博客</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/">🏷️ 知识库</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/09/08/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day2%EF%BC%89/">verilog学习（day2）</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WM | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    总访客量:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;
+
+
+<span class="site-pv">
+    总访问量:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+		
+        </span>
+    </div>
+</footer>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<!--浏览器搞笑标题-->
+<!-- 雪花特效 -->
+
