@@ -274,7 +274,7 @@
 </blockquote>
 <p>一般都是在做差比和的前，进行归一化处理，网上的处理方式千奇百怪。</p>
 <p>归一化后，是利用电感的最大值和最小值处理，算出来的所有电感的电感值都在同一个范围，比如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(实际电感值/(max + min))*100</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(实际电感值/(max + min))*<span class="number">100</span></span><br></pre></td></tr></table></figure>
 <p>这样就可以把所有的电感值统一在0~100这个范围。</p>
 <p>归一化后出来的电感值，再通过差比和得到error，误差要用差比和去给，会让误差更加线性。</p>
 <blockquote>
