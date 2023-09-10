@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WM">
+
+
+
+
+
+<title>数据结构与算法（day7） | WM&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">WM&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">WM&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">数据结构与算法（day7）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WM</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 10, 2023&nbsp;&nbsp;16:10:35</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89/">数据结构与算法（C语言）</a>
+                            
+                        </span>
+                    
+                    
+                        <span class="post-count">
+                    Words:
+                        <a href="">2,549</a> 
+                        </span>
+                             
+                    
+                        <span class="post-count">
+                    Time:
+                        <a href="">10min</a> 
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1>前言</h1>
+<blockquote>
+<p>本章我们学习链表。</p>
+<p>（1）温故而知新。数据结构这块，我们前面已经学了队列和栈的操作了，并且也有简单的实例可供大家练习，不知道大家在学习和复习之中有没有对知识有新的理解；我的感触是颇多的，刚开始学习队列和链表的时候，敲程序很陌生，思路不连贯，但是思考清楚和多加练习之后，我对知识点就更加熟悉了，代码敲得也更加流畅，感觉爽了不少，但是还是需要继续努力学习。</p>
+<p>（2）今天的内容会比以前难一些（不过也不难），在存储一大波数的时候，我们通常用的是数组，但有的时候数组显得不够灵活，比如在对一组数中按大小顺序插入其他数时……</p>
+<p>（3）但是我们用链表的方法，就会以一种比较简单方式解决问题。</p>
+<p>本章的学习目标：</p>
+<p>（1）理解指针和动态分配内存函数malloc</p>
+<p>（2）理解链表操作的原理</p>
+<p>（3）能够使用链表解决简单的实际问题</p>
+</blockquote>
+<h1>题目场景</h1>
+<blockquote>
+<p>有一串已经从小到打排好序的数2 3 5 8 9 10 18 26 32。现需要往这串数中插入6使其得到的新序列仍符合从小到大的顺序。</p>
+</blockquote>
+<p>如何实现链表呢？</p>
+<blockquote>
+<p>在C语言中可以使用指针和动态分配内存函数malloc来实现。</p>
+</blockquote>
+<h2 id="1-malloc动态存储">1-malloc动态存储</h2>
+<blockquote>
+<p>回想一下，我们想在程序中存储一个整数10，除了使用int a；这种方式在内存中申请一块区域来存储，还有另外一种动态储存方法。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">malloc</span>(<span class="number">4</span>);</span><br></pre></td></tr></table></figure>
+<p>malloc函数的作用就是从内存中申请分配指定字节大小的内存空间。上面这行代码就申请了4个字节。如果你不知道int类型是4个字节的，还可以用sizeof(int)获取int类型所占用的字节数，如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br></pre></td></tr></table></figure>
+<p>现在你已经成功从内存中申请了4个字节的空间来准备存放一个整数，可是如何来对这个空间进行操作呢？这里我们就需要用一个指针来指向这个空间，即存储这个空间的首地址。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *p;</span><br><span class="line">p = (<span class="type">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>));</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要注意，malloc函数的返回类型是void*类型。void星表示未确定类型的指针。在C和C++中，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span>*</span><br></pre></td></tr></table></figure>
+<p>类型可以强制转换为任何其他类型的指针。上面我们将其强制转化为整型指针，以便告诉计算机这里的4个字节作为一个整体用来存放整数。</p>
+</blockquote>
+<p>ok，现在我们可以通过指针p对刚才申请的4个字节的空间进行操作了，例如我们向这个空间中存入整数10，如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*p = 10;</span><br></pre></td></tr></table></figure>
+<p>完整代码如下，注意当在程序中使用malloc函数时需要用到stdlib.h头文件。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> *p; <span class="comment">//定义一个指针p</span></span><br><span class="line">	p = (<span class="type">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">int</span>)); <span class="comment">//指针p获取动态分配的内存空间地址</span></span><br><span class="line">    *p = <span class="number">10</span>;  <span class="comment">//向指针p所指向的内存空间存入10</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,*p); <span class="comment">//输出指针p所指向的内存中的值</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果是</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10</span></span><br></pre></td></tr></table></figure>
+<h2 id="2-链表的每一个结点应该如何储存？">2-链表的每一个结点应该如何储存？</h2>
+<blockquote>
+<p>每一个链表都由两部分组成。左边的部分用来存放具体的数值，右边的部分需要村粗下一个结点的地址，可以用指针来实现（也称为后继指针）。那么，左边用一个整型变量就可以。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">int</span> data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">node</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上面的代码中，我们定义了一个叫做node（结点）的结构体类型，这个结构体类型有两个成员。第一个是整型data，用来存储具体的数值；第二个成员是一个指针，用来村粗下一个结点的地址。因为下一个结点的类型也是struct node，所以这个指针的类型也必须是</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> *</span></span><br></pre></td></tr></table></figure>
+<p>类型的指针。</p>
+</blockquote>
+<h2 id="3-如何建立链表？">3-如何建立链表？</h2>
+<blockquote>
+<p>首先我们需要一个头指针head指向链表的最开始。当链表还没有建立的时候头指针head为空（也可以理解为指向空结点）。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> *<span class="title">head</span>;</span></span><br><span class="line">head = <span class="literal">NULL</span>;  <span class="comment">//头指针初始为空</span></span><br></pre></td></tr></table></figure>
+<p>现在我们来创建第一个结点，并用临时指针p指向这个结点。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span> *<span class="title">p</span>;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//动态申请一个空间，用来存放一个结点，并用临时指针指向这个结点</span></span><br><span class="line">p = (<span class="keyword">struct</span> node *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> node));</span><br></pre></td></tr></table></figure>
+<p>接下来分别设置新创建的这个结点的左半部分和右半部分。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;a);</span><br><span class="line">p-&gt;data = a;  <span class="comment">//将数据存储到当前结点的data域中</span></span><br><span class="line">p-&gt;next = <span class="literal">NULL</span>;  <span class="comment">//设置当前结点的后继指针向空，也就是当前结点的下一个结点为空</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上面的代码中,-&gt;叫做结构体指针运算符，也是用来访问内部成员的。</p>
+<p>因为p是一个指针，所以不能使用.号访问内部成员，而是使用-&gt;。</p>
+</blockquote>
+<p>下面设置头指针和新创建的结点。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (head == <span class="literal">NULL</span>)</span><br><span class="line">	head = p;  <span class="comment">//如果这是第一个创建的结点，则头指针指向这个结点</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	q-&gt;next = p;  <span class="comment">//如果不是第一个创建的结点，则将上一个结点的后继指针指向当前结点</span></span><br></pre></td></tr></table></figure>
+<p>最后要将指针q也指向当前结点，因为待会临时指针p将会指向新创建的结点。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">q = p;  <span class="comment">//指针q也指向当前结点</span></span><br></pre></td></tr></table></figure>
+<h3 id="完整代码如下">完整代码如下</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;stdlib.h&gt;</span><br><span class="line"></span><br><span class="line">//这里创建一个结构体用来表示链表的结点类型</span><br><span class="line">struct node</span><br><span class="line">&#123;</span><br><span class="line">	int data;</span><br><span class="line">	struct node *next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	struct node *head, *p, *q, *t;</span><br><span class="line">	int i, n, a;</span><br><span class="line">	</span><br><span class="line">	scanf(&quot;%d&quot;,&amp;n);</span><br><span class="line">	head = NULL;  //头指针初试为空</span><br><span class="line">	q = NULL;  </span><br><span class="line">	//读取一串从小到大的数字并存入链表</span><br><span class="line">	for (i = 1; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		scanf(&quot;%d&quot;,&amp;a);</span><br><span class="line"></span><br><span class="line">		//申请一个动态空间，用来存放一个结点，并用临时指针p指向这个结点 </span><br><span class="line">		p = (struct node *)malloc(sizeof(struct node));  //每次申请的都不同</span><br><span class="line">		p-&gt;data = a;  //将数据存储到当前结点的data域中</span><br><span class="line">		p-&gt;next = NULL;  //设置当前结点的后继指针向空，也就是当前结点的下一个结点为空</span><br><span class="line"></span><br><span class="line">		if (head == NULL)</span><br><span class="line">			head = p;  //如果这是第一个创建的结点，则头指针指向这个结点</span><br><span class="line">		else</span><br><span class="line">			q-&gt;next = p;  //如果不是第一个创建的结点，则将上一个结点的后继指针指向当前结点</span><br><span class="line"></span><br><span class="line">		q = p;  //指针q也指向当前结点</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	//输出链表中的所有数</span><br><span class="line">	t = head;</span><br><span class="line">	while (t != NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&quot;%d &quot;,t-&gt;data);</span><br><span class="line">		t = t-&gt;next;  //继续下一个结点</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4-下面往链表中插入6">4-下面往链表中插入6</h2>
+<p>首先用一个临时指针t从链表的头部开始遍历。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">t = head;  <span class="comment">//从链表头部开始遍历</span></span><br></pre></td></tr></table></figure>
+<p>等到指针t的下一个结点的值比6大的时候，将6插入到中间。即t -&gt;next-&gt;data大于6时进行插入，代码如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">scanf(&quot;%d&quot;,&amp;a);  //读入待插入的数</span><br><span class="line">while (t != NULL)  //当没有到达链表尾部的时候循环</span><br><span class="line">	&#123;</span><br><span class="line">		if (t-&gt;next-&gt;data &gt; a) //如果当前结点的下一个结点的值大于待插入数，将数插入到中间</span><br><span class="line">		&#123;</span><br><span class="line">			p = (struct node*)malloc(sizeof(struct node)); //动态申请一个空间，用来存放新增结点</span><br><span class="line">			p-&gt;data = a;</span><br><span class="line">			p-&gt;next = t-&gt;next;  //新增结点的后继指针指向当前结点的后继指针</span><br><span class="line">			t-&gt;next = p;  //当前结点的后继指针指向新增结点</span><br><span class="line">			break;  //插入完毕，退出循环</span><br><span class="line">		&#125;</span><br><span class="line">		t = t-&gt;next; //继续下一个结点</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="完整代码如下-2">完整代码如下</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//这里创建一个结构体用来表示链表的结点类型</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	<span class="type">int</span> data;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">node</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">node</span> *<span class="title">head</span>, *<span class="title">p</span>, *<span class="title">q</span>, *<span class="title">t</span>;</span></span><br><span class="line">	<span class="type">int</span> i, n, a;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">	head = <span class="literal">NULL</span>;  <span class="comment">//头指针初试为空</span></span><br><span class="line">	q = <span class="literal">NULL</span>;  </span><br><span class="line">	<span class="comment">//读取一串从小到大的数字并存入链表</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;a);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//申请一个动态空间，用来存放一个结点，并用临时指针p指向这个结点 </span></span><br><span class="line">		p = (<span class="keyword">struct</span> node *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> node));  <span class="comment">//每次申请的都不同</span></span><br><span class="line">		p-&gt;data = a;  <span class="comment">//将数据存储到当前结点的data域中</span></span><br><span class="line">		p-&gt;next = <span class="literal">NULL</span>;  <span class="comment">//设置当前结点的后继指针向空，也就是当前结点的下一个结点为空</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (head == <span class="literal">NULL</span>)</span><br><span class="line">			head = p;  <span class="comment">//如果这是第一个创建的结点，则头指针指向这个结点</span></span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			q-&gt;next = p;  <span class="comment">//如果不是第一个创建的结点，则将上一个结点的后继指针指向当前结点</span></span><br><span class="line"></span><br><span class="line">		q = p;  <span class="comment">//指针q也指向当前结点</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;a);  <span class="comment">//读入待插入的数</span></span><br><span class="line">	t = head;  <span class="comment">//从链表头部开始遍历</span></span><br><span class="line">	<span class="keyword">while</span> (t != <span class="literal">NULL</span>)  <span class="comment">//当没有到达链表尾部的时候循环</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (t-&gt;next-&gt;data &gt; a) <span class="comment">//如果当前结点的下一个结点的值大于待插入数，将数插入到中间</span></span><br><span class="line">		&#123;</span><br><span class="line">			p = (<span class="keyword">struct</span> node*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> node)); <span class="comment">//动态申请一个空间，用来存放新增结点</span></span><br><span class="line">			p-&gt;data = a;</span><br><span class="line">			p-&gt;next = t-&gt;next;  <span class="comment">//新增结点的后继指针指向当前结点的后继指针</span></span><br><span class="line">			t-&gt;next = p;  <span class="comment">//当前结点的后继指针指向新增结点</span></span><br><span class="line">			<span class="keyword">break</span>;  <span class="comment">//插入完毕，退出循环</span></span><br><span class="line">		&#125;</span><br><span class="line">		t = t-&gt;next; <span class="comment">//继续下一个结点</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//输出链表中的所有数</span></span><br><span class="line">	t = head;</span><br><span class="line">	<span class="keyword">while</span> (t != <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>,t-&gt;data);</span><br><span class="line">		t = t-&gt;next;  <span class="comment">//继续下一个结点</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WM</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://fiercewill.github.io/2023/09/10/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88day7%EF%BC%89/">https://fiercewill.github.io/2023/09/10/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88day7%EF%BC%89/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>电子信息工程 (A) 2023 <a href="https://fiercewill.github.io/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a> . <a href="https://fiercewill.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89/">数据结构与算法（c语言）</a> . <a href="https://fiercewill.github.io/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a> 王明的博客</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">🏷️ 数据结构与算法</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/09/09/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88day6%EF%BC%89/">数据结构与算法（day6）</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WM | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    总访客量:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;
+
+
+<span class="site-pv">
+    总访问量:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+		
+        </span>
+    </div>
+</footer>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<!--浏览器搞笑标题-->
+<!-- 雪花特效 -->
+

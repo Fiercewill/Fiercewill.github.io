@@ -219,13 +219,13 @@
                     
                         <span class="post-count">
                     Words:
-                        <a href="">79</a> 
+                        <a href="">824</a> 
                         </span>
                              
                     
                         <span class="post-count">
                     Time:
-                        <a href="">1min</a> 
+                        <a href="">3min</a> 
                         </span>
                     
                 </div>
@@ -237,13 +237,62 @@
 <blockquote>
 <p>（1）接上次在学校上这门科目的第一课，今天上了第二课，还是和上次一样，几乎听不懂老师的上课内容。</p>
 <p>（2）其实在掌握C语言的前提下，学会verilog是不难的。</p>
-<p>（3）参考视频教程：</p>
+<p>（3）参考视频教程：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1iv4y1F7Km/?p=3&amp;spm_id_from=333.1007.top_right_bar_window_history.content.click&amp;vd_source=221d5bfd8774acfce916ac253ceaee25">三天入门verilog速成(第三天)_哔哩哔哩_bilibili</a></p>
+<p>（4）我在9月9号和10号花了4个小时，把这verilog的入门课听完了，这篇文章写一下总结。</p>
 <p>本节学习目标：</p>
-<ol>
-<li></li>
-<li></li>
+<ol start="2">
+<li>说明assign语句和always语句的特点。</li>
+<li>说明阻塞语句和非阻塞语句的特点。</li>
+<li>说明wire和reg数据类型的特点。</li>
+<li>分别用assign语句和always语句设计四选一数据选择器。</li>
 </ol>
 </blockquote>
+<h1>1-首先，介绍下Verilog模块结构</h1>
+<p><img src="/2023/09/08/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day2%EF%BC%89/1.png" alt></p>
+<h1>2-说明assign语句和always语句的特点</h1>
+<h2 id="assign语句的特点">assign语句的特点</h2>
+<p>（1）assign语句称作连续赋值语句</p>
+<p>（2）例：assign M=B|C;</p>
+<p>assign Y=A&amp;M;</p>
+<p><strong>M和Y都必须是wire型的</strong></p>
+<p>（2）之所以称为连续赋值语句是指其总是处于激活状态，只要表达式中的操作数有变化，⽴即进⾏计算和赋值。（与连续赋值语句对应的另⼀种语句称为过程赋值语句）</p>
+<p>（3）assign语句赋值⽬标必须是wire型的，wire表示电路间的连线。</p>
+<h3 id="举例：二选一数据选择器">举例：二选一数据选择器</h3>
+<p><img src="/2023/09/08/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day2%EF%BC%89/2.png" alt></p>
+<p><img src="/2023/09/08/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day2%EF%BC%89/3.png" alt></p>
+<h2 id="always语句的特点">always语句的特点</h2>
+<p>（1）always语句块⼜称过程块</p>
+<p>（2）<strong>基本格式：</strong></p>
+<p><strong>always @(敏感信号条件表)</strong></p>
+<p><strong>各类顺序语句；</strong></p>
+<p>（3）<strong>例：</strong></p>
+<p><strong>always @ (posedge CLK)</strong></p>
+<p><strong>Q=D；</strong></p>
+<p>（4）<strong>特点：</strong></p>
+<p>● <strong>always语句本身不是单⼀的有意义的⼀条语句，⽽是和下⾯的语句⼀起构成⼀</strong></p>
+<p><strong>个语句块，称之为过程块；过程块中的赋值语句称过程赋值语句；</strong></p>
+<p>● <strong>该语句块不是总处于激活状态，当满⾜激活条件时才能被执⾏，否则被挂起，</strong></p>
+<p><strong>挂起时即使操作数有变化，也不执⾏赋值，赋值⽬标值保持不变；</strong></p>
+<p>● <strong>赋值⽬标必须是reg型的。</strong></p>
+<p>（5）<strong>激活条件由敏感信号条件表决定，当敏感条件满⾜时，过程块被激活。</strong></p>
+<p>（6）<strong>敏感条件有两种，⼀种是边沿敏感，⼀种是电平敏感。</strong></p>
+<h1>3-说明阻塞语句和非阻塞语句的特点</h1>
+<p><img src="/2023/09/08/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day2%EF%BC%89/4.png" alt></p>
+<p><img src="/2023/09/08/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day2%EF%BC%89/5.png" alt></p>
+<p><img src="/2023/09/08/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day2%EF%BC%89/6.png" alt></p>
+<h1>4-说明wire和reg数据类型的特点</h1>
+<p><img src="/2023/09/08/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day2%EF%BC%89/7.png" alt></p>
+<p>因连续赋值语句和过程赋值语句的激活特点不同，故赋值⽬标特点也不同，前者不需要保存，后者需要保存，因此规定两种数据类</p>
+<p>型，net型⽤于连续赋值的赋值⽬标或⻔原语的输出，且仿真时不需要分配内存空间，variable⽤于过程赋值的赋值⽬标，且仿真时需要分配内存空间。</p>
+<blockquote>
+<p>net类中的数据类型主要是wire（线型），variable类中的数据类型主要是reg（寄存器类型）。</p>
+</blockquote>
+<h1>5-分别用assign语句和always语句设计四选一数据选择器</h1>
+<p>参考教程：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1tV4y1w7X4/?spm_id_from=333.999.0.0&amp;vd_source=221d5bfd8774acfce916ac253ceaee25">四选一(4选1)多路选择器设计(带代码)_哔哩哔哩_bilibili</a></p>
+<p>（我现在还听不懂……）</p>
+<p><img src="/2023/09/08/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day2%EF%BC%89/8.png" alt></p>
+<h3 id="代码">代码</h3>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> sel_41&#123;</span><br><span class="line"><span class="keyword">input</span> a,</span><br><span class="line"><span class="keyword">input</span> b,</span><br><span class="line"><span class="keyword">input</span> [<span class="number">1</span>:<span class="number">0</span>] sel,</span><br><span class="line"></span><br><span class="line"><span class="keyword">output</span> y</span><br><span class="line">&#125;;</span><br><span class="line">    <span class="keyword">reg</span> y;</span><br><span class="line"><span class="keyword">always</span> @&#123;*&#125;<span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">case</span>(sel)</span><br><span class="line">    <span class="number">2&#x27;b00</span>:y = a&amp;b;</span><br><span class="line">    <span class="number">2&#x27;b01</span>:y = a|b;</span><br><span class="line">    <span class="number">2&#x27;b10</span>:y = a^b; <span class="comment">//异或</span></span><br><span class="line">    <span class="number">2&#x27;b11</span>:y = -(a^b);  <span class="comment">//同或</span></span><br><span class="line">            </span><br><span class="line">     <span class="keyword">endcase</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
 
         </div>
 
