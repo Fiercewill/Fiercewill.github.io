@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WM">
+
+
+
+
+
+<title>C语言练习题 | WM&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">WM&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">WM&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">C语言练习题</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WM</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">September 26, 2023&nbsp;&nbsp;15:51:44</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/C%E8%AF%AD%E8%A8%80%E5%88%B7%E9%A2%98/">C语言刷题</a>
+                            
+                        </span>
+                    
+                    
+                        <span class="post-count">
+                    Words:
+                        <a href="">2,095</a> 
+                        </span>
+                             
+                    
+                        <span class="post-count">
+                    Time:
+                        <a href="">9min</a> 
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1>前言</h1>
+<blockquote>
+<ol>
+<li>
+<p>本章我们带来几个经典得C语言练习题。</p>
+</li>
+<li>
+<p>不要认为之前学过C语言，刷过这些题就不愿意再做题了。对待技术，我们永远要怀以一种空杯心态。</p>
+</li>
+<li>
+<p>温故而知新，可以为师矣。</p>
+</li>
+<li>
+<p>老师说，每道题都要尝试用不同得解法，去思考更多的思路，摸索最优解法，久之，技术便得到质的变化。</p>
+</li>
+<li>
+<p>参考资料：</p>
+<p>（1）<a target="_blank" rel="noopener" href="https://www.runoob.com/cprogramming/c-function-islower.html">C 库函数 – islower() | 菜鸟教程 (runoob.com)</a></p>
+</li>
+</ol>
+</blockquote>
+<h1>题目</h1>
+<p><img src="/2023/09/26/C%E8%AF%AD%E8%A8%80%E7%BB%83%E4%B9%A0%E9%A2%98/1.jpg" alt></p>
+<h1>第一题</h1>
+<p>从键盘上输入一个字符串，将小写字母变成大写字母。</p>
+<h2 id="考点：">考点：</h2>
+<h3 id="1-从键盘中输入一个字符串">1 从键盘中输入一个字符串</h3>
+<h4 id="常用方法">常用方法</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX_LENGTH 100</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">char</span> str[MAX_LENGTH];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入一个字符串：&quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, str);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;您输入的字符串是：%s\n&quot;</span>, str);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="其他方法">其他方法</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX_LENGTH 100</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">char</span> str[MAX_LENGTH];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入一个字符串：&quot;</span>);</span><br><span class="line">    fgets(str, <span class="keyword">sizeof</span>(str), <span class="built_in">stdin</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;您输入的字符串是：%s\n&quot;</span>, str);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="解释：">解释：</h4>
+<blockquote>
+<p>fgets(str, sizeof(str), stdin) 是一个用于从标准输入（键盘）读取一行字符串的函数调用。</p>
+<p>具体含义如下：</p>
+<ol>
+<li>str 是一个字符数组，用于存储读取的字符串。</li>
+<li>sizeof(str) 是用于获取字符数组 str 的大小，即它可以容纳的最大字符数。</li>
+<li>stdin 是一个标准输入流，表示从键盘读取输入。</li>
+<li>fgets() 函数会在读取到换行符（包括换行符）或达到指定的最大字符数（sizeof(str)-1）时停止读取。它会将读取到的字符串存储在 str 中，并在字符串末尾添加一个空字符 \0。</li>
+</ol>
+</blockquote>
+<h3 id="2-小写字母转大写字母">2 小写字母转大写字母</h3>
+<h4 id="常用方法-2">常用方法</h4>
+<blockquote>
+<p>将小写字母转换为大写字母的经常是通过 ASCII 码进行转换。在 ASCII 码表中，小写字母的值范围是 97 到 122，而对应的大写字母的值范围是 65 到 90。通过将小写字母的 ASCII 值减去 32，可以得到对应的大写字母的 ASCII 值。</p>
+</blockquote>
+<p>例如</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">char</span> lowercase = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">    <span class="type">char</span> uppercase = lowercase - <span class="number">32</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;小写字母：%c\n&quot;</span>, lowercase);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;对应的大写字母：%c\n&quot;</span>, uppercase);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/09/26/C%E8%AF%AD%E8%A8%80%E7%BB%83%E4%B9%A0%E9%A2%98/2.png" alt></p>
+<h4 id="其他方法-2">其他方法</h4>
+<blockquote>
+<p>在C语言中，可以使用标准库函数toupper(int c)将小写字母转换为大写字母,使用islower(int c)检查给定的字符是否为小写字母。确保包含 ctype.h 头文件，它包含了 toupper 和islower函数的声明。</p>
+</blockquote>
+<blockquote>
+<p>（1）toupper函数：</p>
+<p>原型：int toupper(int c);<br>
+功能：将给定的字符转换为大写字母形式。<br>
+参数：c是一个int类型的整数，通常是一个字符。<br>
+返回值：转换后的大写字母，作为一个int类型的整数。</p>
+</blockquote>
+<p>例如</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ctype.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">char</span> lowercase = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">    <span class="type">char</span> uppercase = <span class="built_in">toupper</span>(lowercase);</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;小写字母：%c\n&quot;</span>, lowercase);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;对应的大写字母：%c\n&quot;</span>, uppercase);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/09/26/C%E8%AF%AD%E8%A8%80%E7%BB%83%E4%B9%A0%E9%A2%98/2.png" alt></p>
+<blockquote>
+<p>（2）islower函数：</p>
+<p>原型：int islower(int c);<br>
+功能：检查给定的字符是否为小写字母。<br>
+参数：c是一个int类型的整数，通常是一个字符。<br>
+返回值：如果给定字符为小写字母，则返回非零值（真）；否则返回0（假）。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ctype.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">char</span> ch = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">islower</span>(ch)) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%c 是小写字母\n&quot;</span>, ch);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%c 不是小写字母\n&quot;</span>, ch);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/09/26/C%E8%AF%AD%E8%A8%80%E7%BB%83%E4%B9%A0%E9%A2%98/3.png" alt></p>
+<h3 id="第一题代码">第一题代码</h3>
+<h4 id="方法一">方法一</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">   <span class="type">char</span> str[<span class="number">100</span>];</span><br><span class="line">   </span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">&quot;请输入一个字符串：&quot;</span>);</span><br><span class="line">   fgets(str, <span class="keyword">sizeof</span>(str), <span class="built_in">stdin</span>);</span><br><span class="line">   </span><br><span class="line">   <span class="type">int</span> length = <span class="built_in">strlen</span>(str);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; length; i++)   <span class="comment">//遍历字符数组</span></span><br><span class="line">   &#123;</span><br><span class="line">       <span class="keyword">if</span> (str[i] &gt;= <span class="string">&#x27;a&#x27;</span> &amp;&amp; str[i] &lt;= <span class="string">&#x27;z&#x27;</span>) </span><br><span class="line">       &#123;</span><br><span class="line">           str[i] = str[i] - <span class="number">32</span>;  <span class="comment">// 将小写字母转换为大写字母</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">&quot;转换后的字符串为：%s&quot;</span>, str);</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/09/26/C%E8%AF%AD%E8%A8%80%E7%BB%83%E4%B9%A0%E9%A2%98/4.png" alt></p>
+<h4 id="方法二">方法二</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;ctype.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">char</span> str[<span class="number">100</span>];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入一个字符串: &quot;</span>);</span><br><span class="line">    fgets(str, <span class="keyword">sizeof</span>(str), <span class="built_in">stdin</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (str[i] != <span class="string">&#x27;\0&#x27;</span>) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">islower</span>(str[i]))</span><br><span class="line">        &#123;</span><br><span class="line">            str[i] = <span class="built_in">toupper</span>(str[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        i++;  <span class="comment">//换种方法遍历字符数组</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;转换后的字符串为: %s\n&quot;</span>, str);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/09/26/C%E8%AF%AD%E8%A8%80%E7%BB%83%E4%B9%A0%E9%A2%98/5.png" alt></p>
+<h1>第二题</h1>
+<p>从键盘上输入一个字符串，将字符串中的abc删除。</p>
+<h2 id="思路">思路</h2>
+<p>（1）如果这道题的目的是把字符串中的所有a、b、c字符都删除，得到一个新的字符串。</p>
+<blockquote>
+<p>我的思路是只申请一个字符数组，遍历此数组，把除了a、b、c以外的所有字符都留下。具体实现代码如下：</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">remove_abc</span><span class="params">(<span class="type">char</span> *str)</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> len = <span class="built_in">strlen</span>(str);</span><br><span class="line">    <span class="type">int</span> i, j = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; len; i++)  <span class="comment">//遍历字符数组</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (str[i] != <span class="string">&#x27;a&#x27;</span> &amp;&amp; str[i] != <span class="string">&#x27;b&#x27;</span> &amp;&amp; str[i] != <span class="string">&#x27;c&#x27;</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            str[j++] = str[i];  <span class="comment">//str[j++]是先把j原来的值用掉再自加，这里是把留下来的字符又放回原数组，重新对数组赋值了</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    str[j] = <span class="string">&#x27;\0&#x27;</span>; <span class="comment">// 在新的字符串末尾加上结束标志符</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> str[<span class="number">100</span>];  <span class="comment">//申请一个字符数组</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入字符串: &quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">    remove_abc(str);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;删除abc后的字符串为: %s\n&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/09/26/C%E8%AF%AD%E8%A8%80%E7%BB%83%E4%B9%A0%E9%A2%98/8.png" alt></p>
+<p>（2）如果这道题的要求是把字符串中的“abc”删除，而不是把单个的a、b、c字符删除，那么这道题可以使用指针处理。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">removeABC</span><span class="params">(<span class="type">char</span> *str)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> len = <span class="built_in">strlen</span>(str);</span><br><span class="line">    <span class="type">char</span> *src = str;</span><br><span class="line">    <span class="type">char</span> *dest = str;  <span class="comment">//申请的两个指针指向同一地址</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (*src)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (*src == <span class="string">&#x27;a&#x27;</span> &amp;&amp; *(src+<span class="number">1</span>) == <span class="string">&#x27;b&#x27;</span> &amp;&amp; *(src+<span class="number">2</span>) == <span class="string">&#x27;c&#x27;</span>) <span class="comment">//判断连续的abc字符串</span></span><br><span class="line">        &#123;</span><br><span class="line">            src += <span class="number">3</span>; <span class="comment">//从字符a开始将指针后移到3个位置，跨越掉abc这部分</span></span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">else</span> </span><br><span class="line">        &#123;</span><br><span class="line">            *dest++ = *src++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    *dest = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> str[<span class="number">100</span>];</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;请输入一个字符串: &quot;</span>);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%[^\n]%*c&quot;</span>, str);</span><br><span class="line"></span><br><span class="line">    removeABC(str);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;删除&#x27;abc&#x27;后的字符串为: %s\n&quot;</span>, str);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/09/26/C%E8%AF%AD%E8%A8%80%E7%BB%83%E4%B9%A0%E9%A2%98/7.png" alt></p>
+<h3 id="tips">tips</h3>
+<p><img src="/2023/09/26/C%E8%AF%AD%E8%A8%80%E7%BB%83%E4%B9%A0%E9%A2%98/9.png" alt></p>
+<h1>第三题</h1>
+<p>在 C 语言中，int 类型的取值范围通常是 -2147483648 到 2147483647，进行 11 位及以上数字的加法运算，（超过了 int 类型的表示范围）。</p>
+<blockquote>
+<p>（1）我们使用字符数组来表示大数，并实现了自定义的 addStrings 函数来进行字符串形式的大数加法运算。该函数通过逆序遍历两个输入字符串，并模拟手工加法的方式进行计算，将结果存储在 result 字符数组中。</p>
+<p>（2）在 main 函数中，我们声明了两个字符数组变量 num1 和 num2，分别存储了两个 11 位数字的字符串表示。然后，我们调用 addStrings 函数将它们相加，并将结果存储在 result 字符数组中。最后，使用 %s 格式化字符串打印出结果。</p>
+<p>（3）这个简单的示例只适用于非负整数的加法运算，并且没有处理输入的有效性检查、溢出等情况。在实际应用中，你可能需要根据具体需求进行更完善的实现。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAX_DIGITS 100</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">addStrings</span><span class="params">(<span class="type">char</span>* num1, <span class="type">char</span>* num2, <span class="type">char</span>* result)</span> &#123;</span><br><span class="line">    <span class="type">int</span> len1 = <span class="built_in">strlen</span>(num1);</span><br><span class="line">    <span class="type">int</span> len2 = <span class="built_in">strlen</span>(num2);</span><br><span class="line">    <span class="type">int</span> carry = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> i, j, k;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 逆序遍历两个字符串，从个位数开始相加</span></span><br><span class="line">    <span class="keyword">for</span> (i = len1 - <span class="number">1</span>, j = len2 - <span class="number">1</span>, k = <span class="number">0</span>; i &gt;= <span class="number">0</span> || j &gt;= <span class="number">0</span> || carry; i--, j--, k++) &#123;</span><br><span class="line">        <span class="type">int</span> digit1 = (i &gt;= <span class="number">0</span>) ? num1[i] - <span class="string">&#x27;0&#x27;</span> : <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> digit2 = (j &gt;= <span class="number">0</span>) ? num2[j] - <span class="string">&#x27;0&#x27;</span> : <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> sum = digit1 + digit2 + carry;</span><br><span class="line"></span><br><span class="line">        result[k] = sum % <span class="number">10</span> + <span class="string">&#x27;0&#x27;</span>;  <span class="comment">// 当前位的数字</span></span><br><span class="line">        carry = sum / <span class="number">10</span>;  <span class="comment">// 进位</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 反转结果字符串</span></span><br><span class="line">    <span class="type">int</span> len = k;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>, j = len - <span class="number">1</span>; i &lt; j; i++, j--) &#123;</span><br><span class="line">        <span class="type">char</span> temp = result[i];</span><br><span class="line">        result[i] = result[j];</span><br><span class="line">        result[j] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    result[len] = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">char</span> num1[MAX_DIGITS] = <span class="string">&quot;12345678901&quot;</span>;  <span class="comment">// 第一个 11 位数字</span></span><br><span class="line">    <span class="type">char</span> num2[MAX_DIGITS] = <span class="string">&quot;98765432109&quot;</span>;  <span class="comment">// 第二个 11 位数字</span></span><br><span class="line">    <span class="type">char</span> result[MAX_DIGITS + <span class="number">1</span>];  <span class="comment">// 结果字符串，预留一位存储结束符 &#x27;\0&#x27;</span></span><br><span class="line"></span><br><span class="line">    addStrings(num1, num2, result);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Sum: %s\n&quot;</span>, result);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WM</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://fiercewill.github.io/2023/09/26/C%E8%AF%AD%E8%A8%80%E7%BB%83%E4%B9%A0%E9%A2%98/">https://fiercewill.github.io/2023/09/26/C%E8%AF%AD%E8%A8%80%E7%BB%83%E4%B9%A0%E9%A2%98/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>电子信息工程 (A) 2023 <a href="https://fiercewill.github.io/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a> . <a href="https://fiercewill.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89/">数据结构与算法（c语言）</a> . <a href="https://fiercewill.github.io/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a> 王明的博客</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/C%E8%AF%AD%E8%A8%80/">🏷️ C语言</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/">LC并联和LC串联谐振电路</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WM | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    总访客量:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;
+
+
+<span class="site-pv">
+    总访问量:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+		
+        </span>
+    </div>
+</footer>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<!--浏览器搞笑标题-->
+<!-- 雪花特效 -->
+

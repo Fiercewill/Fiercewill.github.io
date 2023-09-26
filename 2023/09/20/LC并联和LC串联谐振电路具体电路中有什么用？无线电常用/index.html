@@ -13,7 +13,7 @@
 
 
 
-<title>如何查看芯片数据手册 | WM&#39;s blog</title>
+<title>LC并联和LC串联谐振电路 | WM&#39;s blog</title>
 
 
 
@@ -196,7 +196,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">如何查看芯片数据手册</h1>
+            <h1 class="post-title">LC并联和LC串联谐振电路</h1>
             
                 <div class="post-meta">
                     
@@ -205,27 +205,27 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 16, 2023&nbsp;&nbsp;11:15:55</a>
+                        Date: <a href="#">September 20, 2023&nbsp;&nbsp;19:42:19</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">遇到的问题及解决方法</a>
+                                <a href="/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a>
                             
                         </span>
                     
                     
                         <span class="post-count">
                     Words:
-                        <a href="">989</a> 
+                        <a href="">659</a> 
                         </span>
                              
                     
                         <span class="post-count">
                     Time:
-                        <a href="">4min</a> 
+                        <a href="">2min</a> 
                         </span>
                     
                 </div>
@@ -235,68 +235,48 @@
         <div class="post-content">
             <h1>前言</h1>
 <blockquote>
+<p>（1）前一段时间写的智能车竞赛的笔记里一直有好几个问题还没搞懂，这篇文章主要解决LC并联和LC串联谐振电路具体电路中有什么用？</p>
+<p>（2）后续还要更新笔记中其他的未解决的问题。</p>
+</blockquote>
+<h1>LC谐振电路的应用</h1>
+<p><img src="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/1.png" alt></p>
 <ol>
-<li>昨天晚上和队友交流过程中，发现了自己有遗漏的学习重点——查看芯片手册。</li>
-<li>我回忆了我两年来的比赛经历，好像在这一技能模块还没有系统学习，能力不成熟，所以赶紧补一补。</li>
-<li>我的文章以stm32f103c8t6的芯片手册为例子，可以举一反三。不管做什么比赛或者是项目，都会用到芯片，那么会看芯片手册就特别重要，会通过看一块芯片的手册来使用单片机，就可以类推去看其他手册去使用单片机，在使用单片机过程中，是离不开单片机的手册的！</li>
-<li>参考视频教程：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Gb4y1m7kt?p=4&amp;vd_source=04d53f699331016afe4bb8aaf4b36a6d">https://www.bilibili.com/video/BV1Gb4y1m7kt?p=4&amp;vd_source=04d53f699331016afe4bb8aaf4b36a6d</a></li>
-<li>视频资料说的再多，大部分都是理论性的东西，而这些理论性的东西，初学时，大概率是看不懂的，解决办法就是，拿着c8t6这块板子多写几个程序下载进去玩一玩，多编程序烧录实践，自然而然会在编写程序和烧录过程中对概念进行理解，不动手，光听的话太抽象了。听课不如多写几个程序玩玩，多折腾折腾。</li>
-<li>视频教程主要就是带着大家过一遍两本手册，重点就是引脚的定义那块部分。</li>
-<li>其他芯片手册的查看网址<a target="_blank" rel="noopener" href="https://www.szlcsc.com/">立创商城_一站式电子元器件采购自营商城_现货元器件交易网-嘉立创电子商城 (szlcsc.com)</a></li>
+<li>不管是LC并联谐振还是LC串联谐振，他们都有频率选择的特性</li>
+<li>在具体的电路中，被选择的信号，有可能是被选择来使用，也可能是被选择过滤掉，不用；而用其他的。</li>
 </ol>
-</blockquote>
-<h1>数据手册看什么</h1>
-<h2 id="选型手册">选型手册</h2>
-<p><img src="/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/1.png" alt></p>
+<p><img src="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/2.png" alt></p>
+<p><img src="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/3.png" alt></p>
+<p>不论是并联谐振还是串联谐振，他们选择的频率都是F0，计算公式如上。所选择的频率，有用与滤除的用处；称之为，选而用之，或者是选而弃之。</p>
+<h2 id="一-LC并联谐振，阻碍谐振频率通过">一 LC并联谐振，阻碍谐振频率通过</h2>
+<p><img src="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/4.png" alt></p>
 <blockquote>
-<ol>
-<li>从芯片的选型手册可以看到各个芯片的外设资源，我们这里看c8t6，时钟72M，封装信号，可用引脚数37，4个通用定时器，1个高级定时器，2个adc，2个spi，2个iic，3个串口，1个can通信（车载通信中经常会使用的通信），一个usb器件。</li>
-<li>我们在制作一些东西的时候，会根据选型手册和所需资源，来考虑制作的成本，进行相应的选型。保证在满足要求得前提下，选择最低成本的器件。</li>
-</ol>
+<p>F0的信号经过电路时， 电流在里面转来转去，但是不流出来。所以就表现出最大的阻力，也就是选择性阻碍。</p>
 </blockquote>
-<h2 id="数据手册">数据手册</h2>
-<p><img src="/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/2.png" alt></p>
-<blockquote>
-<ol>
-<li>数据手册我们主要看的是引脚的描述</li>
-<li>我们拿到一款单片机，根据数据手册可以看中断优先级的编程方式，响应优先级和抢占优先级</li>
-<li>boot0和boot1是设置单片机的启动模式，通过跳线帽去设置</li>
-<li>数据手册中的内容可以从头到尾扫一边，上面会给芯片的外设资源和低功耗等模式做一些说明</li>
-<li>滴答定时器要和通用定时器、高级定时器区分，滴答定时器通常是用来产生一些延时函数，高级定时器与通用定时器的区别如下</li>
-</ol>
-</blockquote>
-<p><img src="/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/3.png" alt></p>
-<blockquote>
-<ol start="6">
-<li>c8t6只有ADC魔术转换器，没有DAC数模转换器</li>
-</ol>
-</blockquote>
-<h2 id="芯片封装">芯片封装</h2>
-<p><img src="/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/4.png" alt></p>
-<blockquote>
-<p>第一个引脚是VBAT电源引脚，画原理图的时候要找到芯片对应封装</p>
-</blockquote>
-<h2 id="重点：引脚定义">重点：引脚定义</h2>
-<p><img src="/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/5.png" alt></p>
-<blockquote>
-<p>通过数据手册我们要明确：</p>
-<ol>
-<li>
-<p>芯片大致有哪些IO口可以供我们使用</p>
-</li>
-<li>
-<p>每个IO口的第二功能是怎样的，第一功能肯定都是GPIO（通用输入输出端口）</p>
-<p>手册的内容</p>
-<ol>
-<li>S代表电源键，I/O代表输入输出，I代表输入，O代表输出。</li>
-<li>FT表示这个引脚可以容忍5V，无FT表示不能容忍5V，不管能不能容忍5V，都不能给引脚长期通入5V，最好还是使用3.3V的电。</li>
-<li>PC14、PC15外接的是32.768k的晶振</li>
-<li>OSC_IN与OUT接的是8M晶振，后面讲时钟树，会讲这些。</li>
-<li>寄存器映射顾名思义就是地址的映射，把地址映射为一个名称</li>
-</ol>
-</li>
-</ol>
-</blockquote>
+<p>在高频电路中，可以用LC并联谐振对某一频率进行阻挡，对特定的频率信号进行阻拦，起到抗干扰的作用。</p>
+<p><img src="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/5.png" alt></p>
+<h3 id="二-LC并联谐振，选择性保留谐振频率通过">二 LC并联谐振，选择性保留谐振频率通过</h3>
+<p>把LC并联电路改成对地的连接，把其他信号都连接到地通过，选择性阻碍了F2，而把F2连接到右边通过。</p>
+<p><img src="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/6.png" alt></p>
+<p><img src="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/7.png" alt></p>
+<p>而上面整个电路表现出的就是对谐振频率进行保留。</p>
+<h2 id="三-LC并联谐振，选择性互感">三 LC并联谐振，选择性互感</h2>
+<p><img src="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/8.png" alt></p>
+<p>谐振频率在LC并联谐振中产生最大电流，谐振频率的信号会互感到另一个线圈，可以理解为LC并联谐振电路具有选择性互感的作用。</p>
+<p>无线电的接收电路就是利用了这个原理，如下图。</p>
+<p><img src="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/9.png" alt></p>
+<p>用一个可调电容并联电感，起到调谐，即调频率的作用。天线用来接收信号，通过并联谐振感应输出，起到选台的作用。天线起到接收信号的作用。</p>
+<h4 id="在无线接收电路中，以上的那种方式是最常用的，用于选择接收的选频信号。">在无线接收电路中，以上的那种方式是最常用的，用于选择接收的选频信号。</h4>
+<h1>总结LC并联谐振的三种作用</h1>
+<p><img src="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/11.png" alt></p>
+<p>详情知识请看上面内容。</p>
+<h1>LC串联谐振</h1>
+<p>串联谐振电路</p>
+<p><img src="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/12.png" alt></p>
+<p>串联谐振时，电路的感抗和容抗刚好相等，方向相反，互相抵消，谐振的频率可以轻易通过，而其他的频率不容易通过，这样就达到了选择通过的作用。</p>
+<p><img src="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/13.png" alt></p>
+<p><img src="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/14.png" alt></p>
+<h1>tips</h1>
+<p><img src="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/10.png" alt></p>
 
         </div>
 
@@ -311,7 +291,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://fiercewill.github.io/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/">https://fiercewill.github.io/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/</a></span>
+                        <span><a href="https://fiercewill.github.io/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/">https://fiercewill.github.io/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/</a></span>
                     </p>
                 
                 
@@ -335,7 +315,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/tips/">🏷️ tips</a>
+                        <a href="/tags/%E7%94%B5%E7%A3%81%E5%BE%AA%E8%BF%B9%E8%BD%A6/">🏷️ 电磁循迹车</a>
                     
                         
                 </span>
@@ -348,10 +328,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/">LC并联和LC串联谐振电路</a>
+                <a class="prev" rel="prev" href="/2023/09/26/C%E8%AF%AD%E8%A8%80%E7%BB%83%E4%B9%A0%E9%A2%98/">C语言练习题</a>
             
             
-            <a class="next" rel="next" href="/2023/09/12/IIC%E9%80%9A%E4%BF%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%92%8C%E6%97%B6%E5%BA%8F/">IIC通信的基本原理和时序</a>
+            <a class="next" rel="next" href="/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/">如何查看芯片数据手册</a>
             
         </section>
 
