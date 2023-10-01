@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WM">
+
+
+
+
+
+<title>verilog学习（day3） | WM&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">WM&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">WM&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">verilog学习（day3）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WM</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 1, 2023&nbsp;&nbsp;14:46:37</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/verilog%E7%A1%AC%E4%BB%B6%E6%8F%8F%E8%BF%B0%E8%AF%AD%E8%A8%80/">verilog硬件描述语言</a>
+                            
+                        </span>
+                    
+                    
+                        <span class="post-count">
+                    Words:
+                        <a href="">785</a> 
+                        </span>
+                             
+                    
+                        <span class="post-count">
+                    Time:
+                        <a href="">3min</a> 
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1>前言</h1>
+<blockquote>
+<ol>
+<li>今天是国庆节，我们正式来学习Quartus II13.0软件的安装与使用。</li>
+<li>学习verilog与学习C语言都是学习一门语言，那么学习一门语言，光看理论不敲代码绝对是学习不好的。</li>
+<li>要用verilog语言敲代码，就要像C语言那样搭建起语言的编译环境，verilog的编译环境是Quartus II13.0。</li>
+</ol>
+<p>本章目标：</p>
+<p>（1）安装好Quartus II13.0（带modelsim集成包）</p>
+<p>（2）用Quartus II搭建一个工程并编译成功</p>
+<p>参考资料：</p>
+<p>（1）<a target="_blank" rel="noopener" href="http://www.corecourse.cn/forum.php?mod=viewthread&amp;tid=27692">http://www.corecourse.cn/forum.php?mod=viewthread&amp;tid=27692</a></p>
+<p>（2）<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_47924403/article/details/118945169?spm=1001.2014.3001.5502">Quartus II 13.1入门级使用方法 适用于小白_quartus教程-CSDN博客</a></p>
+<p>（3）<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_47924403/article/details/119007377?spm=1001.2014.3001.5502">Quartus II 13.1入门级使用方法 -仿真篇，适用于小白_quartus13.1波形仿真工具栏-CSDN博客</a></p>
+</blockquote>
+<h1>1 安装好Quartus II13.0（带modelsim集成包）</h1>
+<p>资料：</p>
+<p><a target="_blank" rel="noopener" href="http://www.corecourse.cn/forum.php?mod=viewthread&amp;tid=27692">http://www.corecourse.cn/forum.php?mod=viewthread&amp;tid=27692</a></p>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/1.png" alt></p>
+<p>打开上面链接会看到以上内容，把三样东西全部下载到电脑的下载文件夹页面。</p>
+<p>接下来就是根据指导书上的内容，把Quartus II安装好，很简单。</p>
+<h1>2 用Quartus II搭建一个工程并编译成功</h1>
+<h2 id="步骤">步骤</h2>
+<h3 id="（1）">（1）</h3>
+<p>首先不要打开Quartus，不要在Quartus里面新建工程。</p>
+<p>先创建文件夹，养成好的编程习惯。</p>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/3.png" alt></p>
+<p>以本次的项目功能命名，比如我要实现一个计数器，所以我把文件夹名命名为cnt，在cnt文件夹里又创建四个文件，doc（放文件资料）,par（放<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Quartus&amp;spm=1001.2101.3001.7020">Quartus</a> II所创建的工程）,rtl（放代码）,sim（仿真的东西）。</p>
+<h2 id="（2）">（2）</h2>
+<ol>
+<li>打开Quartus，创建新的工程。</li>
+</ol>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/2.png" alt></p>
+<ol start="2">
+<li>点击next</li>
+</ol>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/5.png" alt></p>
+<ol start="3">
+<li>
+<p>选择好路径，点击next</p>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/6.png" alt></p>
+</li>
+<li>
+<p>出现以下界面：这个是添加设计代码的地方，不用管它，直接点击Next。</p>
+</li>
+</ol>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/7.png" alt></p>
+<ol start="5">
+<li>
+<p>这个界面针对的是有开发板的同学，注意一定要是Altera公司生产的芯片，可以去参考开发板手册，了解芯片的型号！！！小白推荐了解了型号之后，直接搜索型号！！！</p>
+<p>如果没有开发板的同学，直接点击Next。</p>
+</li>
+</ol>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/8.png" alt></p>
+<ol start="6">
+<li>因为要调用modelsim仿真，所以这里就选择modelsim，语言的话，小白使用的是<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=verilog&amp;spm=1001.2101.3001.7020">verilog</a>语言，所以这里选择verilog。然后点击Next。</li>
+</ol>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/9.png" alt></p>
+<ol start="7">
+<li>这个界面就是一个你的所选清单，不用管他，直接点击Finish。</li>
+</ol>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/10.png" alt></p>
+<ol start="8">
+<li>出现以下界面，正确</li>
+</ol>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/11.png" alt></p>
+<ol start="9">
+<li>添加编写verilog语言的文件</li>
+</ol>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/12.png" alt></p>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/13.png" alt></p>
+<ol start="10">
+<li>点击ok后出现以下界面，成功。</li>
+</ol>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/14.png" alt></p>
+<ol start="11">
+<li>复制以下代码，点击保存到rtl文件夹中，再编译。</li>
+</ol>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> cnt(</span><br><span class="line">clk  ,</span><br><span class="line">rst  ,</span><br><span class="line">cnt  </span><br><span class="line">);</span><br><span class="line"> </span><br><span class="line"><span class="keyword">input</span>              clk  ;</span><br><span class="line"><span class="keyword">input</span>              rst  ;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">output</span>  <span class="keyword">reg</span> [<span class="number">3</span>:<span class="number">0</span>]  cnt  ;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">always</span>@(<span class="keyword">posedge</span> clk <span class="keyword">or</span> <span class="keyword">negedge</span> rst)</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="keyword">if</span> (!rst)</span><br><span class="line">     cnt &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (cnt == <span class="number">4&#x27;d15</span>)</span><br><span class="line">     cnt &lt;= <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">     cnt &lt;= cnt + <span class="number">1&#x27;b1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/16.png" alt></p>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/15.png" alt></p>
+<ol start="12">
+<li>结果如下，成功！</li>
+</ol>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/4.png" alt></p>
+<p><img src="/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/17.png" alt></p>
+<blockquote>
+<p>我感觉这个软件的编译速度是比较慢的。</p>
+</blockquote>
+<p>学习用Quartus调用Modelsim来进行仿真,请参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_47924403/article/details/119007377?spm=1001.2014.3001.5502">Quartus II 13.1入门级使用方法 -仿真篇，适用于小白_quartus13.1波形仿真工具栏-CSDN博客</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WM</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://fiercewill.github.io/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/">https://fiercewill.github.io/2023/10/01/verilog%E5%AD%A6%E4%B9%A0%EF%BC%88day3%EF%BC%89/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>电子信息工程 (A) 2023 <a href="https://fiercewill.github.io/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a> . <a href="https://fiercewill.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89/">数据结构与算法（c语言）</a> . <a href="https://fiercewill.github.io/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a> 王明的博客</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/verilog/">🏷️ verilog</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/09/26/C%E8%AF%AD%E8%A8%80%E7%BB%83%E4%B9%A0%E9%A2%98/">C语言练习题</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WM | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    总访客量:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;
+
+
+<span class="site-pv">
+    总访问量:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+		
+        </span>
+    </div>
+</footer>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<!--浏览器搞笑标题-->
+<!-- 雪花特效 -->
+
