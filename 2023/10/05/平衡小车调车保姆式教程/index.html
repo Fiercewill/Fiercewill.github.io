@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WM">
+
+
+
+
+
+<title>平衡小车调车保姆式教程 | WM&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">WM&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">WM&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">平衡小车调车保姆式教程</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WM</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 5, 2023&nbsp;&nbsp;22:25:29</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">遇到的问题及解决方法</a>
+                            
+                        </span>
+                    
+                    
+                        <span class="post-count">
+                    Words:
+                        <a href="">4,031</a> 
+                        </span>
+                             
+                    
+                        <span class="post-count">
+                    Time:
+                        <a href="">18min</a> 
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1>前言</h1>
+<blockquote>
+<p>（1）硬件选型注意点：电机转速、轮子大小</p>
+<p>（2）车模硬件结构注意点：车模整体的重量要分布均匀，利于平衡</p>
+<p>（3）硬件主要模块：陀螺仪jy26、编码器电机、显示屏、驱动、主控、电源</p>
+<p>（4）软件主要模块：陀螺仪、编码器、直立环、速度环、转向环</p>
+</blockquote>
+<p>调参教程 <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1oW4y1Y7nv/?spm_id_from=333.788.top_right_bar_window_history.content.click&amp;vd_source=221d5bfd8774acfce916ac253ceaee25">PID平衡小车调参教程_哔哩哔哩_bilibili</a></p>
+<h1>硬件选型</h1>
+<h2 id="电机的选择">电机的选择</h2>
+<p>电机的关键参数：电压、转速</p>
+<p>参数标的电压不能理解为电机最大供电电压，电机安全的工作状态主要是由于通过电机的电流决定的，只有电流才会损坏电机，电流小的话不会损坏电机，所以额定电流才是关键值。</p>
+<p>重要的是转速的选择：转得越快，电机输出的力矩就越小，即电机产生的力量越小，电机转的越快，那劲肯定越小，电机转的越慢，电机的劲就越大。</p>
+<h4 id="平衡车需要电机的力矩大一点好。建议建议6V-150r-min的电机。">平衡车需要电机的力矩大一点好。建议建议6V 150r/min的电机。</h4>
+<h2 id="轮子的选择">轮子的选择</h2>
+<p>平衡车需要摩擦力较大的轮子，同时车轮的半径要足够大，否则车体的重心太高或太低都不利于平衡。</p>
+<h1>软件模块</h1>
+<h2 id="陀螺仪">陀螺仪</h2>
+<p>这里我用钱来解决了麻烦的问题，重金入手了一个性能较好的六轴陀螺仪jy62。只需要使用单片机的一个串口，这个模块对数据的处理已经做的很成功了。</p>
+<h3 id="imu-c">imu.c</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Created by fazhehy on 2023/7/17.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;platform/platform.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">uint8_t</span> buffer[<span class="number">11</span>];</span><br><span class="line"><span class="type">imu_data_t</span> acceleration, gyroscope, angle;</span><br><span class="line"></span><br><span class="line"><span class="comment">// uart1</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">imu_init</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);</span><br><span class="line">	SysCtlPeripheralEnable(SYSCTL_PERIPH_UART1);</span><br><span class="line">	GPIOPinConfigure(GPIO_PB0_U1RX);</span><br><span class="line">	GPIOPinConfigure(GPIO_PB1_U1TX);</span><br><span class="line">	GPIOPinTypeUART(GPIO_PORTB_BASE, GPIO_PIN_0);</span><br><span class="line">	GPIOPinTypeUART(GPIO_PORTB_BASE, GPIO_PIN_1);</span><br><span class="line">	UARTConfigSetExpClk(UART1_BASE, SysCtlClockGet(), <span class="number">115200</span>, UART_CONFIG_WLEN_8|UART_CONFIG_STOP_ONE|UART_CONFIG_PAR_NONE);</span><br><span class="line">	UARTFIFOEnable(UART1_BASE);</span><br><span class="line">	</span><br><span class="line">	UARTFIFOLevelSet(UART1_BASE, UART_FIFO_TX2_8, UART_FIFO_RX2_8);</span><br><span class="line">	UARTIntEnable(UART1_BASE, UART_INT_RX|UART_INT_RT);</span><br><span class="line">	<span class="type">void</span> <span class="title function_">imu_handler</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line">	UARTIntRegister(UART1_BASE, imu_handler);</span><br><span class="line">	IntPrioritySet(INT_UART1, USER_INT2);</span><br><span class="line">	IntEnable(INT_UART1);</span><br><span class="line">	IntMasterEnable();</span><br><span class="line">    UARTEnable(UART1_BASE);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">uint8_t</span> <span class="title function_">get_verify_code</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">uint32_t</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">uint8_t</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i) &#123;</span><br><span class="line">        sum += buffer[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum&amp;<span class="number">0xff</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int32_t</span> k = <span class="number">0</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">imu_analysis</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">static</span> <span class="type">float</span> last_angle_z = <span class="number">0</span>, angle_z = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">switch</span> (buffer[<span class="number">1</span>]) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0x51</span>:</span><br><span class="line">            acceleration.x = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">2</span>]|(buffer[<span class="number">3</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">16</span>;</span><br><span class="line">            acceleration.y = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">4</span>]|(buffer[<span class="number">5</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">16</span>;</span><br><span class="line">            acceleration.z = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">6</span>]|(buffer[<span class="number">7</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">16</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0x52</span>:</span><br><span class="line">            gyroscope.x = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">2</span>]|(buffer[<span class="number">3</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">2000</span>;</span><br><span class="line">            gyroscope.y = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">4</span>]|(buffer[<span class="number">5</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">2000</span>;</span><br><span class="line">            gyroscope.z = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">6</span>]|(buffer[<span class="number">7</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">2000</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0x53</span>:</span><br><span class="line">            angle.x = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">2</span>]|(buffer[<span class="number">3</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">180</span>;</span><br><span class="line">            angle.y = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">4</span>]|(buffer[<span class="number">5</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">180</span>;</span><br><span class="line">            angle_z = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">6</span>]|(buffer[<span class="number">7</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">180</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (last_angle_z &lt; <span class="number">-90</span> &amp;&amp; angle_z &gt; <span class="number">90</span>)</span><br><span class="line">        k --;</span><br><span class="line">    <span class="keyword">if</span> (last_angle_z &gt; <span class="number">90</span> &amp;&amp; angle_z &lt; <span class="number">-90</span>)</span><br><span class="line">        k ++;</span><br><span class="line"></span><br><span class="line">    last_angle_z = angle_z;</span><br><span class="line"><span class="comment">//    printf(&quot;k:%ld\n&quot;, k);</span></span><br><span class="line">    angle.z = angle_z + (<span class="type">float</span> )k*<span class="number">360</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ERROR   0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DOING   1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SUCCESS 2</span></span><br><span class="line"><span class="type">static</span> <span class="type">uint8_t</span> n = <span class="number">0</span>, state = <span class="number">0</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">imu_handler</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint32_t</span> data;</span><br><span class="line">	</span><br><span class="line">	<span class="type">uint32_t</span> status=UARTIntStatus(UART1_BASE, <span class="literal">true</span>);</span><br><span class="line">	UARTIntClear(UART1_BASE, status);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>(UARTCharsAvail(UART1_BASE))&#123;</span><br><span class="line">		data = UARTCharGetNonBlocking(UART1_BASE)&amp;<span class="number">0xff</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//	data = UARTCharGet(UART1_BASE)&amp;0xff;</span></span><br><span class="line">	<span class="comment">//	UARTCharPutNonBlocking(UART0_BASE, data);</span></span><br><span class="line">	<span class="comment">//	printf(&quot;data:%d\n&quot;, data);</span></span><br><span class="line">		</span><br><span class="line">		 <span class="keyword">if</span> (state == ERROR)&#123;</span><br><span class="line">			n = <span class="number">0</span>;</span><br><span class="line">		 &#125;</span><br><span class="line"></span><br><span class="line">		buffer[n] = (<span class="type">uint8_t</span>)data;</span><br><span class="line">		<span class="keyword">if</span> (n == <span class="number">0</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span> (buffer[<span class="number">0</span>] == <span class="number">0x55</span>)&#123;</span><br><span class="line">				state = DOING;</span><br><span class="line">			&#125; <span class="keyword">else</span>&#123;</span><br><span class="line">				state = ERROR;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (n == <span class="number">10</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span> (buffer[<span class="number">10</span>] == get_verify_code())&#123;</span><br><span class="line">				state = SUCCESS;</span><br><span class="line">			&#125; <span class="keyword">else</span>&#123;</span><br><span class="line">				state = ERROR;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		n += <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (state == SUCCESS)&#123;</span><br><span class="line"><span class="comment">//			printf(&quot;OK\n&quot;);</span></span><br><span class="line">			imu_analysis();</span><br><span class="line">			state = ERROR;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="imu-h">imu.h</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">// Created by fazhehy on 2023/7/17.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> IMU_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> IMU_H</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">float</span> x;</span><br><span class="line">    <span class="type">float</span> y;</span><br><span class="line">    <span class="type">float</span> z;</span><br><span class="line">&#125;<span class="type">imu_data_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">imu_init</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"><span class="keyword">extern</span> <span class="type">imu_data_t</span> acceleration, gyroscope, angle;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">/* IMU_H */</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="代码分析">代码分析</h3>
+<p>按函数分析</p>
+<h4 id="void-imu-init-；-imu初始化">void imu_init()； //imu初始化</h4>
+<blockquote>
+<p>陀螺仪的初始化，初始化引脚，注册串口中断函数，打开中断。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">imu_init</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOB);</span><br><span class="line">	SysCtlPeripheralEnable(SYSCTL_PERIPH_UART1);</span><br><span class="line">	GPIOPinConfigure(GPIO_PB0_U1RX);</span><br><span class="line">	GPIOPinConfigure(GPIO_PB1_U1TX);</span><br><span class="line">	GPIOPinTypeUART(GPIO_PORTB_BASE, GPIO_PIN_0);</span><br><span class="line">	GPIOPinTypeUART(GPIO_PORTB_BASE, GPIO_PIN_1);</span><br><span class="line">	UARTConfigSetExpClk(UART1_BASE, SysCtlClockGet(), <span class="number">115200</span>, UART_CONFIG_WLEN_8|UART_CONFIG_STOP_ONE|UART_CONFIG_PAR_NONE);</span><br><span class="line">	UARTFIFOEnable(UART1_BASE);</span><br><span class="line">	</span><br><span class="line">	UARTFIFOLevelSet(UART1_BASE, UART_FIFO_TX2_8, UART_FIFO_RX2_8);</span><br><span class="line">	UARTIntEnable(UART1_BASE, UART_INT_RX|UART_INT_RT);</span><br><span class="line">	<span class="type">void</span> <span class="title function_">imu_handler</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line">	UARTIntRegister(UART1_BASE, imu_handler);</span><br><span class="line">	IntPrioritySet(INT_UART1, USER_INT2);</span><br><span class="line">	IntEnable(INT_UART1);</span><br><span class="line">	IntMasterEnable();</span><br><span class="line">    UARTEnable(UART1_BASE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="static-uint8-t-get-verify-code-；-数据校准">static uint8_t get_verify_code()；//数据校准</h4>
+<blockquote>
+<p>10个为一组，对串口获取到的 buffer[i]数据进行求和。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">uint8_t</span> <span class="title function_">get_verify_code</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">uint32_t</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">uint8_t</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; ++i) &#123;</span><br><span class="line">        sum += buffer[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum&amp;<span class="number">0xff</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="void-imu-analysis-；-数据分析">void imu_analysis()； //数据分析</h4>
+<blockquote>
+<p>对陀螺仪获取到的数据进行处理，得到角速度和角度。</p>
+<p>其中有一个对角度的巧妙处理，是的偏航角以z轴作为0度分界，解决陀螺仪自身得到角度的不连续性。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> (last_angle_z &lt; <span class="number">-90</span> &amp;&amp; angle_z &gt; <span class="number">90</span>)</span><br><span class="line">        k --;</span><br><span class="line">    <span class="keyword">if</span> (last_angle_z &gt; <span class="number">90</span> &amp;&amp; angle_z &lt; <span class="number">-90</span>)</span><br><span class="line">        k ++;</span><br><span class="line"></span><br><span class="line">    last_angle_z = angle_z;</span><br><span class="line"><span class="comment">//    printf(&quot;k:%ld\n&quot;, k);</span></span><br><span class="line">    angle.z = angle_z + (<span class="type">float</span> )k*<span class="number">360</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int32_t</span> k = <span class="number">0</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">imu_analysis</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">static</span> <span class="type">float</span> last_angle_z = <span class="number">0</span>, angle_z = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">switch</span> (buffer[<span class="number">1</span>]) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0x51</span>:</span><br><span class="line">            acceleration.x = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">2</span>]|(buffer[<span class="number">3</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">16</span>;</span><br><span class="line">            acceleration.y = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">4</span>]|(buffer[<span class="number">5</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">16</span>;</span><br><span class="line">            acceleration.z = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">6</span>]|(buffer[<span class="number">7</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">16</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0x52</span>:</span><br><span class="line">            gyroscope.x = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">2</span>]|(buffer[<span class="number">3</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">2000</span>;</span><br><span class="line">            gyroscope.y = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">4</span>]|(buffer[<span class="number">5</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">2000</span>;</span><br><span class="line">            gyroscope.z = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">6</span>]|(buffer[<span class="number">7</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">2000</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0x53</span>:</span><br><span class="line">            angle.x = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">2</span>]|(buffer[<span class="number">3</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">180</span>;</span><br><span class="line">            angle.y = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">4</span>]|(buffer[<span class="number">5</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">180</span>;</span><br><span class="line">            angle_z = (<span class="type">float</span> )((<span class="type">int16_t</span>)(buffer[<span class="number">6</span>]|(buffer[<span class="number">7</span>]&lt;&lt;<span class="number">8</span>)))/<span class="number">32768</span>*<span class="number">180</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (last_angle_z &lt; <span class="number">-90</span> &amp;&amp; angle_z &gt; <span class="number">90</span>)</span><br><span class="line">        k --;</span><br><span class="line">    <span class="keyword">if</span> (last_angle_z &gt; <span class="number">90</span> &amp;&amp; angle_z &lt; <span class="number">-90</span>)</span><br><span class="line">        k ++;</span><br><span class="line"></span><br><span class="line">    last_angle_z = angle_z;</span><br><span class="line"><span class="comment">//    printf(&quot;k:%ld\n&quot;, k);</span></span><br><span class="line">    angle.z = angle_z + (<span class="type">float</span> )k*<span class="number">360</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="void-imu-handler-；-中断回调函数">void imu_handler()； //中断回调函数</h4>
+<blockquote>
+<p>处理中断工作。在这里面调用imu_analysis()函数。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> ERROR   0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DOING   1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SUCCESS 2</span></span><br><span class="line"><span class="type">static</span> <span class="type">uint8_t</span> n = <span class="number">0</span>, state = <span class="number">0</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">imu_handler</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint32_t</span> data;</span><br><span class="line">	</span><br><span class="line">	<span class="type">uint32_t</span> status=UARTIntStatus(UART1_BASE, <span class="literal">true</span>);</span><br><span class="line">	UARTIntClear(UART1_BASE, status);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>(UARTCharsAvail(UART1_BASE))&#123;</span><br><span class="line">		data = UARTCharGetNonBlocking(UART1_BASE)&amp;<span class="number">0xff</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//	data = UARTCharGet(UART1_BASE)&amp;0xff;</span></span><br><span class="line">	<span class="comment">//	UARTCharPutNonBlocking(UART0_BASE, data);</span></span><br><span class="line">	<span class="comment">//	printf(&quot;data:%d\n&quot;, data);</span></span><br><span class="line">		</span><br><span class="line">		 <span class="keyword">if</span> (state == ERROR)&#123;</span><br><span class="line">			n = <span class="number">0</span>;</span><br><span class="line">		 &#125;</span><br><span class="line"></span><br><span class="line">		buffer[n] = (<span class="type">uint8_t</span>)data;</span><br><span class="line">		<span class="keyword">if</span> (n == <span class="number">0</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span> (buffer[<span class="number">0</span>] == <span class="number">0x55</span>)&#123;</span><br><span class="line">				state = DOING;</span><br><span class="line">			&#125; <span class="keyword">else</span>&#123;</span><br><span class="line">				state = ERROR;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (n == <span class="number">10</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span> (buffer[<span class="number">10</span>] == get_verify_code())&#123;</span><br><span class="line">				state = SUCCESS;</span><br><span class="line">			&#125; <span class="keyword">else</span>&#123;</span><br><span class="line">				state = ERROR;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		n += <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">if</span> (state == SUCCESS)&#123;</span><br><span class="line"><span class="comment">//			printf(&quot;OK\n&quot;);</span></span><br><span class="line">			imu_analysis();</span><br><span class="line">			state = ERROR;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="直立环">直立环</h2>
+<blockquote>
+<p>作用：使小车保持直立。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//****************平衡小车机械零点***************</span></span><br><span class="line"><span class="type">float</span> Car_zero = <span class="number">1.0f</span>;    </span><br><span class="line"><span class="comment">//直立环 </span></span><br><span class="line"><span class="type">float</span> zhili_Kp=<span class="number">95.5f</span>*<span class="number">0.6f</span>;  <span class="comment">//出现大幅度低频振荡 95.5f</span></span><br><span class="line"><span class="type">float</span> zhili_Kd=<span class="number">-10.0f</span>*<span class="number">0.6f</span>;    <span class="comment">//出现小幅度高频振荡  *0.6f</span></span><br><span class="line"><span class="type">int</span> zhili_out=<span class="number">0</span>;       <span class="comment">//直立环输出</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//***********平衡车控制******************************************</span></span><br><span class="line"><span class="comment">//函数功能：控制小车保持直立</span></span><br><span class="line"><span class="comment">//Angle：采集到的实际角度值  angle.x</span></span><br><span class="line"><span class="comment">//Gyro： 采集到的实际角速度值  gyroscope.x</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">zhili</span><span class="params">(<span class="type">float</span> Angle,<span class="type">float</span> Gyro)</span></span><br><span class="line">&#123;  </span><br><span class="line">   <span class="type">float</span> err;</span><br><span class="line">	 <span class="type">int</span> pwm_zhili;</span><br><span class="line">	 err=Car_zero-Angle;    <span class="comment">//期望值-实际值，这里期望小车平衡，因此期望值就是机械中值       </span></span><br><span class="line">	 pwm_zhili=zhili_Kp*err+Gyro*zhili_Kd;<span class="comment">//计算平衡控制的电机PWM</span></span><br><span class="line">	 <span class="keyword">return</span> pwm_zhili;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="速度环">速度环</h2>
+<blockquote>
+<p>作用：使小车平衡得更加稳定，平衡效果更好。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">speed_control_100hz</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//平衡车直立环上的速度环，为与直立环处理速度一致，把下面两行代码注释掉</span></span><br><span class="line"><span class="comment">//	static uint16_t _cnt=0;</span></span><br><span class="line"><span class="comment">//	_cnt++;	if(_cnt&lt;2)	return;	_cnt=0;//10ms控制一次 100hz是0.005s，两个100hz就是10ms</span></span><br><span class="line"></span><br><span class="line">	speed_feedback[<span class="number">0</span>]=smartcar_imu.left_motor_speed_cmps;<span class="comment">//获取左轮实际值  </span></span><br><span class="line">	speed_error[<span class="number">0</span>]=v_target_l-speed_feedback[<span class="number">0</span>];</span><br><span class="line">	speed_error[<span class="number">0</span>]=constrain_float(speed_error[<span class="number">0</span>],-speed_err_max,speed_err_max);</span><br><span class="line">	speed_integral[<span class="number">0</span>]+=speed_ki*speed_error[<span class="number">0</span>];</span><br><span class="line">	speed_integral[<span class="number">0</span>]=constrain_float(speed_integral[<span class="number">0</span>],-speed_integral_max,speed_integral_max);</span><br><span class="line">	speed_output[<span class="number">0</span>]=speed_integral[<span class="number">0</span>]+speed_kp*speed_error[<span class="number">0</span>];</span><br><span class="line">	speed_output[<span class="number">0</span>]=constrain_float(speed_output[<span class="number">0</span>],-speed_ctrl_output_max,speed_ctrl_output_max);</span><br><span class="line"><span class="comment">//	UART_printf(UART0_BASE,&quot;%d\n&quot;,(int)smartcar_imu.left_motor_speed_cmps);</span></span><br><span class="line">		</span><br><span class="line">	speed_feedback[<span class="number">1</span>]=smartcar_imu.right_motor_speed_cmps;<span class="comment">//右轮</span></span><br><span class="line">	speed_error[<span class="number">1</span>]=v_target_r-speed_feedback[<span class="number">1</span>];<span class="comment">//期望速度减去实际速度得到速度误差</span></span><br><span class="line">	speed_error[<span class="number">1</span>]=constrain_float(speed_error[<span class="number">1</span>],-speed_err_max,speed_err_max);<span class="comment">//对速度误差做约束</span></span><br><span class="line">	speed_integral[<span class="number">1</span>]+=speed_ki*speed_error[<span class="number">1</span>]; <span class="comment">//速度积分</span></span><br><span class="line">	speed_integral[<span class="number">1</span>]=constrain_float(speed_integral[<span class="number">1</span>],-speed_integral_max,speed_integral_max);<span class="comment">//对得到的速度积分做约束</span></span><br><span class="line">	speed_output[<span class="number">1</span>]=speed_integral[<span class="number">1</span>]+speed_kp*speed_error[<span class="number">1</span>];<span class="comment">//pid得到输出</span></span><br><span class="line">	speed_output[<span class="number">1</span>]=constrain_float(speed_output[<span class="number">1</span>],-speed_ctrl_output_max,speed_ctrl_output_max);<span class="comment">//对输出做约束</span></span><br><span class="line">	<span class="comment">//UART_printf(UART0_BASE,&quot;%d\n&quot;,(int)smartcar_imu.right_motor_speed_cmps);</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="转向环">转向环</h2>
+<blockquote>
+<p>作用：优化小车的平衡效果，小车不会左拐和右拐，只在正前方与正后方调整车身来平衡车体。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//转向环</span></span><br><span class="line"><span class="type">float</span> zhuan_Kp=<span class="number">0.0f</span>;   <span class="comment">//期望小车转向，正反馈</span></span><br><span class="line"><span class="type">float</span> zhuan_Kd=<span class="number">-10.0f</span>;    <span class="comment">//抑制小车转向，负反馈</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//*************************************************************</span></span><br><span class="line"><span class="comment">//函数功能：控制小车转向</span></span><br><span class="line"><span class="comment">//Set_turn：目标旋转角速度</span></span><br><span class="line"><span class="comment">//Gyro_Z:陀螺仪Z轴的角速度</span></span><br><span class="line"><span class="comment">//不是一个严格的PD控制器，为小车的叠加控制</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">zhuan</span><span class="params">(<span class="type">float</span> Set_turn,<span class="type">float</span> Gyro_Z)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> PWM_Out=<span class="number">0</span>; </span><br><span class="line">	<span class="keyword">if</span>(Set_turn==<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">	 PWM_Out=zhuan_Kd*Gyro_Z; <span class="comment">//没有转向需求，Kd约束小车转向</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(Set_turn!=<span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">	 PWM_Out=zhuan_Kp*Set_turn; <span class="comment">//有转向需求，Kp为期望小车转向 </span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> PWM_Out;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>调参保姆级教程</h1>
+<h2 id="1-机械中值的确定">1 机械中值的确定</h2>
+<p>（1）机械中值就是小车直立状态下的绕x轴的俯仰角pitch，对这个机械中值的要求不是特别高，因为在速度环的作用下，小车在一定范围内的机械中值下都能保持平衡（加入速度环后，机械中值的影响不是很大），没必要按网上那种两边倒下的值加起来取平均值的方法来取机械中值。</p>
+<p>（2）我们除了要用到绕x轴方向的俯仰角外，还需要绕z轴方向的偏航角来使小车的平衡性能更好。</p>
+<p><img src="/2023/10/05/%E5%B9%B3%E8%A1%A1%E5%B0%8F%E8%BD%A6%E8%B0%83%E8%BD%A6%E4%BF%9D%E5%A7%86%E5%BC%8F%E6%95%99%E7%A8%8B/1.png" alt></p>
+<h2 id="2-直立环调参">2 直立环调参</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">   err=Car_zero-Angle;    <span class="comment">//期望值-实际值，这里期望小车平衡，因此期望值就是机械中值       </span></span><br><span class="line">pwm_zhili=zhili_Kp*err+Gyro*zhili_Kd;<span class="comment">//计算平衡控制的电机PWM</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-1-直立环Kp极性的确定">2.1 直立环Kp极性的确定</h3>
+<p>直立的要求是小车往哪边倒，小车就往哪边加速前进，使小车得以平衡。</p>
+<blockquote>
+<p>先给一个大的P值，例如P=100，在单独的直立环作用下，倾倒小车，观察小车的运动状态，正确Kp极性下，运动状态是小车往哪边倒，轮子就往哪边转，改变P值的正负使小车的运动状态达到要求。</p>
+</blockquote>
+<h3 id="2-2-直立环Kp大小的调节">2.2 直立环Kp大小的调节</h3>
+<p>（1）先把Kp设成一个小的值，若发现轮子不转，则是Kp的值过小。</p>
+<p>（2）将Kp的值增大，小车向前倾斜，小车会向前运动；小车向后倾斜，小车会向后运动，但是直立不起来，是因为小车反应得太慢了，原因还是Kp过小。</p>
+<p>（3）继续增大Kp，可以看到小车有接近平衡的趋势，但是还是平衡不起来，原因是Kp的值还是小了些。</p>
+<p>（4）继续增大Kp，可以看到小车有明显的平衡趋势，平衡效果不错。</p>
+<p>（5）根据工程经验，我们要继续增大Kp，直到松手让小车直立时出现低频振荡。</p>
+<p>（6）小车出现低频振荡后，根据工程经验，在增大一点Kp后可以引入Kd分量。这里再增大一点Kp，小车出现明显低频振荡，效果符合，此时应快速关闭电源，不能让低频振荡持续太久。</p>
+<h3 id="2-3-直立环Kd极性的确定">2.3 直立环Kd极性的确定</h3>
+<p>Kd作用是辅助Kp的效果，使小车反应更迅速，达到好的直立效果。</p>
+<blockquote>
+<p>先将直立环Kp置为0，将Kd给一个稍微大一点的值，例如;Kd=100;正确Kd极性下，运动状态是小车往哪边倒，轮子就往哪边转。</p>
+</blockquote>
+<h3 id="2-4-直立环Kd大小的调节">2.4 直立环Kd大小的调节</h3>
+<p>（1）恢复Kp的值，先将Kd设成一个较小的值，例如Kd=1；可以看到小车的平衡效果其实比较好，可以做到稳定平衡。但是按照工程实践，我们需要继续增大Kd寻找Kd的临界值，直到小车出现高频振荡。</p>
+<p>（2）小车出现高频振荡时，需要迅速关闭电源，避免因为反馈电流过大导致电机驱动或者电池烧毁。</p>
+<p>（3）小车出现小范围的高频振荡时，再增大Kd，可以看到小车出现明显的高频振荡。此时，可以停止调节直立环了。</p>
+<p>按照工程实践，给直立环的Kp和Kd都乘上0.6（因为我们是按振荡的现象来调的，所以直这里乘以0.6可以让小车平衡）。</p>
+<h3 id="单独直立环效果">单独直立环效果</h3>
+<p>小车可以较长时间直立，但是需要手动去干预小车的运动状态，使他维持平衡。但是没有速度环的加持，小车不能够自己在大范围空间内保持长时间直立。</p>
+<h2 id="3-速度环调参">3 速度环调参</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">speed_feedback[<span class="number">0</span>]=smartcar_imu.left_motor_speed_cmps;<span class="comment">//获取左轮实际值  </span></span><br><span class="line">speed_error[<span class="number">0</span>]=v_target_l-speed_feedback[<span class="number">0</span>];</span><br><span class="line">speed_error[<span class="number">0</span>]=constrain_float(speed_error[<span class="number">0</span>],-speed_err_max,speed_err_max);</span><br><span class="line">speed_integral[<span class="number">0</span>]+=speed_ki*speed_error[<span class="number">0</span>];</span><br><span class="line">speed_integral[<span class="number">0</span>]=constrain_float(speed_integral[<span class="number">0</span>],-speed_integral_max,speed_integral_max);</span><br><span class="line">speed_output[<span class="number">0</span>]=speed_integral[<span class="number">0</span>]+speed_kp*speed_error[<span class="number">0</span>];</span><br><span class="line">speed_output[<span class="number">0</span>]=constrain_float(speed_output[<span class="number">0</span>],-speed_ctrl_output_max,speed_ctrl_output_max);</span><br></pre></td></tr></table></figure>
+<h3 id="3-1-速度环Kp极性的确定">3.1 速度环Kp极性的确定</h3>
+<p>（1）关闭直立环</p>
+<p>（2）给速度环Kp先设立一个比较大的值，给速度环一个目标值，正确的Kp极性下，轮子是正常快速转动的，否则，小车轮子不转。</p>
+<h3 id="3-2-速度环Ki极性的确定">3.2 速度环Ki极性的确定</h3>
+<p>根据工程实践，速度环的Ki = 1/200*Kp，所以后面我们速度环的Kp与Ki可以一起调。</p>
+<blockquote>
+<p>给Kp一个较小的值，Ki一个更小的值，比Kp小一个数量级，更改Ki的极性观察轮子转动情况，正确的转动情况是，用手将轮子往一个方向转动，小车会按这个方向慢慢增大到最大转速，会出现小范围的振荡属于正常现象,错误极性下，轮子会按手转动的反方向转动，不会按原方向转动到最大。</p>
+</blockquote>
+<h3 id="3-3-速度环Kp、Kd大小的调节">3.3 速度环Kp、Kd大小的调节</h3>
+<p>速度环的Ki = 1/200*Kp，我们只需要调节Kp即可。</p>
+<p>（1）打开直立环，在直立环基础上调速度环，以小车的平衡效果为调参的基准。</p>
+<p>（2）先将Kp设成一个小的值，可以看到在速度环的加持下，小车的直立效果更好。</p>
+<p>（3）但是反馈的效果依旧很慢，所以我们要继续增大速度环Kp。</p>
+<p>（4）调节到合适的Kp，小车可以很好保持平衡，同时还具备一定抗击打能力，可以较长时间直立。</p>
+<p>（5）但是小车在自己的平衡之中会出现旋转，同时在原地平衡时也会出现短期振荡现象。</p>
+<h3 id="直立环加速度环现象">直立环加速度环现象</h3>
+<p>（1）小车可以很好保持平衡，同时还具备一定抗击打能力，可以较长时间直立。</p>
+<p>（2）原地平衡时也会出现短期振荡现象可以通过增大直立环的Kd和减小速度环的Kp来抵消这个情况，慢慢调整可以达到一个好的效果，这个比较麻烦，需要长时间的耐心。</p>
+<p>（3）旋转的情况我们可以通过加入转向环来抑制。</p>
+<h2 id="4-转向环调参">4 转向环调参</h2>
+<p>转向环若是为了让小车保持一个方向上的原地静止，所以不需要Kp，仅加入Kd即可。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(Set_turn==<span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line"> PWM_Out=zhuan_Kd*Gyro_Z; <span class="comment">//没有转向需求，Kd约束小车转向</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(Set_turn!=<span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line"> PWM_Out=zhuan_Kp*Set_turn; <span class="comment">//有转向需求，Kp为期望小车转向 </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-1-转向环Kd极性的确定">4.1 转向环Kd极性的确定</h3>
+<p>将直立环和速度环关闭，将Kd设为100。正确Kp极性下小车的运动状态是，顺时针转动小车，轮子产生的作用可以抵抗小车顺时针转动，产生对抗旋转的扭矩。</p>
+<h3 id="4-2-转向环Kd大小的确定">4.2 转向环Kd大小的确定</h3>
+<p>（1）开启直立环和速度环</p>
+<p>（2）从小到大调整Kd的值，合适的Kd可以使小车在平衡过程中不发生水平方向的转动</p>
+<p>（3）若有平衡过程中小车有旋转趋势，说明Kd的值还是过小，则需要继续增大Kd的值。</p>
+<p>（4）若小车出现明显的高频振荡，说明Kd过大了。</p>
+<h2 id="5-拿起与放下小车检测">5 拿起与放下小车检测</h2>
+<p>拿起检测思路是当轮子以较大速度旋转一段时间后，关闭电机；</p>
+<p>放下检测思路是当俯仰角过大时关闭电机。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WM</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://fiercewill.github.io/2023/10/05/%E5%B9%B3%E8%A1%A1%E5%B0%8F%E8%BD%A6%E8%B0%83%E8%BD%A6%E4%BF%9D%E5%A7%86%E5%BC%8F%E6%95%99%E7%A8%8B/">https://fiercewill.github.io/2023/10/05/%E5%B9%B3%E8%A1%A1%E5%B0%8F%E8%BD%A6%E8%B0%83%E8%BD%A6%E4%BF%9D%E5%A7%86%E5%BC%8F%E6%95%99%E7%A8%8B/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>电子信息工程 (A) 2023 <a href="https://fiercewill.github.io/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a> . <a href="https://fiercewill.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89/">数据结构与算法（c语言）</a> . <a href="https://fiercewill.github.io/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a> 王明的博客</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/tips/">🏷️ tips</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/10/09/C%E8%AF%AD%E8%A8%80%E5%88%B7%E9%A2%98%EF%BC%88Day2%EF%BC%89/">C语言刷题（Day2）</a>
+            
+            
+            <a class="next" rel="next" href="/2023/10/04/STM32%E9%A9%B1%E5%8A%A8%E6%AD%A5%E8%BF%9B%E7%94%B5%E6%9C%BA/STM32-42StepMotor-Tour1-main/STM32%E9%A9%B1%E5%8A%A842%E6%AD%A5%E8%BF%9B%E7%94%B5%E6%9C%BA/"></a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WM | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    总访客量:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;
+
+
+<span class="site-pv">
+    总访问量:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+		
+        </span>
+    </div>
+</footer>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<!--浏览器搞笑标题-->
+<!-- 雪花特效 -->
+

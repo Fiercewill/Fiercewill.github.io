@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WM">
+
+
+
+
+
+<title>C语言刷题（Day2） | WM&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">WM&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">WM&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">C语言刷题（Day2）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WM</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 9, 2023&nbsp;&nbsp;15:22:06</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/C%E8%AF%AD%E8%A8%80%E5%88%B7%E9%A2%98/">C语言刷题</a>
+                            
+                        </span>
+                    
+                    
+                        <span class="post-count">
+                    Words:
+                        <a href="">2,885</a> 
+                        </span>
+                             
+                    
+                        <span class="post-count">
+                    Time:
+                        <a href="">13min</a> 
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1>前言</h1>
+<blockquote>
+<p>（1）今天给大家分享两个非常有意思的题目，通过较长时间的研究，我觉得个人理解得算比较透彻了，与大家分享一下。</p>
+<p>（2）第一道题主要考查浮点数的运算，第二道题主要考查ascii码的巧用，以及字符串数组和整型数组的基础知识，虽然基础，但很是重要。</p>
+<p>（3）如果大家有不同的解法，欢迎在评论区中交流。</p>
+<p>（4）参考资料：<a target="_blank" rel="noopener" href="https://blog.csdn.net/apple_60803036/article/details/124106700">大数加法，大数阶乘-CSDN博客</a></p>
+</blockquote>
+<p><img src="/2023/10/09/C%E8%AF%AD%E8%A8%80%E5%88%B7%E9%A2%98%EF%BC%88Day2%EF%BC%89/1.jpg" alt></p>
+<h1>第一题</h1>
+<p>求一串式子的值。上面题目有误，正确题目应该是1-1/4+1/7-1/10……</p>
+<p>通过观察式子很容易发现规律，分母每次加3，第一个数n=0，极性取决于（-1）的n次方，于是我们调用a的b次方函数pow(a,b)，也不忘记包含它的math.h头文件，问题可以迎刃而解。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> _CRT_SECURE_NO_WARNINGS 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1-1/4+1/7+1/10。。。</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> n = <span class="number">0</span>;</span><br><span class="line">	<span class="type">float</span> sum = <span class="number">0.0f</span>;</span><br><span class="line">	<span class="type">float</span> a = <span class="number">0.0f</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;请输入n=\n&quot;</span>,n);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		a = (<span class="type">float</span>)(<span class="number">1.0f</span> / (<span class="type">float</span>)(<span class="number">1</span> + <span class="number">3</span> * i));</span><br><span class="line">		sum = <span class="built_in">pow</span>(<span class="number">-1</span>,i)* a + sum;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;求和的结果是%f&quot;</span>,sum);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="易错点：-1的n次方千万不能写成：（-1）-n，-在c语言中是异或操作的意思。">易错点：-1的n次方千万不能写成：（-1）^n，^在c语言中是异或操作的意思。</h4>
+<p>本道题还有其他很多方法，下面再列举几种方法。</p>
+<h3 id="方法二：">方法二：</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># <span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> j = <span class="number">1</span>;</span><br><span class="line">    <span class="type">double</span> sum = <span class="number">0</span>;  <span class="comment">//结果肯定是小数, 所以要定义成double或float型</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1.0</span>/i &gt; <span class="number">1e-6</span>)  <span class="comment">/*当1/i小于10的-6次方时停止循环。这个循环条件是自己定的, 定得越小最后的结果就越精确。注意1一定要写成小数的形式即1.0*/</span></span><br><span class="line">    &#123;</span><br><span class="line">        sum += (<span class="number">1.0</span> / i) * j;</span><br><span class="line">        i+=<span class="number">2</span>;</span><br><span class="line">        j = -j;  <span class="comment">//实现正负交替</span></span><br><span class="line">    &#125;</span><br><span class="line">    sum *=<span class="number">4</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;sum = %lf\n&quot;</span>, sum);  <span class="comment">//double是%lf, 取6位小数是%.6</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>第二题</h1>
+<p>求大数的阶乘。</p>
+<p>在解决求大数的阶乘这个问题之前，我们先通过解决求大数加法这一问题进行引入，解决大数加法的问题，大数的阶乘会更加简单。</p>
+<h2 id="大数的加法">大数的加法</h2>
+<p>以前我们写加法都是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">   <span class="type">int</span> a,b;</span><br><span class="line">   <span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>,&amp;a,&amp;b);</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,a+b);</span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于比较小的数字可能还可以计算，但是对于超出整形范围（-2147483648～2147483647（<img src="/2023/10/09/C%E8%AF%AD%E8%A8%80%E5%88%B7%E9%A2%98%EF%BC%88Day2%EF%BC%89/1.png" alt>)的数字，可能就没有办法了。</p>
+<p>为了解决这个问题，我们采取运用字符串数组来巧妙地计算大数。</p>
+<p>先来看一个程序预热，下面代码的作用是将输入的字符串转化为整型打印出来。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>,tmp = <span class="number">0</span>;</span><br><span class="line">    <span class="type">char</span> a[<span class="number">11</span>] = &#123; <span class="number">0</span> &#125;; <span class="comment">//如果从i =10开始遍历的话，定义数组时要定义到大小为11，负责遍历到没有定义的元素，数组会溢出</span></span><br><span class="line">    <span class="type">char</span> b[<span class="number">11</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,a);</span><br><span class="line">    <span class="keyword">for</span> (tmp = <span class="number">0</span>, i = <span class="built_in">strlen</span>(a) - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">        b[tmp++] = a[i] - <span class="string">&#x27;0&#x27;</span>;  <span class="comment">// ASCII码里面字符数字转化为对应的十进制的数字，可以用%d打印数字</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 输出结果</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">10</span>; i &gt;= <span class="number">0</span>; i--) <span class="comment">//如果从i =10开始遍历的话，定义数组时要定义到大小为11，负责遍历到没有定义的元素，数组会溢出</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (b[i] != <span class="number">0</span>) </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (i; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, b[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//这里用不着break，到这的时候i已经等于0了，执行到这以后，i=0;在执行大for循环地i--后，不再满足大for循环的条件，直接退出循环</span></span><br><span class="line">           <span class="comment">// break;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="下面带来大数加法的程序。">下面带来大数加法的程序。</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAXLEN 10000 <span class="comment">//定义求和结果的最大位数</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i, up, tmp;</span><br><span class="line">    <span class="type">char</span> buffer[MAXLEN + <span class="number">1</span>] = &#123; <span class="number">0</span> &#125;, a[MAXLEN + <span class="number">1</span>] = &#123; <span class="number">0</span> &#125;, b[MAXLEN + <span class="number">1</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//逆序输入a</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, buffer);</span><br><span class="line">    <span class="keyword">for</span> (tmp = <span class="number">0</span>, i = <span class="built_in">strlen</span>(buffer) - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">        a[tmp++] = buffer[i] - <span class="string">&#x27;0&#x27;</span>;  <span class="comment">// ASCII码里面字符数字转化为对应的十进制的数字，可以用%d打印数字</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//逆序输入b</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, buffer);</span><br><span class="line">    <span class="keyword">for</span> (tmp = <span class="number">0</span>, i = <span class="built_in">strlen</span>(buffer) - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">        b[tmp++] = buffer[i] - <span class="string">&#x27;0&#x27;</span>; <span class="comment">// ASCII码里面字符数字转化为对应的十进制的数字，可以用%d打印数字</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (a[<span class="number">0</span>] == <span class="number">0</span> &amp;&amp; b[<span class="number">0</span>] == <span class="number">0</span>) <span class="comment">// 这是加数都为零的情况</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;0&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//计算</span></span><br><span class="line">    <span class="keyword">for</span> (up = <span class="number">0</span>, i = <span class="number">0</span>; i &lt; MAXLEN; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        tmp = a[i] + b[i] + up; <span class="comment">// 暂时存储数值</span></span><br><span class="line">        a[i] = tmp % <span class="number">10</span>;</span><br><span class="line">        up = tmp / <span class="number">10</span>; <span class="comment">// 进位</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输出结果</span></span><br><span class="line">    <span class="keyword">for</span> (i = MAXLEN; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (a[i] != <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (i; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, a[i]);</span><br><span class="line">            &#125;</span><br><span class="line">           <span class="comment">//break;//这个break其实用不着，此时i已经等于0了</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="注意点：">注意点：</h2>
+<p>（1）我们先来复习一下strlen函数的基础知识。</p>
+<p>a、strlen是求字符串长度的函数，不能求整型数组的长度。</p>
+<p>b、看看strlen求字符串长度的返回值。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> a[] = <span class="string">&quot;1234&quot;</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, <span class="built_in">strlen</span>(a));  <span class="comment">//结果是4</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（2）数字字符数组不能直接通过%d去打印数组里的每一个数字。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//这样是不对的</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    int i = 0, tmp = 0;</span><br><span class="line">    char a[10] = &#123; 0 &#125;;</span><br><span class="line">    scanf(&quot;%s&quot;, a);</span><br><span class="line">    for (i = strlen(a) - 1; i &gt;= 0; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        printf(&quot;%d&quot;,a[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）数字字符数组要转化为数字打印出来需要这样操作</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">char</span> a[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="type">int</span>  b[<span class="number">10</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="type">int</span> i,tmp;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,a);</span><br><span class="line">	    <span class="keyword">for</span> (tmp = <span class="number">0</span>, i = <span class="built_in">strlen</span>(a) - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">	        b[tmp++] = a[i] - <span class="string">&#x27;0&#x27;</span>;  <span class="comment">// ASCII码里面字符数字转化为对应的十进制的数字，可以用%d打印数字</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>,b[<span class="number">1</span>]);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>,tmp = <span class="number">0</span>;</span><br><span class="line">    <span class="type">char</span> a[<span class="number">11</span>] = &#123; <span class="number">0</span> &#125;; <span class="comment">//如果从i =10开始遍历的话，定义数组时要定义到大小为11，负责遍历到没有定义的元素，数组会溢出</span></span><br><span class="line">    <span class="type">char</span> b[<span class="number">11</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>,a);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//逆序输入b</span></span><br><span class="line">    <span class="keyword">for</span> (tmp = <span class="number">0</span>, i = <span class="built_in">strlen</span>(a) - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">        b[tmp++] = a[i] - <span class="string">&#x27;0&#x27;</span>;  <span class="comment">// ASCII码里面字符数字转化为对应的十进制的数字，可以用%d打印数字</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 输出结果</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">10</span>; i &gt;= <span class="number">0</span>; i--) <span class="comment">//如果从i =10开始遍历的话，定义数组时要定义到大小为11，负责遍历到没有定义的元素，数组会溢出</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (b[i] != <span class="number">0</span>) </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span> (i; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, b[i]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//这里用不着break，到这的时候i已经等于0了，执行到这以后，i=0;在执行大for循环地i--后，不再满足大for循环的条件，直接退出循环</span></span><br><span class="line">           <span class="comment">// break;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（4）整型数组不能用数组名打印，只有字符数组才能用数组名打印,整型数组只能一个一个数组元素打印。</p>
+<p>（5）打印字符串数组时，for循环通常这样搭配</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这样搭配的</span></span><br><span class="line"><span class="comment">//tmp = 0, i = strlen(buffer) - 1;</span></span><br><span class="line"><span class="comment">//tmp = 1, i = strlen(buffer);</span></span><br></pre></td></tr></table></figure>
+<p>（6）字符数组元素转整型元素后的加法运算，a[i]与b[i]已转化为整型元素</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//    //计算  数组的第一位，即两个数的个位 初始进位值up = 0 计算出来应该要逆向输出 这是一个计算的好法子</span></span><br><span class="line">   <span class="keyword">for</span> (up = <span class="number">0</span>, i = <span class="number">0</span>; i &lt;= len; i++)</span><br><span class="line">   &#123;</span><br><span class="line">       tmp = a[i] + b[i] + up; <span class="comment">// 暂时存储数值</span></span><br><span class="line">       result[i] = tmp % <span class="number">10</span>;</span><br><span class="line">       up = tmp / <span class="number">10</span>; <span class="comment">// 进位</span></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>（7）在使用数组时，一定要注意数组空间大小的申请，避免访问数组以外的元素导致出现栈溢出</p>
+<p>（8）注意数组的初始化操作还有sizeof与strlen的区别</p>
+<p>例一</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> arr1[]=&#123;<span class="string">&#x27;H&#x27;</span>,<span class="string">&#x27;E&#x27;</span>,<span class="string">&#x27;L&#x27;</span>,<span class="string">&#x27;L&#x27;</span>,<span class="string">&#x27;O&#x27;</span>&#125;;</span><br><span class="line"><span class="type">char</span> arr2[]=<span class="string">&quot;HELLO&quot;</span>;</span><br><span class="line"><span class="keyword">sizeof</span>(arr1);  <span class="comment">//返回5</span></span><br><span class="line"><span class="keyword">sizeof</span>(arr2);  <span class="comment">//返回6，因为最后有一个&#x27;\0&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>例二</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *str1 = <span class="string">&quot;asdfgh&quot;</span>;</span><br><span class="line"><span class="type">char</span> str2[] = <span class="string">&quot;asdfgh&quot;</span>;</span><br><span class="line"><span class="type">char</span> str3[<span class="number">8</span>] = &#123;<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;s&#x27;</span>, <span class="string">&#x27;d&#x27;</span>&#125;;</span><br><span class="line"><span class="type">char</span> str4[] = <span class="string">&quot;as\0df&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>输出结果是</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sizeof</span>(str1) = <span class="number">4</span>;  <span class="built_in">strlen</span>(str1) = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">sizeof</span>(str2) = <span class="number">7</span>;  <span class="built_in">strlen</span>(str2) = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">sizeof</span>(str3) = <span class="number">8</span>;  <span class="built_in">strlen</span>(str3) = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">sizeof</span>(str4) = <span class="number">6</span>;  <span class="built_in">strlen</span>(str4) = <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<p>sizeof能计算变量或者数据类型所占用的内存（以字节为单位）。用sizeof计算数组长度时，sizeof不关心数组内部存储的是什么类型的数据。<br>
+所以常常用 sizeof(arr)/sizeof(arr[0]) 来计算数组的长度。其中“sizeof(arr)“计算了整个数组arr占据了多少内存（字节为单位），”sizeof(arr[0])“计算了数组中第一个元素所占多少字节，两者相除就是数组的长度。</p>
+<h4 id="看下面代码及其输出结果">看下面代码及其输出结果</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> arr1 [<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;<span class="comment">//定义了元素个数，且给第一个元素赋值为0，则其他元素均为0</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> arr2 [<span class="number">10</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;<span class="comment">//定义了元素个数，但只给前五个元素赋值，则后五个元素均为0</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> arr3 [<span class="number">10</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;;<span class="comment">//定义了元素个数，且给所有元素均赋值</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> arr4 [<span class="number">10</span>];<span class="comment">//什么都不放，编译器会给数组的每个元素放置随机数。</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> arr5[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;<span class="comment">//不定义元素个数，给几个元素赋值就有几个元素。</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> len1 = <span class="keyword">sizeof</span>(arr1) / <span class="keyword">sizeof</span>(arr1 [<span class="number">0</span>]);</span><br><span class="line"><span class="type">int</span> len2 = <span class="keyword">sizeof</span>(arr2) / <span class="keyword">sizeof</span>(arr2 [<span class="number">0</span>]);</span><br><span class="line"><span class="type">int</span> len3 = <span class="keyword">sizeof</span>(arr3) / <span class="keyword">sizeof</span>(arr3 [<span class="number">0</span>]);</span><br><span class="line"><span class="type">int</span> len4 = <span class="keyword">sizeof</span>(arr4) / <span class="keyword">sizeof</span>(arr4 [<span class="number">0</span>]);</span><br><span class="line"><span class="type">int</span> len5 = <span class="keyword">sizeof</span>(arr5) / <span class="keyword">sizeof</span>(arr5 [<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;length arr1 = %d\n&quot;</span>, len1);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;length arr2 = %d\n&quot;</span>, len2);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;length arr3 = %d\n&quot;</span>, len3);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;length arr4 = %d\n&quot;</span>, len4);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;length arr5 = %d\n&quot;</span>, len5);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>运行结果</p>
+<p><img src="/2023/10/09/C%E8%AF%AD%E8%A8%80%E5%88%B7%E9%A2%98%EF%BC%88Day2%EF%BC%89/2.png" alt></p>
+<h2 id="大数阶乘">大数阶乘</h2>
+<p>先贴代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> _CRT_SECURE_NO_WARNINGS 1</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAXLEN 100  <span class="comment">//定义阶乘结果的最大位数</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> n, i, j, up, tmp;</span><br><span class="line">    <span class="type">char</span> arr[MAXLEN + <span class="number">1</span>] = &#123; <span class="number">1</span> &#125;;  <span class="comment">//最开始arr[0] = 1，用1来乘</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 输入n</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//计算    </span></span><br><span class="line">    <span class="comment">//arr[0]保存结果的个位，arr[1]保存结果的十位，以此类推</span></span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">2</span>; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span> (up = <span class="number">0</span>, j = <span class="number">0</span>; j &lt;= MAXLEN; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            tmp = arr[j] * i + up; </span><br><span class="line">            arr[j] = tmp % <span class="number">10</span>;</span><br><span class="line">            up = tmp / <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 输出结果  逆序输出</span></span><br><span class="line">    <span class="keyword">for</span> (i = MAXLEN; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">        <span class="keyword">if</span> (arr[i] != <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">for</span> (i; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, arr[i]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="代码分析">代码分析</h3>
+<p>（1）代码实现思路是：</p>
+<blockquote>
+<p>以计算5！为例，我们的运算思路是1乘2乘3乘4乘5，以此得到运算结果为2，6，24，120。我们巧妙通过arr[0],arr[1],arr[2]来存放运算结果的个位、十位和百位，实现代码如下：</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//计算    </span></span><br><span class="line"><span class="comment">//arr[0]保存结果的个位，arr[1]保存结果的十位，以此类推</span></span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">2</span>; i &lt;= n; i++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (up = <span class="number">0</span>, j = <span class="number">0</span>; j &lt;= MAXLEN; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        tmp = arr[j] * i + up; </span><br><span class="line">        arr[j] = tmp % <span class="number">10</span>;</span><br><span class="line">        up = tmp / <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（2）结果的输出：由于我们在计算过程中是将各位逆序存入数组的，所以我们也像大数的加法一样逆序输出结果。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 输出结果  逆序输出</span></span><br><span class="line"><span class="keyword">for</span> (i = MAXLEN; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">    <span class="keyword">if</span> (arr[i] != <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">for</span> (i; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, arr[i]);</span><br></pre></td></tr></table></figure>
+<p>（2）#define MAXLEN 100  //定义阶乘结果的最大位数</p>
+<p>arr[MAXLEN + 1]数组用来存放运算结果。</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WM</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://fiercewill.github.io/2023/10/09/C%E8%AF%AD%E8%A8%80%E5%88%B7%E9%A2%98%EF%BC%88Day2%EF%BC%89/">https://fiercewill.github.io/2023/10/09/C%E8%AF%AD%E8%A8%80%E5%88%B7%E9%A2%98%EF%BC%88Day2%EF%BC%89/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>电子信息工程 (A) 2023 <a href="https://fiercewill.github.io/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a> . <a href="https://fiercewill.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89/">数据结构与算法（c语言）</a> . <a href="https://fiercewill.github.io/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a> 王明的博客</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/C%E8%AF%AD%E8%A8%80/">🏷️ C语言</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/10/05/%E5%B9%B3%E8%A1%A1%E5%B0%8F%E8%BD%A6%E8%B0%83%E8%BD%A6%E4%BF%9D%E5%A7%86%E5%BC%8F%E6%95%99%E7%A8%8B/">平衡小车调车保姆式教程</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WM | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    总访客量:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;
+
+
+<span class="site-pv">
+    总访问量:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+		
+        </span>
+    </div>
+</footer>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<!--浏览器搞笑标题-->
+<!-- 雪花特效 -->
+
