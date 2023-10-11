@@ -219,7 +219,7 @@
                     
                         <span class="post-count">
                     Words:
-                        <a href="">2,885</a> 
+                        <a href="">2,960</a> 
                         </span>
                              
                     
@@ -233,7 +233,13 @@
         </header>
 
         <div class="post-content">
-            <h1>前言</h1>
+            <blockquote>
+<p>✅作者简介：大家好我是：侠客er，一名普通电子信息工程专业的大学学生，希望一起努力，一起进步！</p>
+<p>📃个人主页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62261692?spm=1000.2115.3001.5343">侠客er</a></p>
+<p>🔥系列专栏：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62261692/category_12457706.html">C语言刷题练习</a></p>
+<p><a href="https://fiercewill.github.io/tags/C%E8%AF%AD%E8%A8%80/">🏷️</a>非常欢迎大家在评论区留言交流，互相学习！</p>
+</blockquote>
+<h1>前言</h1>
 <blockquote>
 <p>（1）今天给大家分享两个非常有意思的题目，通过较长时间的研究，我觉得个人理解得算比较透彻了，与大家分享一下。</p>
 <p>（2）第一道题主要考查浮点数的运算，第二道题主要考查ascii码的巧用，以及字符串数组和整型数组的基础知识，虽然基础，但很是重要。</p>
@@ -245,7 +251,7 @@
 <p>求一串式子的值。上面题目有误，正确题目应该是1-1/4+1/7-1/10……</p>
 <p>通过观察式子很容易发现规律，分母每次加3，第一个数n=0，极性取决于（-1）的n次方，于是我们调用a的b次方函数pow(a,b)，也不忘记包含它的math.h头文件，问题可以迎刃而解。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> _CRT_SECURE_NO_WARNINGS 1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1-1/4+1/7+1/10。。。</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;math.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> n = <span class="number">0</span>;</span><br><span class="line">	<span class="type">float</span> sum = <span class="number">0.0f</span>;</span><br><span class="line">	<span class="type">float</span> a = <span class="number">0.0f</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;请输入n=\n&quot;</span>,n);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		a = (<span class="type">float</span>)(<span class="number">1.0f</span> / (<span class="type">float</span>)(<span class="number">1</span> + <span class="number">3</span> * i));</span><br><span class="line">		sum = <span class="built_in">pow</span>(<span class="number">-1</span>,i)* a + sum;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;求和的结果是%f&quot;</span>,sum);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="易错点：-1的n次方千万不能写成：（-1）-n，-在c语言中是异或操作的意思。">易错点：-1的n次方千万不能写成：（-1）^n，^在c语言中是异或操作的意思。</h4>
+<h4 id="易错点：-1的n次方千万不能写成：（-1）-n，-在c语言中是异或操作的意思。">&gt; 易错点：-1的n次方千万不能写成：（-1）^n，^在c语言中是异或操作的意思。</h4>
 <p>本道题还有其他很多方法，下面再列举几种方法。</p>
 <h3 id="方法二：">方法二：</h3>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># <span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> j = <span class="number">1</span>;</span><br><span class="line">    <span class="type">double</span> sum = <span class="number">0</span>;  <span class="comment">//结果肯定是小数, 所以要定义成double或float型</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1.0</span>/i &gt; <span class="number">1e-6</span>)  <span class="comment">/*当1/i小于10的-6次方时停止循环。这个循环条件是自己定的, 定得越小最后的结果就越精确。注意1一定要写成小数的形式即1.0*/</span></span><br><span class="line">    &#123;</span><br><span class="line">        sum += (<span class="number">1.0</span> / i) * j;</span><br><span class="line">        i+=<span class="number">2</span>;</span><br><span class="line">        j = -j;  <span class="comment">//实现正负交替</span></span><br><span class="line">    &#125;</span><br><span class="line">    sum *=<span class="number">4</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;sum = %lf\n&quot;</span>, sum);  <span class="comment">//double是%lf, 取6位小数是%.6</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -302,7 +308,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//计算    </span></span><br><span class="line"><span class="comment">//arr[0]保存结果的个位，arr[1]保存结果的十位，以此类推</span></span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">2</span>; i &lt;= n; i++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (up = <span class="number">0</span>, j = <span class="number">0</span>; j &lt;= MAXLEN; j++)</span><br><span class="line">    &#123;</span><br><span class="line">        tmp = arr[j] * i + up; </span><br><span class="line">        arr[j] = tmp % <span class="number">10</span>;</span><br><span class="line">        up = tmp / <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>（2）结果的输出：由于我们在计算过程中是将各位逆序存入数组的，所以我们也像大数的加法一样逆序输出结果。</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 输出结果  逆序输出</span></span><br><span class="line"><span class="keyword">for</span> (i = MAXLEN; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">    <span class="keyword">if</span> (arr[i] != <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">for</span> (i; i &gt;= <span class="number">0</span>; i--)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, arr[i]);</span><br></pre></td></tr></table></figure>
-<p>（2）#define MAXLEN 100  //定义阶乘结果的最大位数</p>
+<p>（3）#define MAXLEN 100  //定义阶乘结果的最大位数</p>
 <p>arr[MAXLEN + 1]数组用来存放运算结果。</p>
 
         </div>
@@ -354,6 +360,8 @@
             </div>
         </section>
         <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/10/11/%E8%AE%B0%E5%BD%95%E8%B0%83%E7%94%A8Modelsim%E8%BF%9B%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">记录调用Modelsim进行仿真遇到的问题</a>
             
             
             <a class="next" rel="next" href="/2023/10/05/%E5%B9%B3%E8%A1%A1%E5%B0%8F%E8%BD%A6%E8%B0%83%E8%BD%A6%E4%BF%9D%E5%A7%86%E5%BC%8F%E6%95%99%E7%A8%8B/">平衡小车调车保姆式教程</a>
