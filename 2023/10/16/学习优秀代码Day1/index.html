@@ -13,7 +13,7 @@
 
 
 
-<title>如何查看芯片数据手册 | WM&#39;s blog</title>
+<title>学习优秀代码Day1 | WM&#39;s blog</title>
 
 
 
@@ -196,7 +196,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">如何查看芯片数据手册</h1>
+            <h1 class="post-title">学习优秀代码Day1</h1>
             
                 <div class="post-meta">
                     
@@ -205,27 +205,27 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 16, 2023&nbsp;&nbsp;11:15:55</a>
+                        Date: <a href="#">October 16, 2023&nbsp;&nbsp;19:30:44</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">遇到的问题及解决方法</a>
+                                <a href="/categories/%E7%9F%A5%E8%AF%86%E5%BA%93/">知识库</a>
                             
                         </span>
                     
                     
                         <span class="post-count">
                     Words:
-                        <a href="">989</a> 
+                        <a href="">570</a> 
                         </span>
                              
                     
                         <span class="post-count">
                     Time:
-                        <a href="">4min</a> 
+                        <a href="">2min</a> 
                         </span>
                     
                 </div>
@@ -233,72 +233,20 @@
         </header>
 
         <div class="post-content">
-            <h1>前言</h1>
-<blockquote>
-<ol>
-<li>昨天晚上和队友交流过程中，发现了自己有遗漏的学习重点——查看芯片手册。</li>
-<li>我回忆了我两年来的比赛经历，好像在这一技能模块还没有系统学习，能力不成熟，所以赶紧补一补。</li>
-<li>我的文章以stm32f103c8t6的芯片手册为例子，可以举一反三。不管做什么比赛或者是项目，都会用到芯片，那么会看芯片手册就特别重要，会通过看一块芯片的手册来使用单片机，就可以类推去看其他手册去使用单片机，在使用单片机过程中，是离不开单片机的手册的！</li>
-<li>参考视频教程：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Gb4y1m7kt?p=4&amp;vd_source=04d53f699331016afe4bb8aaf4b36a6d">https://www.bilibili.com/video/BV1Gb4y1m7kt?p=4&amp;vd_source=04d53f699331016afe4bb8aaf4b36a6d</a></li>
-<li>视频资料说的再多，大部分都是理论性的东西，而这些理论性的东西，初学时，大概率是看不懂的，解决办法就是，拿着c8t6这块板子多写几个程序下载进去玩一玩，多编程序烧录实践，自然而然会在编写程序和烧录过程中对概念进行理解，不动手，光听的话太抽象了。听课不如多写几个程序玩玩，多折腾折腾。</li>
-<li>视频教程主要就是带着大家过一遍两本手册，重点就是引脚的定义那块部分。</li>
-<li>其他芯片手册的查看网址<a target="_blank" rel="noopener" href="https://www.szlcsc.com/">立创商城_一站式电子元器件采购自营商城_现货元器件交易网-嘉立创电子商城 (szlcsc.com)</a></li>
-</ol>
+            <blockquote>
+<p>✅作者简介：大家好我是：侠客er，一名普通电子信息工程专业的大学学生，希望一起努力，一起进步！</p>
+<p>📃个人主页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62261692?spm=1000.2115.3001.5343">侠客er</a></p>
+<p>🔥系列专栏：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62261692/category_12457706.html">C语言刷题练习</a></p>
+<p><a href="https://fiercewill.github.io/tags/C%E8%AF%AD%E8%A8%80/">🏷️</a>非常欢迎大家在评论区留言交流，互相学习！</p>
 </blockquote>
-<h1>数据手册看什么</h1>
-<h2 id="选型手册">选型手册</h2>
-<p><img src="/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/1.png" alt></p>
+<h1>前言</h1>
 <blockquote>
-<ol>
-<li>从芯片的选型手册可以看到各个芯片的外设资源，我们这里看c8t6，时钟72M，封装信号，可用引脚数37，4个通用定时器，1个高级定时器，2个adc，2个spi，2个iic，3个串口，1个can通信（车载通信中经常会使用的通信），一个usb器件。</li>
-<li>我们在制作一些东西的时候，会根据选型手册和所需资源，来考虑制作的成本，进行相应的选型。保证在满足要求得前提下，选择最低成本的器件。</li>
-</ol>
+<p>（1）今天优秀的代码工程来源于单片机老师公司的代码，拿到手后粗略看了一下，发现时间片选任务调度算法、状态机这些我知道的高级东西老师都在用；</p>
+<p>（2）其次，我还发现，LORA模块真的是很多公司喜好用的通信模块，老师的项目也用了；</p>
+<p>（3）老师在时间片选任务调度算法里每次调度一次程序还喂狗了，巧用了看门狗的功能;另外，这份代码的任务调度是在定时器中断3中执行的，我的架构是开始给定时器任务调度配置好了一个定时器作为任务调度的时钟源，在OS文件夹中把系统都封装好了，集成度高，所以两种编写方式各有特点，都很不错。</p>
 </blockquote>
-<h2 id="数据手册">数据手册</h2>
-<p><img src="/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/2.png" alt></p>
-<blockquote>
-<ol>
-<li>数据手册我们主要看的是引脚的描述</li>
-<li>我们拿到一款单片机，根据数据手册可以看中断优先级的编程方式，响应优先级和抢占优先级</li>
-<li>boot0和boot1是设置单片机的启动模式，通过跳线帽去设置</li>
-<li>数据手册中的内容可以从头到尾扫一边，上面会给芯片的外设资源和低功耗等模式做一些说明</li>
-<li>滴答定时器要和通用定时器、高级定时器区分，滴答定时器通常是用来产生一些延时函数，高级定时器与通用定时器的区别如下</li>
-</ol>
-</blockquote>
-<p><img src="/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/3.png" alt></p>
-<blockquote>
-<ol start="6">
-<li>c8t6只有ADC魔术转换器，没有DAC数模转换器</li>
-</ol>
-</blockquote>
-<h2 id="芯片封装">芯片封装</h2>
-<p><img src="/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/4.png" alt></p>
-<blockquote>
-<p>第一个引脚是VBAT电源引脚，画原理图的时候要找到芯片对应封装</p>
-</blockquote>
-<h2 id="重点：引脚定义">重点：引脚定义</h2>
-<p><img src="/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/5.png" alt></p>
-<blockquote>
-<p>通过数据手册我们要明确：</p>
-<ol>
-<li>
-<p>芯片大致有哪些IO口可以供我们使用</p>
-</li>
-<li>
-<p>每个IO口的第二功能是怎样的，第一功能肯定都是GPIO（通用输入输出端口）</p>
-</li>
-</ol>
-</blockquote>
-<blockquote>
-<p>手册的内容</p>
-<ol>
-<li>S代表电源键，I/O代表输入输出，I代表输入，O代表输出。</li>
-<li>FT表示这个引脚可以容忍5V，无FT表示不能容忍5V，不管能不能容忍5V，都不能给引脚长期通入5V，最好还是使用3.3V的电。</li>
-<li>PC14、PC15外接的是32.768k的晶振</li>
-<li>OSC_IN与OUT接的是8M晶振，后面讲时钟树，会讲这些。</li>
-<li>寄存器映射顾名思义就是地址的映射，把地址映射为一个名称</li>
-</ol>
-</blockquote>
+<h2 id="时间片选任务调度">时间片选任务调度</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**************************************************************/</span></span><br><span class="line">Task_Struct tasks[] =</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//用各个任务的函数名初始化</span></span><br><span class="line">    &#123;<span class="number">0</span>,<span class="number">1000</span>,<span class="number">1000</span>,TASK0&#125;,  <span class="comment">//100MS执行一次</span></span><br><span class="line">    &#123;<span class="number">0</span>,<span class="number">100</span>,<span class="number">100</span>,TASK1&#125;,   <span class="comment">//1秒钟执行一次模块程序</span></span><br><span class="line">    &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,TASK2&#125;,   <span class="comment">//1秒钟执行一次模块程序</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">uint8_t</span> task_count = <span class="keyword">sizeof</span>(tasks) / <span class="keyword">sizeof</span>(Task_Struct);</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">Task_Process</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">uint8_t</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (i=<span class="number">0</span>; i &lt; task_count; ++i) <span class="comment">//遍历任务数组</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (tasks[i].isRun) <span class="comment">//若任务可执行，则执行任务</span></span><br><span class="line">        &#123;</span><br><span class="line">            tasks[i].TaskPointer(<span class="literal">NULL</span>);</span><br><span class="line">            tasks[i].isRun = <span class="number">0</span>;<span class="comment">//将标志位清零</span></span><br><span class="line">            IWDG_ReloadCounter();<span class="comment">//喂狗</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">TIM3_IRQHandler</span><span class="params">(<span class="type">void</span>)</span><span class="comment">//TIMER3中断</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (RESET != TIM_GetITStatus(TIM3,TIM_IT_Update))<span class="comment">//检查TIM3更新中断发生与否</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">uint8_t</span> i = <span class="number">0</span>;</span><br><span class="line">        TIM_ClearITPendingBit(TIM3,TIM_IT_Update);</span><br><span class="line">        SIM7600Tick = (SIM7600Tick+<span class="number">1</span>)%<span class="number">0xffffffff</span>;</span><br><span class="line">        <span class="keyword">for</span> (i=<span class="number">0</span>; i &lt; task_count; ++i) <span class="comment">//遍历任务数组</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (tasks[i].TimerSlice)  <span class="comment">//判断时间片是否到了</span></span><br><span class="line">            &#123;</span><br><span class="line">                --tasks[i].TimerSlice;</span><br><span class="line">                <span class="keyword">if</span> (<span class="number">0</span> == tasks[i].TimerSlice) <span class="comment">//时间片到了</span></span><br><span class="line">                &#123;</span><br><span class="line">                    tasks[i].isRun = <span class="number">0x01</span>;<span class="comment">//置位  表示任务可以执行</span></span><br><span class="line">                    tasks[i].TimerSlice = tasks[i].SliceNumber; <span class="comment">//重新加载时间片值，为下次做准备</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
         </div>
 
@@ -313,7 +261,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://fiercewill.github.io/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/">https://fiercewill.github.io/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/</a></span>
+                        <span><a href="https://fiercewill.github.io/2023/10/16/%E5%AD%A6%E4%B9%A0%E4%BC%98%E7%A7%80%E4%BB%A3%E7%A0%81Day1/">https://fiercewill.github.io/2023/10/16/%E5%AD%A6%E4%B9%A0%E4%BC%98%E7%A7%80%E4%BB%A3%E7%A0%81Day1/</a></span>
                     </p>
                 
                 
@@ -337,7 +285,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/tips/">🏷️ tips</a>
+                        <a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/">🏷️ 知识库</a>
                     
                         
                 </span>
@@ -350,10 +298,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/">LC并联和LC串联谐振电路</a>
+                <a class="prev" rel="prev" href="/2023/10/16/%E9%AB%98%E7%A7%BB%E6%A4%8D%E6%80%A7%E7%9A%84spi%E4%B8%83%E8%84%9Aoled%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F%E5%92%8C%E5%AE%9E%E7%8E%B0Oled%E5%B1%8F%E5%B9%95180%E5%BA%A6%E7%BF%BB%E8%BD%AC%E6%98%BE%E7%A4%BA%E7%9A%84%E5%B0%8Ftip/">高移植性的spi七脚oled驱动程序和实现Oled屏幕180度翻转显示的小tip</a>
             
             
-            <a class="next" rel="next" href="/2023/09/12/IIC%E9%80%9A%E4%BF%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%92%8C%E6%97%B6%E5%BA%8F/">IIC通信的基本原理和时序</a>
+            <a class="next" rel="next" href="/2023/10/16/%E5%9C%A8Keil%E4%B8%AD%E6%B7%BB%E5%8A%A0STM32%E8%8A%AF%E7%89%87%E5%8C%85/">在Keil中添加STM32芯片包</a>
             
         </section>
 

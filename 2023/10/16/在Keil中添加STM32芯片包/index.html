@@ -13,7 +13,7 @@
 
 
 
-<title>如何查看芯片数据手册 | WM&#39;s blog</title>
+<title>在Keil中添加STM32芯片包 | WM&#39;s blog</title>
 
 
 
@@ -196,7 +196,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">如何查看芯片数据手册</h1>
+            <h1 class="post-title">在Keil中添加STM32芯片包</h1>
             
                 <div class="post-meta">
                     
@@ -205,27 +205,27 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">September 16, 2023&nbsp;&nbsp;11:15:55</a>
+                        Date: <a href="#">October 16, 2023&nbsp;&nbsp;19:10:46</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">遇到的问题及解决方法</a>
+                                <a href="/categories/%E7%9F%A5%E8%AF%86%E5%BA%93/">知识库</a>
                             
                         </span>
                     
                     
                         <span class="post-count">
                     Words:
-                        <a href="">989</a> 
+                        <a href="">261</a> 
                         </span>
                              
                     
                         <span class="post-count">
                     Time:
-                        <a href="">4min</a> 
+                        <a href="">1min</a> 
                         </span>
                     
                 </div>
@@ -233,72 +233,33 @@
         </header>
 
         <div class="post-content">
-            <h1>前言</h1>
-<blockquote>
-<ol>
-<li>昨天晚上和队友交流过程中，发现了自己有遗漏的学习重点——查看芯片手册。</li>
-<li>我回忆了我两年来的比赛经历，好像在这一技能模块还没有系统学习，能力不成熟，所以赶紧补一补。</li>
-<li>我的文章以stm32f103c8t6的芯片手册为例子，可以举一反三。不管做什么比赛或者是项目，都会用到芯片，那么会看芯片手册就特别重要，会通过看一块芯片的手册来使用单片机，就可以类推去看其他手册去使用单片机，在使用单片机过程中，是离不开单片机的手册的！</li>
-<li>参考视频教程：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Gb4y1m7kt?p=4&amp;vd_source=04d53f699331016afe4bb8aaf4b36a6d">https://www.bilibili.com/video/BV1Gb4y1m7kt?p=4&amp;vd_source=04d53f699331016afe4bb8aaf4b36a6d</a></li>
-<li>视频资料说的再多，大部分都是理论性的东西，而这些理论性的东西，初学时，大概率是看不懂的，解决办法就是，拿着c8t6这块板子多写几个程序下载进去玩一玩，多编程序烧录实践，自然而然会在编写程序和烧录过程中对概念进行理解，不动手，光听的话太抽象了。听课不如多写几个程序玩玩，多折腾折腾。</li>
-<li>视频教程主要就是带着大家过一遍两本手册，重点就是引脚的定义那块部分。</li>
-<li>其他芯片手册的查看网址<a target="_blank" rel="noopener" href="https://www.szlcsc.com/">立创商城_一站式电子元器件采购自营商城_现货元器件交易网-嘉立创电子商城 (szlcsc.com)</a></li>
-</ol>
+            <blockquote>
+<p>✅作者简介：大家好我是：侠客er，一名普通电子信息工程专业的大学学生，希望一起努力，一起进步！</p>
+<p>📃个人主页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62261692?spm=1000.2115.3001.5343">侠客er</a></p>
+<p>🔥系列专栏：<a href="https://fiercewill.github.io/categories/%E7%9F%A5%E8%AF%86%E5%BA%93/">知识库</a></p>
+<p><a href="https://fiercewill.github.io/tags/C%E8%AF%AD%E8%A8%80/">🏷️</a>非常欢迎大家在评论区留言交流，互相学习！</p>
 </blockquote>
-<h1>数据手册看什么</h1>
-<h2 id="选型手册">选型手册</h2>
-<p><img src="/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/1.png" alt></p>
+<h1>前言</h1>
 <blockquote>
-<ol>
-<li>从芯片的选型手册可以看到各个芯片的外设资源，我们这里看c8t6，时钟72M，封装信号，可用引脚数37，4个通用定时器，1个高级定时器，2个adc，2个spi，2个iic，3个串口，1个can通信（车载通信中经常会使用的通信），一个usb器件。</li>
-<li>我们在制作一些东西的时候，会根据选型手册和所需资源，来考虑制作的成本，进行相应的选型。保证在满足要求得前提下，选择最低成本的器件。</li>
-</ol>
+<p>（1）今天老师给了一个企业级的代码工程，主控芯片是STM32F030C8T6</p>
+<p>（2）平常用STM32F1XX系列的芯片比较多，所以我的Keil里没有这个芯片，这篇博客记录一下把芯片资源加入Keil的学习过程。</p>
 </blockquote>
-<h2 id="数据手册">数据手册</h2>
-<p><img src="/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/2.png" alt></p>
-<blockquote>
-<ol>
-<li>数据手册我们主要看的是引脚的描述</li>
-<li>我们拿到一款单片机，根据数据手册可以看中断优先级的编程方式，响应优先级和抢占优先级</li>
-<li>boot0和boot1是设置单片机的启动模式，通过跳线帽去设置</li>
-<li>数据手册中的内容可以从头到尾扫一边，上面会给芯片的外设资源和低功耗等模式做一些说明</li>
-<li>滴答定时器要和通用定时器、高级定时器区分，滴答定时器通常是用来产生一些延时函数，高级定时器与通用定时器的区别如下</li>
-</ol>
-</blockquote>
-<p><img src="/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/3.png" alt></p>
-<blockquote>
-<ol start="6">
-<li>c8t6只有ADC魔术转换器，没有DAC数模转换器</li>
-</ol>
-</blockquote>
-<h2 id="芯片封装">芯片封装</h2>
-<p><img src="/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/4.png" alt></p>
-<blockquote>
-<p>第一个引脚是VBAT电源引脚，画原理图的时候要找到芯片对应封装</p>
-</blockquote>
-<h2 id="重点：引脚定义">重点：引脚定义</h2>
-<p><img src="/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/5.png" alt></p>
-<blockquote>
-<p>通过数据手册我们要明确：</p>
-<ol>
-<li>
-<p>芯片大致有哪些IO口可以供我们使用</p>
-</li>
-<li>
-<p>每个IO口的第二功能是怎样的，第一功能肯定都是GPIO（通用输入输出端口）</p>
-</li>
-</ol>
-</blockquote>
-<blockquote>
-<p>手册的内容</p>
-<ol>
-<li>S代表电源键，I/O代表输入输出，I代表输入，O代表输出。</li>
-<li>FT表示这个引脚可以容忍5V，无FT表示不能容忍5V，不管能不能容忍5V，都不能给引脚长期通入5V，最好还是使用3.3V的电。</li>
-<li>PC14、PC15外接的是32.768k的晶振</li>
-<li>OSC_IN与OUT接的是8M晶振，后面讲时钟树，会讲这些。</li>
-<li>寄存器映射顾名思义就是地址的映射，把地址映射为一个名称</li>
-</ol>
-</blockquote>
+<h2 id="1-找到对应芯片包">1 找到对应芯片包</h2>
+<p>比如我要使用STM32F030C8T6，</p>
+<p>（1）就要找到Keil.STM32F0xx_DFP.2.0.0.pack。</p>
+<p>（2）将它复制到自己<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Keil5&amp;spm=1001.2101.3001.7020">Keil5</a>的所在文件夹的\ARM\Pack.Download，如下</p>
+<p><img src="/2023/10/16/%E5%9C%A8Keil%E4%B8%AD%E6%B7%BB%E5%8A%A0STM32%E8%8A%AF%E7%89%87%E5%8C%85/1.png" alt></p>
+<h2 id="2-导入芯片包">2 导入芯片包</h2>
+<p>点下面</p>
+<p><img src="/2023/10/16/%E5%9C%A8Keil%E4%B8%AD%E6%B7%BB%E5%8A%A0STM32%E8%8A%AF%E7%89%87%E5%8C%85/2.png" alt></p>
+<p>然后点击这个窗口的File-&gt;Import</p>
+<p><img src="/2023/10/16/%E5%9C%A8Keil%E4%B8%AD%E6%B7%BB%E5%8A%A0STM32%E8%8A%AF%E7%89%87%E5%8C%85/3.png" alt></p>
+<p>找到自己<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Keil5&amp;spm=1001.2101.3001.7020">Keil5</a>的所在文件夹的\ARM\Pack.Download文件夹下的下载好的包然后点就好了</p>
+<p><img src="/2023/10/16/%E5%9C%A8Keil%E4%B8%AD%E6%B7%BB%E5%8A%A0STM32%E8%8A%AF%E7%89%87%E5%8C%85/4.png" alt></p>
+<p>安装成功会看到这个，点击是</p>
+<p><img src="/2023/10/16/%E5%9C%A8Keil%E4%B8%AD%E6%B7%BB%E5%8A%A0STM32%E8%8A%AF%E7%89%87%E5%8C%85/5.png" alt></p>
+<p>编译工程发现无报错</p>
+<p><img src="/2023/10/16/%E5%9C%A8Keil%E4%B8%AD%E6%B7%BB%E5%8A%A0STM32%E8%8A%AF%E7%89%87%E5%8C%85/6.png" alt></p>
 
         </div>
 
@@ -313,7 +274,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://fiercewill.github.io/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/">https://fiercewill.github.io/2023/09/16/%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%8A%AF%E7%89%87%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/</a></span>
+                        <span><a href="https://fiercewill.github.io/2023/10/16/%E5%9C%A8Keil%E4%B8%AD%E6%B7%BB%E5%8A%A0STM32%E8%8A%AF%E7%89%87%E5%8C%85/">https://fiercewill.github.io/2023/10/16/%E5%9C%A8Keil%E4%B8%AD%E6%B7%BB%E5%8A%A0STM32%E8%8A%AF%E7%89%87%E5%8C%85/</a></span>
                     </p>
                 
                 
@@ -337,7 +298,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/tips/">🏷️ tips</a>
+                        <a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/">🏷️ 知识库</a>
                     
                         
                 </span>
@@ -350,10 +311,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2023/09/20/LC%E5%B9%B6%E8%81%94%E5%92%8CLC%E4%B8%B2%E8%81%94%E8%B0%90%E6%8C%AF%E7%94%B5%E8%B7%AF%E5%85%B7%E4%BD%93%E7%94%B5%E8%B7%AF%E4%B8%AD%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%EF%BC%9F%E6%97%A0%E7%BA%BF%E7%94%B5%E5%B8%B8%E7%94%A8/">LC并联和LC串联谐振电路</a>
+                <a class="prev" rel="prev" href="/2023/10/16/%E5%AD%A6%E4%B9%A0%E4%BC%98%E7%A7%80%E4%BB%A3%E7%A0%81Day1/">学习优秀代码Day1</a>
             
             
-            <a class="next" rel="next" href="/2023/09/12/IIC%E9%80%9A%E4%BF%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%92%8C%E6%97%B6%E5%BA%8F/">IIC通信的基本原理和时序</a>
+            <a class="next" rel="next" href="/2023/10/11/%E8%AE%B0%E5%BD%95%E8%B0%83%E7%94%A8Modelsim%E8%BF%9B%E8%A1%8C%E4%BB%BF%E7%9C%9F%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/">记录调用Modelsim进行仿真遇到的问题</a>
             
         </section>
 
