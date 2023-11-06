@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WM">
+
+
+
+
+
+<title>记录单片机作业-基于at89c51的4位7段数码管的1000s秒表 | WM&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">WM&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">WM&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">记录单片机作业-基于at89c51的4位7段数码管的1000s秒表</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WM</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">November 5, 2023&nbsp;&nbsp;20:53:26</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E7%9F%A5%E8%AF%86%E5%BA%93/">知识库</a>
+                            
+                        </span>
+                    
+                    
+                        <span class="post-count">
+                    Words:
+                        <a href="">1,501</a> 
+                        </span>
+                             
+                    
+                        <span class="post-count">
+                    Time:
+                        <a href="">6min</a> 
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <blockquote>
+<p>✅作者简介：大家好我是：侠客er，一名普通电子信息工程专业的大学学生，希望一起努力，一起进步！</p>
+<p>📃CSDN个人主页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62261692?spm=1000.2115.3001.5343">侠客er</a></p>
+<p>🔥个人博客：<a href="https://fiercewill.github.io/">个人博客</a></p>
+</blockquote>
+<h1>前言</h1>
+<blockquote>
+<p>（1）这是单片机课程老师布置的一个实验作业，要求是运用keil5编程at89c51单片机，并且使用proteus搭建电路，将Keil5的代码在proteus的电路中运行。</p>
+<p>（2）最终实现的效果是一个秒表，计时1000s后归零。</p>
+<p>（3）这次实验，考察了很多基础技能，比如：</p>
+<p>&lt;1&gt;使用proteus搭建51单片机的最小系统，怎么在proteus中找元器件</p>
+<p>&lt;2&gt;四位七段数码管的使用原理，硬件电路搭建与软件驱动程序编写</p>
+<p>&lt;3&gt;下拉电阻的运用</p>
+<p>&lt;4&gt;51单片机定时器的使用 包括初始化定时器与计时时间</p>
+<p>&lt;5&gt;1000s秒表计时时间的思路 中断服务函数的内容 以及 主循环各位轮询一次</p>
+<p>&lt;6&gt;数码管显示要消影，选择数码管：在Optoelectronics库中含有Cathode的器件均为共阴极的。</p>
+</blockquote>
+<p>代码思路</p>
+<p>（1）个 十 百 千 四个位各司其职 根据条件显示自己该显示的值</p>
+<p>（2）需要注意的地方是</p>
+<p>由于数码管显示的思路是 位选 —&gt; 段选 —&gt;位选 —&gt; 段选 …</p>
+<p>由于单片机的机器时钟（即运行一条指令的时钟是1Mhz） 所以对每次显示的数字要消隐 否则数字显示不清</p>
+<p>消隐的方法是 在每个位显示完数字后 加1ms延时 延时后对段选清零 实测消隐效果不错</p>
+<blockquote>
+<p>下面从0开始记录我的实验过程。</p>
+</blockquote>
+<h4 id="老师给的题目如下：">老师给的题目如下：</h4>
+<p><img src="/2023/11/05/%E8%AE%B0%E5%BD%95%E5%8D%95%E7%89%87%E6%9C%BA%E4%BD%9C%E4%B8%9A-%E5%9F%BA%E4%BA%8Eat89c51%E7%9A%844%E4%BD%8D7%E6%AE%B5%E6%95%B0%E7%A0%81%E7%AE%A1%E7%9A%841000s%E7%A7%92%E8%A1%A8/2.png" alt="img"></p>
+<p>题目给出了需求与数码管的内部电路图。数码管内部电路图是我们编写显示程序的关键，显示不同数字即控制不同的引脚输出高低电平（引脚ABCDEFG），二选择显示的数码管位置，就是控制1234四个引脚的高低电平，置0是选位，其余位都要置1，例如选择左边的第一位，则P3=0x07,P3=0x07的意思是 0000 0111 = P3.7 P3.6 P3.5 P3.4 P3.3 P3.2 P3.1 P3.0。这个道理同时也会也在段选显示数字中。</p>
+<h1>Proteus搭建仿真电路</h1>
+<p><img src="/2023/11/05/%E8%AE%B0%E5%BD%95%E5%8D%95%E7%89%87%E6%9C%BA%E4%BD%9C%E4%B8%9A-%E5%9F%BA%E4%BA%8Eat89c51%E7%9A%844%E4%BD%8D7%E6%AE%B5%E6%95%B0%E7%A0%81%E7%AE%A1%E7%9A%841000s%E7%A7%92%E8%A1%A8/1.png" alt="img"></p>
+<p>（1）我选择的数码管是共阴极数码管，高电平点亮led，低电平熄灭led。</p>
+<p>（2）搭建电路图过程，会考察很多细节知识，例如给电线编辑标号（就像用立创EDA画板子是用的网络标签），表示不同位置的电线相接；还有为了使三极管电路有实打实的高低电平，我特地用了下拉电阻</p>
+<h1>程序编写</h1>
+<h2 id="数码管显示数字原理">数码管显示数字原理</h2>
+<p>（1）数码管的显示一次只能在一个位置显示一个数字，就是位选和段选，位选是选择数码管的位置，段选是选择数码管要显示的数字。</p>
+<p>（2）我仿真软件上这款共阴极数码管的位选码与段选码如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> uchar unsigned char</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> uint unsigned int</span></span><br><span class="line"><span class="comment">//段码表           0     1    2    3    4    5    6    7    8    9    </span></span><br><span class="line">uchar code seg[]=&#123;<span class="number">0x3f</span>,<span class="number">0x06</span>,<span class="number">0x5b</span>,<span class="number">0x4f</span>,<span class="number">0x66</span>,<span class="number">0x6d</span>,<span class="number">0x7d</span>,<span class="number">0x07</span>,<span class="number">0x7f</span>,<span class="number">0x6f</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//位控码表</span></span><br><span class="line">uchar code pos[]=&#123;<span class="number">0x07</span>,<span class="number">0x0B</span>,<span class="number">0x0D</span>,<span class="number">0x0E</span>&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="数码管显示函数">数码管显示函数</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//数码管显示子函数</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">Nixie</span><span class="params">(<span class="type">unsigned</span> <span class="type">char</span> Location,Number)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">switch</span>(Location)		<span class="comment">//位码输出</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">1</span>:P3 = pos[<span class="number">0</span>];<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">2</span>:P3 = pos[<span class="number">1</span>];<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">3</span>:P3 = pos[<span class="number">2</span>];<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="number">4</span>:P3 = pos[<span class="number">3</span>];<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	P2=seg[Number];	<span class="comment">//段码输出</span></span><br><span class="line">	Delay(<span class="number">1</span>);				<span class="comment">//显示一段时间</span></span><br><span class="line">	P2=<span class="number">0x00</span>;				<span class="comment">//段码清0，消影</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="消影处理">消影处理</h2>
+<p>延时1ms后将段选位的那一组GPIO口清零。</p>
+<h2 id="秒表计时思路">秒表计时思路</h2>
+<p>（1）利用50ms的定时器中断的中断处理函数，通过对时间变量i的处理，达到计时的效果。</p>
+<p>（2）uint flag[4] = {0};数组里的四个数分别为个十百千位的数字</p>
+<p>（3）	unit();//个位</p>
+<p>​		ten(); //十位</p>
+<p>​		Hundredth();//百位</p>
+<p>​		kilobit();//千位</p>
+<p>这四个函数分别显示个十百千位的数字，放在主循环里循环执行。</p>
+<h3 id="中断服务函数代码">中断服务函数代码</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Timer1_Int</span><span class="params">(<span class="type">void</span>)</span> interrupt 3  <span class="comment">//中断向量号是定死的interrupt 3</span></span><br><span class="line">&#123;</span><br><span class="line">	TL1 = <span class="number">0xB0</span>;		<span class="comment">//设置定时初始值</span></span><br><span class="line">	TH1 = <span class="number">0x3C</span>;		<span class="comment">//设置定时初始值</span></span><br><span class="line">	i++;</span><br><span class="line">	<span class="keyword">if</span>(i == <span class="number">20</span>)  <span class="comment">//1s</span></span><br><span class="line">	&#123;</span><br><span class="line">		i = <span class="number">0</span>;</span><br><span class="line">		flag[<span class="number">0</span>]++;  <span class="comment">//隔1s增1  个位 1s</span></span><br><span class="line">		<span class="keyword">if</span>(flag[<span class="number">0</span>] == <span class="number">10</span>)<span class="comment">//10s</span></span><br><span class="line">		&#123;</span><br><span class="line">			flag[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">			flag[<span class="number">1</span>]++;<span class="comment">//隔10s增1  十位 10s</span></span><br><span class="line">			<span class="keyword">if</span>(flag[<span class="number">1</span>] == <span class="number">10</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				flag[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">				flag[<span class="number">2</span>]++;<span class="comment">//隔100s增1  百位 100s</span></span><br><span class="line">				<span class="keyword">if</span>(flag[<span class="number">2</span>] == <span class="number">10</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					flag[<span class="number">2</span>] = <span class="number">0</span>;</span><br><span class="line">					flag[<span class="number">3</span>]++;<span class="comment">//隔1000s增1  百位 1000s</span></span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="主循环中代码">主循环中代码</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	Timer1_Init();      <span class="comment">//定时器1初始化</span></span><br><span class="line">	Digital_tube_Init();<span class="comment">//数码管各管脚初始化</span></span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		unit();<span class="comment">//个位</span></span><br><span class="line">		ten(); <span class="comment">//十位</span></span><br><span class="line">		Hundredth();<span class="comment">//百位</span></span><br><span class="line">		kilobit();<span class="comment">//千位	</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="51单片机定时时间的计算">51单片机定时时间的计算</h2>
+<h3 id="可以使用stc-isp这个软件直接生成">可以使用stc-isp这个软件直接生成</h3>
+<p>例如我们要利用定时器1定时50ms，则按下图进行配置</p>
+<p><img src="/2023/11/05/%E8%AE%B0%E5%BD%95%E5%8D%95%E7%89%87%E6%9C%BA%E4%BD%9C%E4%B8%9A-%E5%9F%BA%E4%BA%8Eat89c51%E7%9A%844%E4%BD%8D7%E6%AE%B5%E6%95%B0%E7%A0%81%E7%AE%A1%E7%9A%841000s%E7%A7%92%E8%A1%A8/3.png" alt="img"></p>
+<p>生成的代码为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Timer1Init</span><span class="params">(<span class="type">void</span>)</span>		<span class="comment">//50毫秒@12.000MHz</span></span><br><span class="line">&#123;</span><br><span class="line">	AUXR &amp;= <span class="number">0xBF</span>;		<span class="comment">//定时器时钟12T模式</span></span><br><span class="line">	TMOD &amp;= <span class="number">0x0F</span>;		<span class="comment">//设置定时器模式</span></span><br><span class="line">	TMOD |= <span class="number">0x10</span>;		<span class="comment">//设置定时器模式</span></span><br><span class="line">	TL1 = <span class="number">0xB0</span>;		<span class="comment">//设置定时初始值</span></span><br><span class="line">	TH1 = <span class="number">0x3C</span>;		<span class="comment">//设置定时初始值</span></span><br><span class="line">	TF1 = <span class="number">0</span>;		<span class="comment">//清除TF1标志</span></span><br><span class="line">	TR1 = <span class="number">1</span>;		<span class="comment">//定时器1开始计时</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>加上开启定时器1的中断即可，同时51单片机没有AUXR寄存器，删除那一行代码即可</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Timer1_Init</span><span class="params">(<span class="type">void</span>)</span>  <span class="comment">//产生50ms中断</span></span><br><span class="line">&#123;</span><br><span class="line">	TMOD &amp;= <span class="number">0x0F</span>;		<span class="comment">//设置定时器模式</span></span><br><span class="line">	TMOD |= <span class="number">0x10</span>;		<span class="comment">//设置定时器模式</span></span><br><span class="line">	TL1 = <span class="number">0xB0</span>;		<span class="comment">//设置定时初始值</span></span><br><span class="line">	TH1 = <span class="number">0x3C</span>;		<span class="comment">//设置定时初始值</span></span><br><span class="line">	TF1 = <span class="number">0</span>;		<span class="comment">//清除TF1标志</span></span><br><span class="line">	TR1 = <span class="number">1</span>;		<span class="comment">//定时器1开始计时</span></span><br><span class="line">	ET1 = <span class="number">1</span>;</span><br><span class="line">	EA = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="完整代码如下：">完整代码如下：</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/Fiercewill/AT89C52-1000sstopwatch">https://github.com/Fiercewill/AT89C52-1000sstopwatch</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WM</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://fiercewill.github.io/2023/11/05/%E8%AE%B0%E5%BD%95%E5%8D%95%E7%89%87%E6%9C%BA%E4%BD%9C%E4%B8%9A-%E5%9F%BA%E4%BA%8Eat89c51%E7%9A%844%E4%BD%8D7%E6%AE%B5%E6%95%B0%E7%A0%81%E7%AE%A1%E7%9A%841000s%E7%A7%92%E8%A1%A8/">https://fiercewill.github.io/2023/11/05/%E8%AE%B0%E5%BD%95%E5%8D%95%E7%89%87%E6%9C%BA%E4%BD%9C%E4%B8%9A-%E5%9F%BA%E4%BA%8Eat89c51%E7%9A%844%E4%BD%8D7%E6%AE%B5%E6%95%B0%E7%A0%81%E7%AE%A1%E7%9A%841000s%E7%A7%92%E8%A1%A8/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>电子信息工程 (A) 2023 <a href="https://fiercewill.github.io/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a> . <a href="https://fiercewill.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89/">数据结构与算法（c语言）</a> . <a href="https://fiercewill.github.io/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a> 王明的博客</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/">🏷️ 知识库</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/10/23/STM32-%E6%B1%9F%E5%8D%8F%E6%B2%89%E6%B7%80%E7%AF%87%EF%BC%88AD%E5%A4%9A%E9%80%9A%E9%81%93-DMA%EF%BC%89/">STM32-江协沉淀篇（AD多通道+DMA）</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WM | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    总访客量:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;
+
+
+<span class="site-pv">
+    总访问量:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+		
+        </span>
+    </div>
+</footer>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<!--浏览器搞笑标题-->
+<!-- 雪花特效 -->
+
