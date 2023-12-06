@@ -130,6 +130,68 @@
                 <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
@@ -157,13 +219,13 @@
                     
                         <span class="post-count">
                     Words:
-                        <a href="">0</a> 
+                        <a href="">968</a> 
                         </span>
                              
                     
                         <span class="post-count">
                     Time:
-                        <a href="">1min</a> 
+                        <a href="">3min</a> 
                         </span>
                     
                 </div>
@@ -171,7 +233,33 @@
         </header>
 
         <div class="post-content">
-            
+            <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1b14y1q7ip/?spm_id_from=333.337.search-card.all.click&amp;vd_source=221d5bfd8774acfce916ac253ceaee25">OpenMv第一课（2023.11.30）脱机调阈值/串口通信/模板匹配</a></p>
+<h1>内容</h1>
+<p><img src="/2023/11/30/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/1.png" alt></p>
+<p>openmv一般不用神经网络，k210会用神经网络。</p>
+<p>什么是神经网络？</p>
+<blockquote>
+<p>神经网络是一种模拟人脑神经网络的计算模型，它由多个相互连接的节点层组成。这些节点（也称为神经元）将收到输入，并计算输出，这些输出会传递到网络中的下一个层次，以此类推，直到输出层的结果被计算出来。在神经网络的训练过程中，网络会自动调整节点中的权值，以使其能够更准确地预测给定的输入。神经网络在许多领域中都有广泛的应用，例如图像和语音识别、自然语言处理、机器翻译等。</p>
+</blockquote>
+<p>什么是深度学习？</p>
+<blockquote>
+<p>深度学习是一种机器学习的分支，它利用人工神经网络模型来学习和解决复杂的问题。与传统的机器学习方法相比，深度学习在处理大规模数据集时具有更强大的能力。</p>
+<p>深度学习的核心思想是通过多层次的神经网络模型，逐层提取和学习输入数据的高级特征表示。每一层网络（也称为隐藏层）在前一层的基础上构建更加抽象和丰富的特征表示。这种层次化的表示能力使得深度学习模型能够自动学习数据中的复杂模式和关系。</p>
+<p>深度学习在计算机视觉、自然语言处理、语音识别等领域取得了很多重要的突破。它能够处理大量非结构化数据，例如图像、文本和语音，并在其中寻找隐藏的模式和规律。深度学习技术已经被广泛应用于各种领域，包括图像分类、目标检测、机器翻译、语音合成等。</p>
+</blockquote>
+<p>神经网络与深度学习的关系？</p>
+<blockquote>
+<p>神经网络和深度学习有密切的关系，深度学习是基于神经网络构建的一种机器学习方法。</p>
+<p>神经网络是深度学习的基础，它是由多个神经元组成的计算模型。神经网络通过层次化的连接来模拟人脑的神经网络结构，从而可以自动学习和表示数据中的复杂模式和关系。每个神经元接收来自上一层神经元的输入，并通过激活函数进行非线性转换，然后将输出传递给下一层神经元，最终得到网络的输出。</p>
+<p>深度学习则是在神经网络的基础上发展而来的一种机器学习方法。它通过增加网络的层数，构建深层神经网络模型。这种层次化的结构使得深度学习模型能够学习到更加复杂和抽象的特征表示，从而提高了模型的表达能力。深度学习模型利用反向传播算法和梯度下降优化方法来训练网络，自动调整网络中的权重和参数，以最小化预测输出与真实标签之间的误差。</p>
+<p>因此，可以说神经网络是深度学习的基础，而深度学习则是利用深层神经网络模型进行学习和解决复杂问题的一种方法。深度学习在许多领域中取得了巨大的成功，尤其在处理大规模数据和复杂任务上具有突出的优势。</p>
+</blockquote>
+<h3 id="python基础">python基础</h3>
+<p>菜鸟教程</p>
+<p>廖雪峰教程</p>
+<p><img src="/2023/11/30/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/2.png" alt></p>
+<p>效率要提高，基本操作都要熟练，特有的知识不用学，图像识别都是用的python的基本操作。</p>
+
         </div>
 
         
