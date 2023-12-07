@@ -13,7 +13,7 @@
 
 
 
-<title>总钻风MT9V034的图像处理 | WM&#39;s blog</title>
+<title>stm32中滴答定时器与普通定时器的区别 | WM&#39;s blog</title>
 
 
 
@@ -130,11 +130,73 @@
                 <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">总钻风MT9V034的图像处理</h1>
+            <h1 class="post-title">stm32中滴答定时器与普通定时器的区别</h1>
             
                 <div class="post-meta">
                     
@@ -143,21 +205,21 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">November 30, 2023&nbsp;&nbsp;16:27:24</a>
+                        Date: <a href="#">December 7, 2023&nbsp;&nbsp;17:37:19</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/%E6%91%84%E5%83%8F%E5%A4%B4%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">摄像头图像处理</a>
+                                <a href="/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a>
                             
                         </span>
                     
                     
                         <span class="post-count">
                     Words:
-                        <a href="">0</a> 
+                        <a href="">311</a> 
                         </span>
                              
                     
@@ -171,7 +233,27 @@
         </header>
 
         <div class="post-content">
-            
+            <p>1、两者在单片机中的位置不一样</p>
+<p>滴答定时器在内核上，普通定时器在外设上。</p>
+<blockquote>
+<p>由于位置不同，滴答定时器的程序可以移植到所有相同内核的芯片上，但普通定时器的程序却不可以。</p>
+</blockquote>
+<p>2、两者的中断优先级不一样</p>
+<p>滴答定时器优先级高，普通定时器优先级低。</p>
+<blockquote>
+<p>（1）滴答定时器的中断优先级处于内核中断的末尾，但是却比所有外设的中断优先级要高（默认情况下，也就是没有修改优先级的时候，当然这也决定了其优先级的上限），即除非系统异常，比如复位，否则滴答定时器将稳定运行。</p>
+<p>（2）因此表现为滴答定时器稳定，不受外界干扰，普通定时器容易受外界干扰。</p>
+</blockquote>
+<p>3、寄存器的位数不一样</p>
+<blockquote>
+<p>滴答定时器是24位的，普通定时器16位</p>
+</blockquote>
+<h4 id="用途：">用途：</h4>
+<p>根据两类定时器的特征不一样，所以分别适用于不同的场合。</p>
+<blockquote>
+<p>滴答定时器一般用于操作系统时间，进程切换等，普通定时器用于用户需求。</p>
+</blockquote>
+
         </div>
 
         
@@ -185,7 +267,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://fiercewill.github.io/2023/11/30/%E6%80%BB%E9%92%BB%E9%A3%8EMT9V034%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">https://fiercewill.github.io/2023/11/30/%E6%80%BB%E9%92%BB%E9%A3%8EMT9V034%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/</a></span>
+                        <span><a href="https://fiercewill.github.io/2023/12/07/stm32%E4%B8%AD%E6%BB%B4%E7%AD%94%E5%AE%9A%E6%97%B6%E5%99%A8%E4%B8%8E%E6%99%AE%E9%80%9A%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E5%8C%BA%E5%88%AB/">https://fiercewill.github.io/2023/12/07/stm32%E4%B8%AD%E6%BB%B4%E7%AD%94%E5%AE%9A%E6%97%B6%E5%99%A8%E4%B8%8E%E6%99%AE%E9%80%9A%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E5%8C%BA%E5%88%AB/</a></span>
                     </p>
                 
                 
@@ -209,7 +291,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E6%80%BB%E9%92%BB%E9%A3%8E/">🏷️ 总钻风</a>
+                        <a href="/tags/STM32/">🏷️ STM32</a>
                     
                         
                 </span>
@@ -222,10 +304,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2023/12/07/stm32%E4%B8%AD%E6%BB%B4%E7%AD%94%E5%AE%9A%E6%97%B6%E5%99%A8%E4%B8%8E%E6%99%AE%E9%80%9A%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E5%8C%BA%E5%88%AB/">stm32中滴答定时器与普通定时器的区别</a>
             
-            
-            <a class="next" rel="next" href="/2023/11/30/K210-MaxiBit%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">K210 MaxiBit的图像处理</a>
+            <a class="next" rel="next" href="/2023/11/30/%E6%80%BB%E9%92%BB%E9%A3%8EMT9V034%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">总钻风MT9V034的图像处理</a>
             
         </section>
 
