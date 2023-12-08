@@ -219,13 +219,13 @@
                     
                         <span class="post-count">
                     Words:
-                        <a href="">1,315</a> 
+                        <a href="">1,574</a> 
                         </span>
                              
                     
                         <span class="post-count">
                     Time:
-                        <a href="">5min</a> 
+                        <a href="">6min</a> 
                         </span>
                     
                 </div>
@@ -233,10 +233,26 @@
         </header>
 
         <div class="post-content">
-            <p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1b14y1q7ip/?spm_id_from=333.337.search-card.all.click&amp;vd_source=221d5bfd8774acfce916ac253ceaee25">OpenMv第一课（2023.11.30）脱机调阈值/串口通信/模板匹配</a></p>
+            <blockquote>
+<p>✅作者简介：大家好我是：侠客er，一名普通电子信息工程专业的大学学生，希望一起努力，一起进步！</p>
+<p>📃CSDN个人主页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62261692?spm=1000.2115.3001.5343">侠客er</a></p>
+<p>🔥系列专栏：<a href="https://fiercewill.github.io/categories/%E6%91%84%E5%83%8F%E5%A4%B4%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">摄像头图像处理</a></p>
+</blockquote>
+<h1>前言</h1>
+<blockquote>
+<p>（1）小编不想把openmv所有的学习内容集中在一篇文章中，那样不方便阅读和学习，所以本文只做这个视频<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1b14y1q7ip/?spm_id_from=333.337.search-card.all.click&amp;vd_source=221d5bfd8774acfce916ac253ceaee25">OpenMv第一课（2023.11.30）脱机调阈值/串口通信/模板匹配</a>的学习笔记。</p>
+<p>（2）通过本篇文章，你将学到：</p>
+<p>&lt;1&gt;python基础与openmv基础的学习资源</p>
+<p>&lt;2&gt;openmv与单片机串口通信数据包协议</p>
+<p>&lt;3&gt;openmv对图像做二值化处理代码</p>
+<p>（3）本系列专栏会详细介绍openmv的学习，敬请关注。</p>
+<p>（4）openmv的学习资料：</p>
+<p>&lt;1&gt;星瞳教程:<a target="_blank" rel="noopener" href="https://book.openmv.cc">https://book.openmv.cc</a></p>
+<p>&lt;2&gt;库函数查找:<a target="_blank" rel="noopener" href="https://docs.singtown.com/micropython/zh/latest/openmvcam/library/index.html">https://docs.singtown.com/micropython/zh/latest/openmvcam/library/index.html</a></p>
+</blockquote>
 <h1>内容</h1>
 <p><img src="/2023/11/30/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/1.png" alt></p>
-<p>openmv一般不用神经网络，k210会用神经网络。</p>
+<p>openmv一般不用于跑神经网络，k210会用于跑神经网络。</p>
 <p>什么是神经网络？</p>
 <blockquote>
 <p>神经网络是一种模拟人脑神经网络的计算模型，它由多个相互连接的节点层组成。这些节点（也称为神经元）将收到输入，并计算输出，这些输出会传递到网络中的下一个层次，以此类推，直到输出层的结果被计算出来。在神经网络的训练过程中，网络会自动调整节点中的权值，以使其能够更准确地预测给定的输入。神经网络在许多领域中都有广泛的应用，例如图像和语音识别、自然语言处理、机器翻译等。</p>
@@ -254,11 +270,18 @@
 <p>深度学习则是在神经网络的基础上发展而来的一种机器学习方法。它通过增加网络的层数，构建深层神经网络模型。这种层次化的结构使得深度学习模型能够学习到更加复杂和抽象的特征表示，从而提高了模型的表达能力。深度学习模型利用反向传播算法和梯度下降优化方法来训练网络，自动调整网络中的权重和参数，以最小化预测输出与真实标签之间的误差。</p>
 <p>因此，可以说神经网络是深度学习的基础，而深度学习则是利用深层神经网络模型进行学习和解决复杂问题的一种方法。深度学习在许多领域中取得了巨大的成功，尤其在处理大规模数据和复杂任务上具有突出的优势。</p>
 </blockquote>
-<h3 id="python基础">python基础</h3>
+<h1>python基础</h1>
 <p>菜鸟教程</p>
 <p>廖雪峰教程</p>
 <p><img src="/2023/11/30/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/2.png" alt></p>
 <p>效率要提高，基本操作都要熟练，特有的知识不用学，图像识别都是用的python的基本操作。</p>
+<h1>openmv基础</h1>
+<h4 id="教程">教程</h4>
+<p>（1）星瞳教程:</p>
+<p><a target="_blank" rel="noopener" href="https://book.openmv.cc">https://book.openmv.cc</a></p>
+<p>（2）库函数查找:<br>
+<a target="_blank" rel="noopener" href="https://docs.singtown.com/micropython/zh/latest/openmvcam/library/index.html">https://docs.singtown.com/micropython/zh/latest/openmvcam/library/index.html</a></p>
+<h1>openmv与单片机串口通信数据包协议</h1>
 <p><img src="/2023/11/30/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/3.png" alt></p>
 <h2 id="串口数据包通信的实现方法">串口数据包通信的实现方法</h2>
 <p>摄像头openmv端：</p>

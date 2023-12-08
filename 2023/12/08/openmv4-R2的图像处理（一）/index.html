@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WM">
+
+
+
+
+
+<title>openmv4 R2的图像处理（一） | WM&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">WM&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">WM&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">openmv4 R2的图像处理（一）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WM</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 8, 2023&nbsp;&nbsp;16:42:51</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E6%91%84%E5%83%8F%E5%A4%B4%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">摄像头图像处理</a>
+                            
+                        </span>
+                    
+                    
+                        <span class="post-count">
+                    Words:
+                        <a href="">1,387</a> 
+                        </span>
+                             
+                    
+                        <span class="post-count">
+                    Time:
+                        <a href="">6min</a> 
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <blockquote>
+<p>✅作者简介：大家好我是：侠客er，一名普通电子信息工程专业的大学学生，希望一起努力，一起进步！</p>
+<p>📃CSDN个人主页：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62261692?spm=1000.2115.3001.5343">侠客er</a></p>
+<p>🔥系列专栏：<a href="https://fiercewill.github.io/categories/%E6%91%84%E5%83%8F%E5%A4%B4%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">摄像头图像处理</a></p>
+</blockquote>
+<h1>前言</h1>
+<blockquote>
+<p>通过本篇文章，你将学到：</p>
+<p>（1）openmv图像的处理方法：感光元件</p>
+<p>（2）画图</p>
+<p>（3）寻找色块</p>
+</blockquote>
+<h1>感光元件</h1>
+<p>sensor模块,用于设置感光元件的参数。</p>
+<p>举个例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sensor<span class="comment">#引入感光元件的模块</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置摄像头</span></span><br><span class="line">sensor.reset()<span class="comment">#初始化感光元件</span></span><br><span class="line">sensor.set_pixformat(sensor.RGB565)<span class="comment">#设置为彩色</span></span><br><span class="line">sensor.set_framesize(sensor.QVGA)<span class="comment">#设置图像的大小</span></span><br><span class="line">sensor.skip_frames()<span class="comment">#跳过n张照片，在更改设置后，跳过一些帧，等待感光元件变稳定。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 一直拍照</span></span><br><span class="line"><span class="keyword">while</span>(<span class="literal">True</span>):</span><br><span class="line">    img = sensor.snapshot()<span class="comment">#拍摄一张照片，img为一个image对象</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="1-初始化">1 初始化</h2>
+<ul>
+<li>sensor.reset() 初始化感光元件</li>
+</ul>
+<h2 id="2-设置彩色／黑白">2 设置彩色／黑白</h2>
+<ul>
+<li>sensor.set_pixformat() 设置像素模式。
+<ul>
+<li>sensor.GRAYSCALE: 灰度，每个像素8bit。</li>
+<li>sensor.RGB565: 彩色，每个像素16bit。</li>
+</ul>
+</li>
+</ul>
+<p>（1）sensor.set_pixformat(sensor.RGB565)#设置为彩色，效果如下：</p>
+<p><img src="/2023/12/08/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/1.png" alt></p>
+<p>（2）sensor.set_pixformat(sensor.GRAYSCALE)#设置为黑白，效果如下：</p>
+<p><img src="/2023/12/08/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/2.png" alt></p>
+<p>黑白图像下，摄像头的功耗要比彩色图像下低很多。</p>
+<h2 id="3-设置图像大小">3 设置图像大小</h2>
+<ul>
+<li>sensor.set_framesize() 设置图像的大小，其实就是设置图像长与宽的像素点，这里只展示做比赛时常用的几个参数
+<ul>
+<li>sensor.QQQQVGA: 40x30</li>
+<li>sensor.QQQVGA: 80x60</li>
+<li>sensor.QQVGA: 160x120</li>
+<li>sensor.QVGA: 320x240</li>
+<li>sensor.VGA: 640x480</li>
+</ul>
+</li>
+</ul>
+<p>（1）如上示例代码所示：sensor.set_framesize(sensor.QVGA)#设置图像的大小</p>
+<p>配置的是sensor.QVGA: 320x240，从帧缓冲区中可以看到，320应该是长，240是宽。</p>
+<p>（2）我们改成sensor.QQVGA: 160x120看下效果。</p>
+<p><img src="/2023/12/08/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/3.png" alt></p>
+<p>可以看到，图像比之前小了很多。</p>
+<h2 id="4-跳过一些帧">4 跳过一些帧</h2>
+<ul>
+<li>sensor.skip_frames(n=10) 跳过n张照片，在更改设置后，跳过一些帧，等待感光元件变稳定。</li>
+</ul>
+<h2 id="5-获取一张图像">5 获取一张图像</h2>
+<ul>
+<li>sensor.snapshot() 拍摄一张照片，返回一个image对象。</li>
+</ul>
+<h2 id="6-自动增益／白平衡／曝光">6 自动增益／白平衡／曝光</h2>
+<ul>
+<li>sensor.set_auto_gain() 自动增益开启（True）或者关闭（False）。在使用颜色追踪时，需要关闭自动增益。</li>
+<li>sensor.set_auto_whitebal() 自动白平衡开启（True）或者关闭（False）。在使用颜色追踪时，需要关闭自动白平衡。</li>
+<li>sensor.set_auto_exposure(enable[, exposure_us])
+<ul>
+<li>enable 打开（True）或关闭（False）自动曝光。默认打开。</li>
+<li>如果 enable 为False， 则可以用 exposure_us 设置一个固定的曝光时间（以微秒为单位）。</li>
+</ul>
+</li>
+</ul>
+<h2 id="7-设置窗口ROI">7 设置窗口ROI</h2>
+<p>sensor.set_windowing(roi)</p>
+<p>ROI：Region Of Interest，图像处理中的术语“感兴趣区”。就是在要处理的图像中提取出的要处理的区域。<br>
+<img src="/2023/12/08/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/4.png" alt></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sensor.set_framesize(sensor.VGA) # 高分辨率</span><br><span class="line">sensor.set_windowing((640, 80)) #取中间的640*80区域</span><br><span class="line">Copy</span><br></pre></td></tr></table></figure>
+<p>roi的格式是(x, y, w, h)。详见<a target="_blank" rel="noopener" href="https://book.openmv.cc/image/statistics.html">使用统计信息 · OpenMV中文入门教程</a></p>
+<h2 id="8-设置翻转">8 设置翻转</h2>
+<p>（1）sensor.set_hmirror(True) #水平方向翻转</p>
+<p><img src="/2023/12/08/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/5.png" alt></p>
+<p>可以看到帧缓冲区的图像与之前水平镜像了。</p>
+<p>（2）sensor.set_vflip(True) #垂直方向翻转</p>
+<p><img src="/2023/12/08/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/6.png" alt></p>
+<h1>画图</h1>
+<p>示例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Hello World Example</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Welcome to the OpenMV IDE! Click on the green run arrow button below to run the script!</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sensor, image, time</span><br><span class="line"></span><br><span class="line">sensor.reset() <span class="comment"># 初始化摄像头</span></span><br><span class="line">sensor.set_pixformat(sensor.RGB565) <span class="comment"># 格式为 RGB565.</span></span><br><span class="line">sensor.set_framesize(sensor.QQVGA)</span><br><span class="line">sensor.skip_frames(<span class="number">10</span>) <span class="comment"># 跳过10帧，使新设置生效</span></span><br><span class="line"><span class="keyword">while</span>(<span class="literal">True</span>):</span><br><span class="line">    img = sensor.snapshot()         <span class="comment"># Take a picture and return the image.</span></span><br><span class="line">    img.draw_line((<span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>))</span><br><span class="line">    img.draw_line((<span class="number">80</span>, <span class="number">50</span>, <span class="number">100</span>, <span class="number">100</span>), color=(<span class="number">255</span>,<span class="number">0</span>,<span class="number">0</span>))</span><br><span class="line">    img.draw_rectangle((<span class="number">20</span>, <span class="number">30</span>, <span class="number">41</span>, <span class="number">51</span>), color=(<span class="number">255</span>,<span class="number">0</span>,<span class="number">0</span>))</span><br><span class="line">    img.draw_circle(<span class="number">50</span>, <span class="number">50</span>, <span class="number">30</span>)</span><br><span class="line">    img.draw_cross(<span class="number">90</span>,<span class="number">60</span>,size=<span class="number">10</span>)</span><br><span class="line">    img.draw_string(<span class="number">10</span>,<span class="number">10</span>, <span class="string">&quot;hello world!&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="1-画线">1 画线</h2>
+<ul>
+<li>image.draw_line(line_tuple, color=White) 在图像中画一条直线。
+<ul>
+<li>line_tuple的格式是(x0, y0, x1, y1)，意思是(x0, y0)到(x1, y1)的直线。</li>
+<li>颜色可以是灰度值(0-255)，或者是彩色值(r, g, b)的tupple。默认是白色</li>
+</ul>
+</li>
+</ul>
+<p>（1）img.draw_line((20, 30, 40, 50))</p>
+<p><img src="/2023/12/08/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/7.png" alt></p>
+<p>可以看到，图像中画出了一条白线。</p>
+<p>（2）img.draw_line((80, 50, 100, 100), color=(255,0,0))</p>
+<p><img src="/2023/12/08/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/8.png" alt></p>
+<h2 id="2-画框">2 画框</h2>
+<ul>
+<li>image.draw_rectangle(rect_tuple, color=White) 在图像中画一个矩形框。
+<ul>
+<li>rect_tuple 的格式是 (x, y, w, h)。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img.draw_rectangle((<span class="number">20</span>, <span class="number">30</span>, <span class="number">41</span>, <span class="number">51</span>), color=(<span class="number">255</span>,<span class="number">0</span>,<span class="number">0</span>))</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/12/08/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/9.png" alt></p>
+<h2 id="3-画圆">3 画圆</h2>
+<ul>
+<li>image.draw_circle(x, y, radius, color=White) 在图像中画一个圆。
+<ul>
+<li>x,y是圆心坐标</li>
+<li>radius是圆的半径</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img.draw_circle(<span class="number">50</span>, <span class="number">50</span>, <span class="number">30</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/12/08/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/10.png" alt></p>
+<h2 id="4-画十字">4 画十字</h2>
+<ul>
+<li>image.draw_cross(x, y, size=5, color=White) 在图像中画一个十字
+<ul>
+<li>x,y是坐标</li>
+<li>size是两侧的尺寸</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img.draw_cross(<span class="number">90</span>,<span class="number">60</span>,size=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/12/08/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/11.png" alt></p>
+<h2 id="5-写字">5 写字</h2>
+<ul>
+<li>image.draw_string(x, y, text, color=White) 在图像中写字 8x10的像素
+<ul>
+<li>x,y是坐标。使用\n, \r, and \r\n会使光标移动到下一行。</li>
+<li>text是要写的字符串。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img.draw_string(<span class="number">10</span>,<span class="number">10</span>, <span class="string">&quot;hello world!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/12/08/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/12.png" alt></p>
+<h1>寻找色块</h1>
+<h5 id="视频教程4-颜色识别：https-singtown-com-learn-49993">视频教程4 - 颜色识别：<a target="_blank" rel="noopener" href="https://singtown.com/learn/49993/">https://singtown.com/learn/49993/</a></h5>
+<h2 id="1-find-blobs函数">1 find_blobs函数</h2>
+<p>通过find_blobs函数可以找到色块.我们来讨论一下，find_blobs的细节。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image.find_blobs(thresholds, roi=Auto, x_stride=<span class="number">2</span>, y_stride=<span class="number">1</span>, invert=<span class="literal">False</span>, area_threshold=<span class="number">10</span>, pixels_threshold=<span class="number">10</span>, merge=<span class="literal">False</span>, margin=<span class="number">0</span>, threshold_cb=<span class="literal">None</span>, merge_cb=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+<p>这里的参数比较多。</p>
+<p>(1)thresholds是颜色的阈值，注意：这个参数是一个列表，可以包含多个颜色。如果你只需要一个颜色，那么在这个列表中只需要有一个颜色值，如果你想要多个颜色阈值，那这个列表就需要多个颜色阈值。注意：在返回的色块对象blob可以调用code方法，来判断是什么颜色的色块。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">red = (xxx,xxx,xxx,xxx,xxx,xxx)</span><br><span class="line">blue = (xxx,xxx,xxx,xxx,xxx,xxx)</span><br><span class="line">yellow = (xxx,xxx,xxx,xxx,xxx,xxx)</span><br><span class="line"></span><br><span class="line">img=sensor.snapshot()</span><br><span class="line">red_blobs = img.find_blobs([red])</span><br><span class="line"></span><br><span class="line">color_blobs = img.find_blobs([red,blue, yellow])</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WM</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://fiercewill.github.io/2023/12/08/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/">https://fiercewill.github.io/2023/12/08/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>电子信息工程 (A) 2023 <a href="https://fiercewill.github.io/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a> . <a href="https://fiercewill.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89/">数据结构与算法（c语言）</a> . <a href="https://fiercewill.github.io/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a> 王明的博客</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/openmv/">🏷️ openmv</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2023/12/07/stm32%E4%B8%AD%E6%BB%B4%E7%AD%94%E5%AE%9A%E6%97%B6%E5%99%A8%E4%B8%8E%E6%99%AE%E9%80%9A%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E5%8C%BA%E5%88%AB/">stm32中滴答定时器与普通定时器的区别</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WM | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    总访客量:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;
+
+
+<span class="site-pv">
+    总访问量:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+		
+        </span>
+    </div>
+</footer>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<!--浏览器搞笑标题-->
+<!-- 雪花特效 -->
+
