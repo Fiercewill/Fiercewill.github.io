@@ -13,7 +13,7 @@
 
 
 
-<title>信达杯光电、电磁、摄像头三个组别总结 | WM&#39;s blog</title>
+<title>ADS软件的使用 | WM&#39;s blog</title>
 
 
 
@@ -130,11 +130,73 @@
                 <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">信达杯光电、电磁、摄像头三个组别总结</h1>
+            <h1 class="post-title">ADS软件的使用</h1>
             
                 <div class="post-meta">
                     
@@ -143,7 +205,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">November 28, 2023&nbsp;&nbsp;21:25:57</a>
+                        Date: <a href="#">December 19, 2023&nbsp;&nbsp;15:00:41</a>
                         </span>
                     
                     
@@ -157,13 +219,13 @@
                     
                         <span class="post-count">
                     Words:
-                        <a href="">0</a> 
+                        <a href="">498</a> 
                         </span>
                              
                     
                         <span class="post-count">
                     Time:
-                        <a href="">1min</a> 
+                        <a href="">2min</a> 
                         </span>
                     
                 </div>
@@ -171,7 +233,51 @@
         </header>
 
         <div class="post-content">
-            
+            <h1>参考资料</h1>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV11k4y1F7bV/?spm_id_from=333.1007.top_right_bar_window_history.content.click&amp;vd_source=221d5bfd8774acfce916ac253ceaee25">19届智能车软件培训之ADS使用教程一_哔哩哔哩_bilibili</a></p>
+<p>用ADS打开工程，</p>
+<ol>
+<li>
+<p>includes是路径，可以简单理解为python里面的库。</p>
+</li>
+<li>
+<p>code文件夹是模块化代码</p>
+</li>
+<li>
+<p>libraries里面是一些基础功能的库函数和外设的库函数,</p>
+<p>common里面是一些程序范例</p>
+<p>device里面是一些模块：摄像头、TFT屏幕，陀螺仪等</p>
+<p>driver里面是底层驱动函数adc、gpio、flash等等</p>
+</li>
+</ol>
+<p><img src="/2023/12/19/ADS%E8%BD%AF%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/1.png" alt></p>
+<ol start="4">
+<li>user是我们的主要操作模块，main.c中是我们主要的操作函数，可以理解为集成模块化</li>
+<li>isr.c是中断函数</li>
+</ol>
+<p>我们在编写程序时，主要更改三个地方的代码：</p>
+<p>（1）CODE里的模块化代码</p>
+<p>（2）cpu0main.c、cpu1main.c</p>
+<p>（3）isr.c中断函数</p>
+<h1>模块化编程</h1>
+<blockquote>
+<p>编写各个模块的代码，我直接沿用STM32程序框架的思想，建立驱动层、中间层和应用层的代码。</p>
+<p>（1）Hal驱动层，放单片机基本外设的底层驱动代码，例如hal_led.c、hal_timer.c等。</p>
+<p>（2）Mt中间层，是运用Hal驱动层代码的代码，命名为将hal改成mt，mt_encoder.c，mt_pwm.c,mt_test.c等。</p>
+<p>（3）APP应用层，编写OLED、Beep、编码器、PWM、ADC等外设的初始化，还有hal_OledProc显示程序和hal_KeyProc按键检测程序。</p>
+</blockquote>
+<h2 id="现成的">现成的</h2>
+<p>逐飞的开源库里有现成的一些驱动程序，adc，delay，dma，encoder，exti，flash，gpio，pit，pwm，iic，spi，timer，uart，</p>
+<p><img src="/2023/12/19/ADS%E8%BD%AF%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/2.png" alt></p>
+<p>（1）建议用户需要添加自己的代码文件的时候，将文件存放在CODE文件夹下<br>
+（2）不要再创建子文件夹，直接将代码文件放在CODE文件夹里面就行<br>
+（3）然后工程里面添加文件即可编译</p>
+<h2 id="在CODE文件夹中创建源、头文件">在CODE文件夹中创建源、头文件</h2>
+<p>（1）右击code文件夹，选择New，再点击Other</p>
+<p><img src="/2023/12/19/ADS%E8%BD%AF%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/4.png" alt></p>
+<p><img src="/2023/12/19/ADS%E8%BD%AF%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/3.png" alt></p>
+<p>我们编写头文件和源文件的内容可以参考逐飞例程中写好的文件，</p>
+
         </div>
 
         
@@ -185,7 +291,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://fiercewill.github.io/2023/11/28/%E4%BF%A1%E8%BE%BE%E6%9D%AF%E5%85%89%E7%94%B5%E3%80%81%E7%94%B5%E7%A3%81%E3%80%81%E6%91%84%E5%83%8F%E5%A4%B4%E4%B8%89%E4%B8%AA%E7%BB%84%E5%88%AB%E6%80%BB%E7%BB%93/">https://fiercewill.github.io/2023/11/28/%E4%BF%A1%E8%BE%BE%E6%9D%AF%E5%85%89%E7%94%B5%E3%80%81%E7%94%B5%E7%A3%81%E3%80%81%E6%91%84%E5%83%8F%E5%A4%B4%E4%B8%89%E4%B8%AA%E7%BB%84%E5%88%AB%E6%80%BB%E7%BB%93/</a></span>
+                        <span><a href="https://fiercewill.github.io/2023/12/19/ADS%E8%BD%AF%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/">https://fiercewill.github.io/2023/12/19/ADS%E8%BD%AF%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/</a></span>
                     </p>
                 
                 
@@ -209,7 +315,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/%E6%91%84%E5%83%8F%E5%A4%B4%E5%BE%AA%E8%BF%B9%E8%BD%A6/">🏷️ 摄像头循迹车</a>
+                        <a href="/tags/ADS/">🏷️ ADS</a>
                     
                         
                 </span>
@@ -222,10 +328,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2023/11/30/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">openmv4 R2的图像处理</a>
             
-            
-            <a class="next" rel="next" href="/2023/11/15/18%E5%B1%8A%E8%B4%9F%E5%8E%8B%E7%94%B5%E7%A3%81%E6%8A%80%E6%9C%AF%E6%8A%A5%E5%91%8A%E5%88%86%E6%9E%90/">18届负压电磁技术报告分析</a>
+            <a class="next" rel="next" href="/2023/12/08/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/">openmv4 R2的图像处理（一）</a>
             
         </section>
 
