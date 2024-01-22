@@ -13,7 +13,7 @@
 
 
 
-<title>ADS软件的使用 | WM&#39;s blog</title>
+<title>Git/GitHub预备知识 | WM&#39;s blog</title>
 
 
 
@@ -196,7 +196,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">ADS软件的使用</h1>
+            <h1 class="post-title">Git/GitHub预备知识</h1>
             
                 <div class="post-meta">
                     
@@ -205,27 +205,20 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">December 19, 2023&nbsp;&nbsp;15:00:41</a>
+                        Date: <a href="#">January 20, 2024&nbsp;&nbsp;14:48:05</a>
                         </span>
                     
-                    
-                        <span class="post-category">
-                    Category:
-                            
-                                <a href="/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a>
-                            
-                        </span>
                     
                     
                         <span class="post-count">
                     Words:
-                        <a href="">498</a> 
+                        <a href="">388</a> 
                         </span>
                              
                     
                         <span class="post-count">
                     Time:
-                        <a href="">2min</a> 
+                        <a href="">1min</a> 
                         </span>
                     
                 </div>
@@ -233,50 +226,20 @@
         </header>
 
         <div class="post-content">
-            <h1>参考资料</h1>
-<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV11k4y1F7bV/?spm_id_from=333.1007.top_right_bar_window_history.content.click&amp;vd_source=221d5bfd8774acfce916ac253ceaee25">19届智能车软件培训之ADS使用教程一_哔哩哔哩_bilibili</a></p>
-<p>用ADS打开工程，</p>
-<ol>
-<li>
-<p>includes是路径，可以简单理解为python里面的库。</p>
-</li>
-<li>
-<p>code文件夹是模块化代码</p>
-</li>
-<li>
-<p>libraries里面是一些基础功能的库函数和外设的库函数,</p>
-<p>common里面是一些程序范例</p>
-<p>device里面是一些模块：摄像头、TFT屏幕，陀螺仪等</p>
-<p>driver里面是底层驱动函数adc、gpio、flash等等</p>
-</li>
-</ol>
-<p><img src="/2023/12/19/ADS%E8%BD%AF%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/1.png" alt></p>
-<ol start="4">
-<li>user是我们的主要操作模块，main.c中是我们主要的操作函数，可以理解为集成模块化</li>
-<li>isr.c是中断函数</li>
-</ol>
-<p>我们在编写程序时，主要更改三个地方的代码：</p>
-<p>（1）CODE里的模块化代码</p>
-<p>（2）cpu0main.c、cpu1main.c</p>
-<p>（3）isr.c中断函数</p>
-<h1>模块化编程</h1>
+            <p>学习资料：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1KZ4y1e7cG/?spm_id_from=333.337.search-card.all.click&amp;vd_source=221d5bfd8774acfce916ac253ceaee25">团队开发神器 Git/GitHub 自学教程指南，几分钟掌握学习重点_哔哩哔哩_bilibili</a></p>
+<p>视频下面的文档<a target="_blank" rel="noopener" href="https://webtech.wiki/git/#/note/note-01?id=_3-%e5%b0%86%e6%9c%ac%e5%9c%b0%e4%bb%a3%e7%a0%81%e6%8f%90%e4%ba%a4%e5%88%b0-git-%e7%bc%93%e5%ad%98%e5%8c%ba">https://webtech.wiki/git/#/note/note-01?id=_3-将本地代码提交到-git-缓存区</a></p>
+<h1>Git&amp;GitHub是什么？</h1>
 <blockquote>
-<p>编写各个模块的代码，我直接沿用STM32程序框架的思想，建立驱动层、中间层和应用层的代码。</p>
-<p>（1）Hal驱动层，放单片机基本外设的底层驱动代码，例如hal_led.c、hal_timer.c等。</p>
-<p>（2）Mt中间层，是运用Hal驱动层代码的代码，命名为将hal改成mt，mt_encoder.c，mt_pwm.c,mt_test.c等。</p>
-<p>（3）APP应用层，编写OLED、Beep、编码器、PWM、ADC等外设的初始化，还有hal_OledProc显示程序和hal_KeyProc按键检测程序。</p>
+<p>Git是一个免费和开源的<strong>分布式版本控制系统</strong>（VCS），旨在快速高效地处理从小型项目到大型项目的所有项目。</p>
 </blockquote>
-<h2 id="现成的">现成的</h2>
-<p>逐飞的开源库里有现成的一些驱动程序，adc，delay，dma，encoder，exti，flash，gpio，pit，pwm，iic，spi，timer，uart，</p>
-<p><img src="/2023/12/19/ADS%E8%BD%AF%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/2.png" alt></p>
-<p>（1）建议用户需要添加自己的代码文件的时候，将文件存放在CODE文件夹下<br>
-（2）不要再创建子文件夹，直接将代码文件放在CODE文件夹里面就行<br>
-（3）然后工程里面添加文件即可编译</p>
-<h2 id="在CODE文件夹中创建源、头文件">在CODE文件夹中创建源、头文件</h2>
-<p>（1）右击code文件夹，选择New，再点击Other</p>
-<p><img src="/2023/12/19/ADS%E8%BD%AF%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/4.png" alt></p>
-<p><img src="/2023/12/19/ADS%E8%BD%AF%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/3.png" alt></p>
-<p>我们编写头文件和源文件的内容可以参考逐飞例程中写好的文件，</p>
+<p>版本控制系统（VCS）可以帮你保存文件的所有修改记录并使用版本号进行区分，可以随时浏览历史版本，将该错的文件还原到指定的版本，还可以对比不同版本的文件差异，起到恢复和保护的作用。而Github是主流i的代码托管平台，可以理解为一个存放和管理代码的网盘，大家可以把自己的的代码传上去，进行共享和维护，当然也可以从平台下载代码。</p>
+<p>Git是工具，是抓手；而GitHub是平台，两者没有必然的联系。</p>
+<h1>为什么要用Git&amp;GitHub？</h1>
+<p>他们是为协作开发而生的。大多数公司都在用他们来管理项目，只要我们想找工作就不得不学。</p>
+<p>准备开发个人项目前，可以学习Git，这样就可以把做的所有项目放到GitHub去管理。</p>
+<h1>Git&amp;GitHub重点学什么？怎么学？</h1>
+<p>学习路线见：yupi.icu里面的学习路线</p>
+<p><a target="_blank" rel="noopener" href="https://www.codefather.cn/%E4%B8%93%E5%B1%9E%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/#%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91">https://www.codefather.cn/专属学习路线/#软件开发</a></p>
 
         </div>
 
@@ -291,7 +254,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://fiercewill.github.io/2023/12/19/ADS%E8%BD%AF%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/">https://fiercewill.github.io/2023/12/19/ADS%E8%BD%AF%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/</a></span>
+                        <span><a href="https://fiercewill.github.io/2024/01/20/Git-GitHub%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86/">https://fiercewill.github.io/2024/01/20/Git-GitHub%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86/</a></span>
                     </p>
                 
                 
@@ -314,10 +277,6 @@
                 <span>Tag(s):</span>
                 <span class="tag">
                     
-                    
-                        <a href="/tags/ADS/">🏷️ ADS</a>
-                    
-                        
                 </span>
             </div>
             <div>
@@ -328,10 +287,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2024/01/20/Git-GitHub%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86/">Git/GitHub预备知识</a>
             
-            
-            <a class="next" rel="next" href="/2023/12/08/openmv4-R2%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86%EF%BC%88%E4%B8%80%EF%BC%89/">openmv4 R2的图像处理（一）</a>
+            <a class="next" rel="next" href="/2023/12/19/ADS%E8%BD%AF%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/">ADS软件的使用</a>
             
         </section>
 
