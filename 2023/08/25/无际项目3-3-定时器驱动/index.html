@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WM">
+
+
+
+
+
+<title>定时器驱动 | WM&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">WM&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">WM&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">定时器驱动</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WM</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 25, 2023&nbsp;&nbsp;19:28:29</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a>
+                            
+                        </span>
+                    
+                    
+                        <span class="post-count">
+                    Words:
+                        <a href="">1,153</a> 
+                        </span>
+                             
+                    
+                        <span class="post-count">
+                    Time:
+                        <a href="">6min</a> 
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<blockquote>
+<p>（1）本系列是基于STM32的项目笔记，内容涵盖了STM32各种外设的使用，由浅入深。</p>
+<p>（2）小编使用的单片机是STM32F105RCT6，项目笔记基于小编的实际项目，但是博客中的内容适用于各种单片机开发的同学学习和使用。</p>
+<p>（3）本篇文章对应的国内博客链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62261692/article/details/132500698?spm=1001.2014.3001.5501">定时器驱动_爱写博客的橙留香的博客-CSDN博客</a></p>
+<p>（4）访问国内博客可以查看文章中的图片。</p>
+</blockquote>
+<h2 id="学习目标">学习目标</h2>
+<blockquote>
+<ol>
+<li>掌握STM32单片机通用定时器初始化。</li>
+<li>完成定时器1ms的定时功能。</li>
+<li>实验效果：LED灯1秒闪烁。</li>
+</ol>
+</blockquote>
+<h1>主要内容</h1>
+<h2 id="STM32单片机的定时器"><strong>STM32单片机的定时器</strong></h2>
+<blockquote>
+<p>STM32总共有8个定时器，分别是2个高级定时器（TIM1、TIM8），4个通用定时器（TIM2、TIM3、TIM4、TIM5）和2个基本定时器（TIM6、TIM7）</p>
+</blockquote>
+<h2 id="定时器初始化，分为3个部分">定时器初始化，分为3个部分</h2>
+<blockquote>
+<p>（1）打开定时器时钟</p>
+<p>（2）配置定时器参数</p>
+<p>（3）配置定时器中断，并打开定时器中断功能</p>
+</blockquote>
+<p>本节我们使用的是定时器4,所以要对定时器4进行初始化操作。</p>
+<h3 id="打开定时器时钟">打开定时器时钟</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);</span><br></pre></td></tr></table></figure>
+<h3 id="配置定时器参数">配置定时器参数</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;</span><br><span class="line"></span><br><span class="line">TIM_DeInit(TIM4); </span><br><span class="line">TIM_TimeBaseStructure.TIM_Period = <span class="number">1000</span>;   			<span class="comment">//1ms </span></span><br><span class="line">TIM_TimeBaseStructure.TIM_Prescaler = SystemCoreClock/<span class="number">1000000</span> - <span class="number">1</span>;              </span><br><span class="line">TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;     </span><br><span class="line">TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up; </span><br><span class="line">TIM_TimeBaseInit(TIM4, &amp;TIM_TimeBaseStructure);	</span><br><span class="line"></span><br><span class="line">TIM_ClearFlag(TIM4, TIM_FLAG_Update);					  </span><br><span class="line">TIM_ITConfig(TIM4, TIM_IT_Update, ENABLE); </span><br><span class="line">				 </span><br><span class="line">TIM_Cmd(TIM4, ENABLE); </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>相关参数说明：</p>
+<p><strong>TIM_Period:</strong>  设置自动重装载寄存器周期的值</p>
+<p><strong>TIM_Prescaler：</strong> 设置时钟频率除数的预分频值  1M   // 0.000 001秒  1uS</p>
+<p>为什么要-1； 因为从0开始计算 0表示1分配   1表示2分配…/</p>
+<p>72000 000 / 1000 000 = 72;    //71</p>
+<p>72M进行72分频下来就是1M，1M是时钟频率，1/1M=1us是定时器一个计数周期。要积累period=1000才会产生定时器中断，即定时器中断的周期是1us*1000=1ms。</p>
+<p><strong>TIM_ClockDivision：</strong>//设置时钟分割，与定时器定时时间无关</p>
+<p><strong>TIM_CounterMode：</strong>//TIM 向上计数</p>
+<p>配置后，定时器的定时时间为1s，这里给出算定时器定时时间的公式：</p>
+<p>①  定时器时钟频率 = 72M/（Prescaler+1）；</p>
+<p>② 一个计数周期 = 1/定时器时钟频率；</p>
+<p>③定时时间 = Period * 定时器时钟时间；</p>
+</blockquote>
+<h3 id="配置定时器中断">配置定时器中断</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">     NVIC_InitTypeDef NVIC_InitStructure;</span><br><span class="line"></span><br><span class="line">NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);<span class="comment">//设置NVIC中断分组2</span></span><br><span class="line"></span><br><span class="line">NVIC_InitStructure.NVIC_IRQChannel = TIM4_IRQn;</span><br><span class="line">NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = <span class="number">1</span>;<span class="comment">///先占优先级</span></span><br><span class="line">NVIC_InitStructure.NVIC_IRQChannelSubPriority = <span class="number">2</span>;        <span class="comment">///代优先级</span></span><br><span class="line">NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="配置NVIC中断分组2">配置NVIC中断分组2</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);</span><br></pre></td></tr></table></figure>
+<h3 id="定时器中断服务函数"><strong>定时器中断服务函数</strong></h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">TIM4_IRQHandler</span><span class="params">(<span class="type">void</span>)</span><span class="comment">///定时器4 中断服务函数</span></span><br><span class="line">&#123;</span><br><span class="line">	hal_LedProc();</span><br><span class="line">	TIM_ClearFlag(TIM4, TIM_FLAG_Update);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="hal-timer-h代码">hal_timer.h代码</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _HAL_TIMER_H_</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _HAL_TIMER_H_</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">hal_timerInit</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="hal-timer-c代码">hal_timer.c代码</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stm32F10x.h&quot;</span><br><span class="line">#include &quot;hal_timer.h&quot;</span><br><span class="line">#include &quot;hal_led.h&quot;</span><br><span class="line">#include &quot;string.h&quot;</span><br><span class="line"></span><br><span class="line">/*******************************************************************************</span><br><span class="line">* Function Name  : static void hal_timer4Config(void)</span><br><span class="line">* Description    : 定时器硬件配置函数</span><br><span class="line">* Input          : None</span><br><span class="line">* Output         : None</span><br><span class="line">* Return         : None</span><br><span class="line">* Attention		 	 : None</span><br><span class="line">*******************************************************************************/</span><br><span class="line">static void hal_timer4Config(void)</span><br><span class="line">&#123;</span><br><span class="line">	TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;</span><br><span class="line">	NVIC_InitTypeDef NVIC_InitStructure;</span><br><span class="line">	</span><br><span class="line">	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);</span><br><span class="line">	</span><br><span class="line">	TIM_DeInit(TIM4); </span><br><span class="line">	TIM_TimeBaseStructure.TIM_Period = 1000; 			//1ms  </span><br><span class="line">	TIM_TimeBaseStructure.TIM_Prescaler = SystemCoreClock/1000000 - 1;              </span><br><span class="line">	TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;     </span><br><span class="line">	TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up; </span><br><span class="line">	TIM_TimeBaseInit(TIM4, &amp;TIM_TimeBaseStructure);	</span><br><span class="line">	</span><br><span class="line">	TIM_ITConfig(TIM4, TIM_IT_Update, ENABLE); ///打开定时器4中断				 </span><br><span class="line">	TIM_Cmd(TIM4, ENABLE);   ///打开定时器4</span><br><span class="line"></span><br><span class="line">	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);//设置NVIC中断分组2</span><br><span class="line">	</span><br><span class="line">	NVIC_InitStructure.NVIC_IRQChannel = TIM4_IRQn;</span><br><span class="line">	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;///先占优先级</span><br><span class="line">	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;        ///从优先级</span><br><span class="line">	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;</span><br><span class="line">	NVIC_Init(&amp;NVIC_InitStructure);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/*******************************************************************************</span><br><span class="line">* Function Name  : void hal_timerInit(void)</span><br><span class="line">* Description    : 定时器初始化</span><br><span class="line">* Input          : None</span><br><span class="line">* Output         : None</span><br><span class="line">* Return         : None</span><br><span class="line">* Attention		 	 : None</span><br><span class="line">*******************************************************************************/</span><br><span class="line">void hal_timerInit(void)</span><br><span class="line">&#123;</span><br><span class="line">	hal_timer4Config();</span><br><span class="line">&#125;</span><br><span class="line">/////////////////////////////////</span><br><span class="line">void TIM4_IRQHandler(void)</span><br><span class="line">&#123;</span><br><span class="line">	hal_LedProc();</span><br><span class="line">	TIM_ClearFlag(TIM4, TIM_FLAG_Update);</span><br><span class="line">&#125;</span><br><span class="line">//////////////////////////////</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="hal-led-c代码">hal_led.c代码</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stm32F10x.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;hal_timer.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;hal_led.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">hal_LedConfig</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">hal_Led1Turn</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">hal_LedInit</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	hal_LedConfig();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/////////////////////////</span></span><br><span class="line"><span class="comment">/////////////////////////</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">delay_1sTest</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">	i = <span class="number">7200000</span>;</span><br><span class="line">	<span class="keyword">while</span>(i--);   </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">hal_LedHandle</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//	delay_1sTest();</span></span><br><span class="line"><span class="comment">//	GPIO_ResetBits(LED8_PORT,LED8_PIN);</span></span><br><span class="line"><span class="comment">//	GPIO_ResetBits(LED7_PORT,LED7_PIN);</span></span><br><span class="line"><span class="comment">//	delay_1sTest();</span></span><br><span class="line"><span class="comment">//	GPIO_SetBits(LED8_PORT,LED8_PIN);</span></span><br><span class="line"><span class="comment">//	GPIO_SetBits(LED7_PORT,LED7_PIN);</span></span><br><span class="line">  <span class="type">static</span> <span class="type">unsigned</span> <span class="type">short</span> delayt =<span class="number">0</span>;</span><br><span class="line">	delayt ++;</span><br><span class="line">  <span class="keyword">if</span>(delayt &gt; <span class="number">999</span>)</span><br><span class="line">	&#123;<span class="comment">////1秒钟</span></span><br><span class="line">		hal_Led1Turn();</span><br><span class="line">		delayt = <span class="number">0</span>;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//////</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">hal_LedProc</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	hal_LedHandle();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">hal_LedConfig</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	GPIO_InitTypeDef GPIO_InitStructure;	</span><br><span class="line">	RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOC,ENABLE); 						 </span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = LED8_PIN | LED7_PIN;</span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; ; </span><br><span class="line">	GPIO_Init(LED8_PORT, &amp;GPIO_InitStructure);</span><br><span class="line">	</span><br><span class="line">	GPIO_ResetBits(LED8_PORT,LED8_PIN);</span><br><span class="line">	GPIO_SetBits(LED7_PORT,LED7_PIN);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">////</span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">hal_Led1Turn</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;<span class="comment">/////1-》0    0-》1</span></span><br><span class="line">	GPIO_WriteBit(LED8_PORT,LED8_PIN,(BitAction)(<span class="number">1</span>-GPIO_ReadOutputDataBit(LED8_PORT,LED8_PIN)));</span><br><span class="line">	GPIO_WriteBit(LED7_PORT,LED7_PIN,(BitAction)(<span class="number">1</span>-GPIO_ReadOutputDataBit(LED7_PORT,LED7_PIN)));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/////</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="main-c代码">main.c代码</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stm32f10x.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;hal_timer.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;hal_led.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;hal_gpio.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	hal_LedInit();</span><br><span class="line">	hal_GpioConfig_init();	</span><br><span class="line">	hal_timerInit();</span><br><span class="line">  <span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">  &#123;	</span><br><span class="line"><span class="comment">//		if(hal_Gpio_AcStateCheck() == STA_AC_BREAK)</span></span><br><span class="line"><span class="comment">//		&#123;</span></span><br><span class="line"><span class="comment">//			GPIO_ResetBits(LED7_PORT,LED7_PIN);</span></span><br><span class="line"><span class="comment">//		&#125;</span></span><br><span class="line"><span class="comment">//		else</span></span><br><span class="line"><span class="comment">//		&#123;	</span></span><br><span class="line"><span class="comment">//			GPIO_SetBits(LED7_PORT,LED7_PIN);			</span></span><br><span class="line"><span class="comment">//		&#125;		</span></span><br><span class="line"><span class="comment">//		hal_LedProc();</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WM</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://fiercewill.github.io/2023/08/25/%E6%97%A0%E9%99%85%E9%A1%B9%E7%9B%AE3-3-%E5%AE%9A%E6%97%B6%E5%99%A8%E9%A9%B1%E5%8A%A8/">https://fiercewill.github.io/2023/08/25/%E6%97%A0%E9%99%85%E9%A1%B9%E7%9B%AE3-3-%E5%AE%9A%E6%97%B6%E5%99%A8%E9%A9%B1%E5%8A%A8/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>电子信息工程 (A) 2023 <a href="https://fiercewill.github.io/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a> . <a href="https://fiercewill.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89/">数据结构与算法（c语言）</a> . <a href="https://fiercewill.github.io/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a> 王明的博客</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/STM32/">🏷️ STM32</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/08/25/%E6%97%A0%E9%99%85%E9%A1%B9%E7%9B%AE3-4-SPI2%E5%A4%96%E8%AE%BE%E9%A9%B1%E5%8A%A8-W25Q64-SPI%E6%8E%A5%E5%8F%A3%E5%88%9D%E5%A7%8B%E5%8C%96/">SPI2外设驱动-W25Q64 SPI接口初始化</a>
+            
+            
+            <a class="next" rel="next" href="/2023/08/25/%E6%97%A0%E9%99%85%E9%A1%B9%E7%9B%AE3-2-GPIO%E8%BE%93%E5%85%A5-%E5%A4%96%E7%94%B5%E6%A3%80%E6%B5%8B/">GPIO输入-外电检测</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WM | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    总访客量:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;
+
+
+<span class="site-pv">
+    总访问量:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+		
+        </span>
+    </div>
+</footer>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<!--浏览器搞笑标题-->
+<!-- 雪花特效 -->
+

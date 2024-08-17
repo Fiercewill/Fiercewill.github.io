@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WM">
+
+
+
+
+
+<title>Hexo&amp;Github 个人博客基本命令 | WM&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">WM&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">WM&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Hexo&amp;Github 个人博客基本命令</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WM</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 17, 2024&nbsp;&nbsp;21:17:29</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">遇到的问题及解决方法</a>
+                            
+                        </span>
+                    
+                    
+                        <span class="post-count">
+                    Words:
+                        <a href="">424</a> 
+                        </span>
+                             
+                    
+                        <span class="post-count">
+                    Time:
+                        <a href="">2min</a> 
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<blockquote>
+<p>时间来到2024年8月17日，距离这个博客搭建好已经有一年多了，也已经很久没有在这上面更新文章了，原因如下：</p>
+<p>（1）个人博客需要是搭建在github上的，需要借助外网才能访问，但是在连接到外网的情况下，观看博客还是不流畅，体验感不好，一般我们在查看笔记的时候都需要高效率，不然等到文章打开，等着连看博客的心思都没有了。</p>
+<p>（2）其次虽然看这些文章也可以在电脑的文件中观看，但是文件夹里的文件内容就很乱，条理不清楚，所以阅读的体验感也不好。</p>
+<p>基于以上原因，就不是很乐意以此种方式继续记笔记了。</p>
+<p>但是话说回来，这个博客都搭建好了，而且也准备在简历上贴上这个博客（因为csdn博客的链接太长了，这个博客的网址还有github显得高级一些）所以还是要讲得出来这个博客是怎么搭建的，了解写博客的基本命令和操作。</p>
+</blockquote>
+<h2 id="打开Git-Bash-Here">打开Git Bash Here</h2>
+<p>在此目录下，右击鼠标进入git bash终端</p>
+<p><img src="/2024/08/17/Hexo-Github-%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/a.png" alt="药姐"></p>
+<h2 id="新建文章">新建文章</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">&#x27;xxx&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>执行完此条命令后，会在post文件夹新建出一个typora文件和同名文件夹用于保存照片。</p>
+<h2 id="上传文件到网站">上传文件到网站</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo g  <span class="comment">#生成文件</span></span><br><span class="line">hexo s  <span class="comment">#本地服务器查看网站</span></span><br><span class="line">hexo d  <span class="comment">#部署到Github上</span></span><br></pre></td></tr></table></figure>
+<h2 id="参考资料">参考资料</h2>
+<blockquote>
+<h4 id="基于hexo和chic主题的博客教程">基于hexo和chic主题的博客教程</h4>
+<p><a target="_blank" rel="noopener" href="https://myoontyee.github.io/article/1650c0d7.html">https://myoontyee.github.io/article/1650c0d7.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.foxerlee.top/2020/02/17/wordcount/">https://www.foxerlee.top/2020/02/17/wordcount/</a></p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WM</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://fiercewill.github.io/2024/08/17/Hexo-Github-%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/">https://fiercewill.github.io/2024/08/17/Hexo-Github-%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>电子信息工程 (A) 2023 <a href="https://fiercewill.github.io/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a> . <a href="https://fiercewill.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89/">数据结构与算法（c语言）</a> . <a href="https://fiercewill.github.io/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a> 王明的博客</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/tips/">🏷️ tips</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/01/20/Git-GitHub%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86/">Git/GitHub预备知识</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WM | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    总访客量:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;
+
+
+<span class="site-pv">
+    总访问量:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+		
+        </span>
+    </div>
+</footer>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<!--浏览器搞笑标题-->
+<!-- 雪花特效 -->
+

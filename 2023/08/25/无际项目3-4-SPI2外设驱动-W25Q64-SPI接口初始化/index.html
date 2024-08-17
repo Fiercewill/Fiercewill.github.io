@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="WM">
+
+
+
+
+
+<title>SPI2外设驱动-W25Q64 SPI接口初始化 | WM&#39;s blog</title>
+
+
+
+    <link rel="icon" href="/favicon1.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">WM&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">WM&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">SPI2外设驱动-W25Q64 SPI接口初始化</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">WM</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 25, 2023&nbsp;&nbsp;19:46:31</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a>
+                            
+                        </span>
+                    
+                    
+                        <span class="post-count">
+                    Words:
+                        <a href="">1,535</a> 
+                        </span>
+                             
+                    
+                        <span class="post-count">
+                    Time:
+                        <a href="">7min</a> 
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<blockquote>
+<p>（1）本系列是基于STM32的项目笔记，内容涵盖了STM32各种外设的使用，由浅入深。</p>
+<p>（2）小编使用的单片机是STM32F105RCT6，项目笔记基于小编的实际项目，但是博客中的内容适用于各种单片机开发的同学学习和使用。</p>
+<p>（3）本篇文章对应的国内博客链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_62261692/article/details/132501741?spm=1001.2014.3001.5501">SPI2外设驱动-W25Q64 SPI接口初始化_爱写博客的橙留香的博客-CSDN博客</a></p>
+<p>（4）访问国内博客可以查看文章中的图片。</p>
+</blockquote>
+<h2 id="学习目标">学习目标</h2>
+<blockquote>
+<ol>
+<li>W25Q64硬件设计。</li>
+<li>学习SPI通讯协议。</li>
+<li>完成25Q64芯片的SPI驱动程序编写。</li>
+</ol>
+</blockquote>
+<h2 id="硬件原理图">硬件原理图</h2>
+<p><img src="https://gitee.com/Wangmingdream/typora-image/raw/master/img/5.png" alt></p>
+<blockquote>
+<p>从上图可以看出 25Q64连接的是单片机的SPI2接口，通过SPI2来通讯的。</p>
+</blockquote>
+<h2 id="SPI通讯原理简单介绍（理解）"><strong>SPI通讯原理简单介绍（理解）</strong></h2>
+<h3 id="典型连线图">典型连线图</h3>
+<p><img src="https://gitee.com/Wangmingdream/typora-image/raw/master/img/6.png" alt></p>
+<h3 id="简单原理分析">简单原理分析</h3>
+<p><img src="https://gitee.com/Wangmingdream/typora-image/raw/master/img/7.png" alt></p>
+<p>SCK：决定SPI的通信速率，即 数据传输速率。</p>
+<p>数据：1高电平 0 低电平。</p>
+<h4 id="SPI的四种通讯模式"><strong>SPI的四种通讯模式</strong></h4>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ytAad2jdKczzdhD3b92apA">https://mp.weixin.qq.com/s/ytAad2jdKczzdhD3b92apA</a></p>
+<p>可以看一下上面的资料。</p>
+<blockquote>
+<p>首先我们要了解两个特殊寄存器 分别是 CPOL （Clock POlarity）和 CPHA （Clock PHAse）。</p>
+<p>CPOL：配置SPI总线的极性</p>
+<p>CPHA：配置SPI总线的相位</p>
+</blockquote>
+<h4 id="SPI总线极性的概念：-空闲的时候时钟信号是高电平还是低电平"><strong>SPI总线极性的概念： 空闲的时候时钟信号是高电平还是低电平</strong></h4>
+<blockquote>
+<p>CPOL = 1; SCK 空闲是高电平</p>
+<p>CPOL = 0; SCK 空闲是低电平</p>
+</blockquote>
+<h4 id="SPI总线的相位的概念"><strong>SPI总线的相位的概念</strong></h4>
+<blockquote>
+<p>一个时钟周期有2个跳变沿，相位决定从那个跳变开始采集数据</p>
+<p>CPHA = 0; 表示从第一个跳变 开始采集</p>
+<p>CPHA = 1; 表示从第二个跳变 开始采集</p>
+</blockquote>
+<h4 id="SPI四种模式"><strong>SPI四种模式</strong></h4>
+<blockquote>
+<p>模式0:  CPOL = 0;  CPHA = 0;</p>
+<p>模式1：CPOL = 0;  CPHA = 1;</p>
+<p>模式2：CPOL = 1;  CPHA = 0;</p>
+<p>模式3：CPOL = 1;  CPHA = 1;</p>
+</blockquote>
+<h4 id="数据传输方向"><strong>数据传输方向</strong></h4>
+<blockquote>
+<p>高位在前：MSB</p>
+<p>低位在前:  LSB</p>
+</blockquote>
+<h4 id="SPI的单线-和双线-模式"><strong>SPI的单线 和双线 模式</strong></h4>
+<blockquote>
+<p>单线：一般用于OLED屏幕单向通讯</p>
+<p>双向：一般用于芯片之间的双向通讯</p>
+</blockquote>
+<p>特别说明： 一般情况下，我们不用刻意去学习四种模式的具体细节，一般芯片资料里面都会告诉你芯片支持的模式。</p>
+<h2 id="25Q64-SPI2的初始化操作"><strong>25Q64 SPI2的初始化操作</strong></h2>
+<h3 id="hal-flash-c代码">hal_flash.c代码</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stm32F10x.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;hal_flash.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">hal_spi2Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	SPI_InitTypeDef  SPI_InitStructure;</span><br><span class="line">	GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/* Enable SPI2 and GPIOA clocks */</span></span><br><span class="line">	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);</span><br><span class="line">	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);	</span><br><span class="line">	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/* Configure SPI2 pins: NSS, SCK, MISO and MOSI */</span></span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = SPI2_SCK_PIN | SPI2_MISO_PIN | SPI2_MOSI_PIN;</span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;</span><br><span class="line">	GPIO_Init(SPI2_SCK_PORT, &amp;GPIO_InitStructure);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//SPI2 NSS </span></span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = SPI2_NSS_PIN;</span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;</span><br><span class="line">	GPIO_Init(SPI2_NSS_PORT, &amp;GPIO_InitStructure);</span><br><span class="line">	GPIO_SetBits(SPI2_NSS_PORT,SPI2_NSS_PIN);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/* SPI2 configuration */</span> </span><br><span class="line">	SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex; <span class="comment">//SPI1设置为两线全双工</span></span><br><span class="line">	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;	                     <span class="comment">//设置SPI1为主模式</span></span><br><span class="line">	SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;                  <span class="comment">//SPI发送接收8位帧结构</span></span><br><span class="line">	SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;	 		                   <span class="comment">//串行时钟在不操作时，时钟为高电平</span></span><br><span class="line">	SPI_InitStructure.SPI_CPHA = SPI_CPHA_2Edge;		                   <span class="comment">//第二个时钟沿开始采样数据</span></span><br><span class="line">	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;			                     <span class="comment">//NSS信号由软件（使用SSI位）管理</span></span><br><span class="line">	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8; <span class="comment">//定义波特率预分频的值:波特率预分频值为8</span></span><br><span class="line">	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;				         <span class="comment">//数据传输从MSB位开始</span></span><br><span class="line">	SPI_InitStructure.SPI_CRCPolynomial = <span class="number">7</span>;						               <span class="comment">//CRC值计算的多项式</span></span><br><span class="line">	SPI_Init(SPI2, &amp;SPI_InitStructure);</span><br><span class="line">	<span class="comment">/* Enable SPI2  */</span></span><br><span class="line">	SPI_Cmd(SPI2, ENABLE); 											  <span class="comment">//使能SPI2外设</span></span><br><span class="line">	</span><br><span class="line">	hal_spi2CSDrive(<span class="number">1</span>);<span class="comment">//空闲时将片选信号拉高，初始化为空闲状态</span></span><br><span class="line">	</span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">hal_spi2CSDrive</span><span class="params">(<span class="type">unsigned</span> <span class="type">char</span> sta)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(sta)</span><br><span class="line">		GPIO_SetBits(SPI2_NSS_PORT,SPI2_NSS_PIN);		</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		GPIO_ResetBits(SPI2_NSS_PORT,SPI2_NSS_PIN);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//SPIx 读写一个字节</span></span><br><span class="line"><span class="comment">//返回值:读取到的字节</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span>  <span class="title function_">hal_spi2ReadWriteByte</span><span class="params">(<span class="type">unsigned</span> <span class="type">char</span>  TxData)</span></span><br><span class="line">&#123;		</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> retry=<span class="number">0</span>;				 </span><br><span class="line">	<span class="keyword">while</span>(SPI_I2S_GetFlagStatus(SPI2,SPI_I2S_FLAG_TXE)==RESET)<span class="comment">//等待发送区空	</span></span><br><span class="line">	&#123;</span><br><span class="line">		retry++;</span><br><span class="line">		<span class="keyword">if</span>(retry&gt;<span class="number">200</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;	</span><br><span class="line">  SPI_I2S_SendData(SPI2,TxData);	</span><br><span class="line">	retry=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(SPI_I2S_GetFlagStatus(SPI2,SPI_I2S_FLAG_RXNE)==RESET)<span class="comment">//等待发送区空	</span></span><br><span class="line">	&#123;</span><br><span class="line">		retry++;</span><br><span class="line">		<span class="keyword">if</span>(retry&gt;<span class="number">200</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;	  						    </span><br><span class="line">	<span class="keyword">return</span> SPI_I2S_ReceiveData(SPI2);<span class="comment">//SPI2-&gt;DR;          //返回收到的数据						    </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="hal-flash-h代码">hal_flash.h代码</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> _HAL_FLASH_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _HAL_FLASH_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPI2_SCK_PORT       GPIOB</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPI2_SCK_PIN        GPIO_Pin_13</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPI2_MOSI_PORT       GPIOB</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPI2_MOSI_PIN        GPIO_Pin_15</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPI2_MISO_PORT       GPIOB</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPI2_MISO_PIN        GPIO_Pin_14</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPI2_NSS_PORT       GPIOB</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPI2_NSS_PIN        GPIO_Pin_12</span></span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">hal_spi2Init</span><span class="params">(<span class="type">void</span>)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">hal_spi2CSDrive</span><span class="params">(<span class="type">unsigned</span> <span class="type">char</span> sta)</span>;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span>  <span class="title function_">hal_spi2ReadWriteByte</span><span class="params">(<span class="type">unsigned</span> <span class="type">char</span>  TxData)</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="SPI2接口初始化流程（拆解代码分析）"><strong>SPI2接口初始化流程（拆解代码分析）</strong></h2>
+<blockquote>
+<p>● 定义SPI通讯的端口</p>
+<p>● 打开相关时钟</p>
+<p>● 初始化SPI2相关的GPIO口</p>
+<p>● 初始化SPI2相关参数</p>
+<p>● 片选CS初始化 拉高</p>
+</blockquote>
+<h3 id="定义SPI通讯的端口">定义SPI通讯的端口</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> SPI2_SCK_PORT       GPIOB</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPI2_SCK_PIN        GPIO_Pin_13</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPI2_MOSI_PORT       GPIOB</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPI2_MOSI_PIN        GPIO_Pin_15</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPI2_MISO_PORT       GPIOB</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPI2_MISO_PIN        GPIO_Pin_14</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPI2_NSS_PORT       GPIOB<span class="comment">//其实就是CS，片选引脚</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SPI2_NSS_PIN        GPIO_Pin_12</span></span><br></pre></td></tr></table></figure>
+<h3 id="打开相关时钟">打开相关时钟</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Enable SPI2 and GPIOA clocks */</span></span><br><span class="line">	RCC_APB1PeriphClockCmd(RCC_APB1Periph_SPI2, ENABLE);</span><br><span class="line">	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);	</span><br><span class="line">	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);</span><br></pre></td></tr></table></figure>
+<h3 id="初始化SPI2相关的GPIO口">初始化SPI2相关的GPIO口</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Configure SPI2 pins: NSS, SCK, MISO and MOSI */</span></span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = SPI2_SCK_PIN | SPI2_MISO_PIN | SPI2_MOSI_PIN;</span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;</span><br><span class="line">	GPIO_Init(SPI2_SCK_PORT, &amp;GPIO_InitStructure);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//SPI2 NSS   </span></span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;</span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;</span><br><span class="line">	GPIO_Init(GPIOB, &amp;GPIO_InitStructure);</span><br><span class="line">	GPIO_SetBits(GPIOB,GPIO_Pin_12);</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="初始化SPI2相关参数">初始化SPI2相关参数</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* SPI2 configuration */</span> </span><br><span class="line">	SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex; <span class="comment">//SPI2设置为两线全双工</span></span><br><span class="line">	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;	   <span class="comment">//设置SPI2为主模式</span></span><br><span class="line">	SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;   <span class="comment">//SP2发送接收8位帧结构</span></span><br><span class="line">	SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;	<span class="comment">//串行时钟在不操作时，时钟为高电平</span></span><br><span class="line">	SPI_InitStructure.SPI_CPHA = SPI_CPHA_2Edge;	<span class="comment">//第二个时钟沿开始采样数据</span></span><br><span class="line">	SPI_InitStructure.SPI_NSS = SPI_NSS_Soft; <span class="comment">//NSS信号由软件（使用SSI位）管理</span></span><br><span class="line">	SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8; <span class="comment">//定义波特率预分频的值:波特率预分频值为8</span></span><br><span class="line">	SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;	<span class="comment">//数据传输从MSB位开始</span></span><br><span class="line">	SPI_InitStructure.SPI_CRCPolynomial = <span class="number">7</span>;		<span class="comment">//CRC值计算的多项式</span></span><br><span class="line">	SPI_Init(SPI2, &amp;SPI_InitStructure);</span><br><span class="line">	<span class="comment">/* Enable SPI2  */</span></span><br><span class="line">	SPI_Cmd(SPI2, ENABLE); 					<span class="comment">//使能SPI2外设</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="25Q64片选操作，拉高"><strong>25Q64片选操作</strong>，拉高</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">hal_spi2CSDrive</span><span class="params">(<span class="type">unsigned</span> <span class="type">char</span> sta)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(sta)</span><br><span class="line">		GPIO_SetBits(GPIOB,GPIO_Pin_12);		</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		GPIO_ResetBits(GPIOB,GPIO_Pin_12);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="SPI数据读写函数"><strong>SPI数据读写函数</strong></h3>
+<h4 id="SPI读写数据操作原理"><strong>SPI读写数据操作原理</strong></h4>
+<p><img src="https://gitee.com/Wangmingdream/typora-image/raw/master/img/8.png" alt></p>
+<h4 id="SPI-读写操作图示分析"><strong>SPI 读写操作图示分析</strong></h4>
+<p><img src="https://gitee.com/Wangmingdream/typora-image/raw/master/img/9.png" alt></p>
+<h4 id="代码分析"><strong>代码分析</strong></h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//SPIx 读写一个字节</span></span><br><span class="line"><span class="comment">//返回值:读取到的字节</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span>  <span class="title function_">hal_spi2ReadWriteByte</span><span class="params">(<span class="type">unsigned</span> <span class="type">char</span>  TxData)</span></span><br><span class="line">&#123;		</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> retry=<span class="number">0</span>;				 </span><br><span class="line">	<span class="keyword">while</span>(SPI_I2S_GetFlagStatus(SPI2,SPI_I2S_FLAG_TXE)==RESET)<span class="comment">//等待发送区空	</span></span><br><span class="line">	&#123;</span><br><span class="line">		retry++;</span><br><span class="line">		<span class="keyword">if</span>(retry&gt;<span class="number">200</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;	</span><br><span class="line">  SPI_I2S_SendData(SPI2,TxData);	</span><br><span class="line">	retry=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(SPI_I2S_GetFlagStatus(SPI2,SPI_I2S_FLAG_RXNE)==RESET)<span class="comment">//	</span></span><br><span class="line">&#123;</span><br><span class="line">		retry++;</span><br><span class="line">		<span class="keyword">if</span>(retry&gt;<span class="number">200</span>)</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;	  						    </span><br><span class="line">	<span class="keyword">return</span> SPI_I2S_ReceiveData(SPI2);<span class="comment">//SPI2-&gt;DR;          //返回收到的数据			    </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>WM</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="https://fiercewill.github.io/2023/08/25/%E6%97%A0%E9%99%85%E9%A1%B9%E7%9B%AE3-4-SPI2%E5%A4%96%E8%AE%BE%E9%A9%B1%E5%8A%A8-W25Q64-SPI%E6%8E%A5%E5%8F%A3%E5%88%9D%E5%A7%8B%E5%8C%96/">https://fiercewill.github.io/2023/08/25/%E6%97%A0%E9%99%85%E9%A1%B9%E7%9B%AE3-4-SPI2%E5%A4%96%E8%AE%BE%E9%A9%B1%E5%8A%A8-W25Q64-SPI%E6%8E%A5%E5%8F%A3%E5%88%9D%E5%A7%8B%E5%8C%96/</a></span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>电子信息工程 (A) 2023 <a href="https://fiercewill.github.io/categories/STM32%E7%AC%94%E8%AE%B0/">STM32笔记</a> . <a href="https://fiercewill.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88C%E8%AF%AD%E8%A8%80%EF%BC%89/">数据结构与算法（c语言）</a> . <a href="https://fiercewill.github.io/categories/%E6%99%BA%E8%83%BD%E8%BD%A6%E7%AB%9E%E8%B5%9B/">智能车竞赛</a> 王明的博客</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>在你最虚弱的时候，<strong>最强版本</strong>的你正在准备<strong>登场</strong>。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/STM32/">🏷️ STM32</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2023/08/29/%E6%97%A0%E9%99%85%E9%A1%B9%E7%9B%AE3-5-W25Q64-%E9%A9%B1%E5%8A%A8-%E5%9F%BA%E4%BA%8ESPI2%E6%8E%A5%E5%8F%A3/">W25Q64 驱动--基于SPI2接口</a>
+            
+            
+            <a class="next" rel="next" href="/2023/08/25/%E6%97%A0%E9%99%85%E9%A1%B9%E7%9B%AE3-3-%E5%AE%9A%E6%97%B6%E5%99%A8%E9%A9%B1%E5%8A%A8/">定时器驱动</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© WM | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a>
+		
+		  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<span class="site-uv">
+    总访客量:
+    <i class="busuanzi-value" id="busuanzi_value_site_uv"></i>
+</span>&nbsp;
+
+
+<span class="site-pv">
+    总访问量:
+    <i class="busuanzi-value" id="busuanzi_value_site_pv"></i>
+</span>
+
+
+		
+        </span>
+    </div>
+</footer>
+<link rel="stylesheet" href="/dist/APlayer.min.css">
+<div id="aplayer"></div>
+<script type="text/javascript" src="/dist/APlayer.min.js"></script>
+<script type="text/javascript" src="/dist/music.js"></script>
+    </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+
+</html>
+<canvas class="fireworks" style="position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;" ></canvas> 
+<script type="text/javascript" src="//cdn.bootcss.com/animejs/2.2.0/anime.min.js"></script> 
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="\js\snow.js"></script>
+<script type="text/javascript" src="/js/fireworks.js"></script>
+<!--浏览器搞笑标题-->
+<!-- 雪花特效 -->
+
